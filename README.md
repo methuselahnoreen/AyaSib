@@ -1,6 +1,6 @@
-# Tabang - Cebuano-first Services Assistant
+﻿# AyaSib - Cebuano-first Services Assistant
 
-> *Tabang* means "help" in Cebuano. (Working name - rename freely.)
+> *AyaSib* means "help" in Cebuano. (Working name - rename freely.)
 
 Ask about government services in Bisaya and get a short, step-by-step answer in Bisaya, with the source and the date it was last verified.
 
@@ -16,7 +16,7 @@ Ask about government services in Bisaya and get a short, step-by-step answer in 
 ## Table of contents
 
 1. [The problem](#the-problem)
-2. [What Tabang does](#what-tabang-does)
+2. [What AyaSib does](#what-AyaSib-does)
 3. [How it avoids wrong answers](#how-it-avoids-wrong-answers)
 4. [Architecture](#architecture)
 5. [Tech stack](#tech-stack)
@@ -41,7 +41,7 @@ Ask about government services in Bisaya and get a short, step-by-step answer in 
 
 Most government and service information in Cebu (permits, clearances, PhilHealth steps, disaster advisories) is written in English or formal Filipino. Many Cebuano speakers, especially older people and people in outlying barangays, do not read these comfortably. Generic translators handle Cebuano poorly and know nothing about local procedures. People end up asking relatives or fixers, or standing in the wrong line at the wrong office.
 
-## What Tabang does
+## What AyaSib does
 
 Three features, deliberately and no more.
 
@@ -55,7 +55,7 @@ Type a question such as *"Unsaon pag-apply ug barangay clearance?"* and receive 
 - Source link and **last verified** date
 
 ### 2. Explain this document
-Paste text or upload a photo of a notice or form. Tabang explains in plain Cebuano what the document is, what it asks for, and what to do next.
+Paste text or upload a photo of a notice or form. AyaSib explains in plain Cebuano what the document is, what it asks for, and what to do next.
 
 ### 3. Translate with government vocabulary
 English or Filipino to Cebuano and back, using a small curated glossary so terms like *affidavit* or *business permit* are translated consistently instead of guessed.
@@ -70,7 +70,7 @@ Wrong information about a government process can cost people time and money, so 
 |-----------|--------------|
 | **Grounded answers only** | The model may answer only from retrieved knowledge-base files. |
 | **Citations on every answer** | Each answer shows its source URL and `last_verified` date. |
-| **Refusal fallback** | If sources do not cover the question, Tabang says it is not sure and tells the user to confirm with the office. |
+| **Refusal fallback** | If sources do not cover the question, AyaSib says it is not sure and tells the user to confirm with the office. |
 | **Curated glossary** | Government terms use fixed Cebuano renderings. |
 | **Evaluation set** | 30-50 Cebuano questions with expected answers, run in CI, reviewed by a native speaker. |
 
@@ -162,19 +162,19 @@ Real keys must never be committed. `.env*` files are git-ignored.
 
 ```
 .
-├── web/                 # Next.js app (UI and API routes)
-├── kb/                  # One YAML file per service
-├── glossary/
-│   └── glossary.json    # Preferred Cebuano terms
-├── eval/                # Question set and runner
-├── scripts/             # Embedding and maintenance scripts
-├── docs/
-│   ├── api-contract.md
-│   └── TEAM_KICKOFF.md
-├── .github/             # CI workflows, PR and issue templates
-├── .env.example
-├── CONTRIBUTING.md
-└── LICENSE
+â”œâ”€â”€ web/                 # Next.js app (UI and API routes)
+â”œâ”€â”€ kb/                  # One YAML file per service
+â”œâ”€â”€ glossary/
+â”‚   â””â”€â”€ glossary.json    # Preferred Cebuano terms
+â”œâ”€â”€ eval/                # Question set and runner
+â”œâ”€â”€ scripts/             # Embedding and maintenance scripts
+â”œâ”€â”€ docs/
+â”‚   â”œâ”€â”€ api-contract.md
+â”‚   â””â”€â”€ TEAM_KICKOFF.md
+â”œâ”€â”€ .github/             # CI workflows, PR and issue templates
+â”œâ”€â”€ .env.example
+â”œâ”€â”€ CONTRIBUTING.md
+â””â”€â”€ LICENSE
 ```
 
 > `TODO: update to match the real layout.`
@@ -291,9 +291,9 @@ npm run eval      # runs the Cebuano question set
 
 ## Limitations
 
-Please read these before relying on Tabang.
+Please read these before relying on AyaSib.
 
-- **Not official.** Tabang is an independent project and is not affiliated with any government office.
+- **Not official.** AyaSib is an independent project and is not affiliated with any government office.
 - **Information can go out of date.** Always check the "last verified" date and confirm with the office for anything important.
 - **Limited coverage.** Only the services in `/kb` are supported. Other questions get the "not sure" response.
 - **Cebuano quality.** LLMs are weaker in Cebuano than in English. The glossary and eval set reduce this risk but do not remove it.
@@ -335,3 +335,4 @@ Native Cebuano reviewer: `TODO`
 ## Acknowledgements
 
 Built for `TODO: hackathon name`. Thanks to everyone who reviewed our Cebuano and verified service information.
+

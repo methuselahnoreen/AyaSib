@@ -1,4 +1,4 @@
-# Contributing to Tabang
+# Contributing to AyaSib
 
 Thank you for helping. This project is built by a small team and open to outside contributions, especially **verified knowledge-base entries** and **Cebuano reviews**.
 
