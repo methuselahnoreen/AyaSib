@@ -6,10 +6,10 @@
 
 | Label | Name | Group | Notes |
 |-------|------|-------|-------|
-| FE1 | | Frontend | Also Project Manager |
-| FE2 | | Frontend | |
-| BE1 | | Backend | |
-| BE2 | | Backend | |
+| Methus | | Frontend | Also Project Manager |
+| Irish | | Frontend | |
+| Stephanie | | Backend | |
+| Elizah | | Backend | |
 
 **Deadline:** `____ / ____ / ______`. Day numbers below are counted from today (Day 1) and should be converted to real dates once the deadline is fixed.
 
@@ -23,17 +23,17 @@
 
 | Feature | Frontend owner | Backend owner |
 |---------|----------------|---------------|
-| F1 Ask in Bisaya | FE2 | BE1 |
-| F2 Explain document | FE1 | BE2 |
-| F3 Translate | FE1 | BE2 |
+| F1 Ask in Bisaya | Irish | Stephanie |
+| F2 Explain document | Methus | Elizah |
+| F3 Translate | Methus | Elizah |
 
 Each pair agrees on request and response shapes in `docs/api-contract.md` before building.
 
 ---
 
-## 2. Frontend group (FE1 + FE2)
+## 2. Frontend group (Methus + Irish)
 
-### FE2: foundation and Feature 1
+### Irish: foundation and Feature 1
 
 | ID | Task | Pri | Due | Depends on | Done when |
 |----|------|-----|-----|------------|-----------|
@@ -48,7 +48,7 @@ Each pair agrees on request and response shapes in `docs/api-contract.md` before
 
 > Someone already pushed a branch called `feat/answer-card`. Find out who, then either make that person the owner of FE-06 or merge their work into it. Do not build it twice.
 
-### FE1 (PM): Features 2 and 3, polish
+### Methus (PM): Features 2 and 3, polish
 
 | ID | Task | Pri | Due | Depends on | Done when |
 |----|------|-----|-----|------------|-----------|
@@ -63,13 +63,13 @@ Each pair agrees on request and response shapes in `docs/api-contract.md` before
 
 ---
 
-## 3. Backend group (BE1 + BE2)
+## 3. Backend group (Stephanie + Elizah)
 
-### BE1: knowledge base, retrieval and Feature 1
+### Stephanie: knowledge base, retrieval and Feature 1
 
 | ID | Task | Pri | Due | Depends on | Done when |
 |----|------|-----|-----|------------|-----------|
-| BE-01 | With FE2, decide the architecture: Next.js API routes or a separate service in `backend/`. Write the decision in the README and the contract's base path | P0 | Day 1 | none | Decision merged |
+| BE-01 | With Irish, decide the architecture: Next.js API routes or a separate service in `backend/`. Write the decision in the README and the contract's base path | P0 | Day 1 | none | Decision merged |
 | BE-02 | Supabase project, enable pgvector, create the table for KB chunks and embeddings | P0 | Day 2 | BE-01 | Table exists and accepts a row |
 | BE-03 | KB loader and schema validator: reads `kb/*.yaml`, fails with a clear message if `source_url` or `last_verified` is missing | P0 | Day 3 | KB schema agreed | Bad files are rejected with a useful error |
 | BE-04 | Embedding script (`kb:embed`) that loads the KB into pgvector, safe to re-run | P0 | Day 4 | BE-02, BE-03 | Running it twice does not duplicate rows |
@@ -78,7 +78,7 @@ Each pair agrees on request and response shapes in `docs/api-contract.md` before
 | BE-13 | Eval runner and the 30 to 50 question set, with expected answers reviewed by the native Cebuano reviewer. Includes questions the KB does not cover | P0 | Day 11 | BE-07 | `npm run eval` prints a pass rate |
 | BE-14 | Tests for retrieval and the refusal behavior (including "no sources means no answer") | P0 | Day 9 | BE-07 | Tests run in CI |
 
-### BE2: platform, Features 2 and 3, security
+### Elizah: platform, Features 2 and 3, security
 
 | ID | Task | Pri | Due | Depends on | Done when |
 |----|------|-----|-----|------------|-----------|
@@ -102,7 +102,7 @@ Each pair agrees on request and response shapes in `docs/api-contract.md` before
 | SH-01 | **Knowledge base content**: 15 to 20 services, each with a verified source and date. Target split of about 4 services per person (see candidates below) | All four | P0 | Day 9 | Files merged via PR, each reviewed by a second person |
 | SH-02 | Eval questions: each person writes 10 to 12 questions in natural Bisaya for the services they added | All four | P0 | Day 10 | Questions merged and reviewed |
 | SH-03 | Each person writes the README section for their own part (setup, how it works, limits) | All four | P0 | Day 12 | Sections merged |
-| SH-04 | Demo video: script, record, edit (2 to 3 minutes) | FE1 leads | P0 | Day 13 | Link in README |
+| SH-04 | Demo video: script, record, edit (2 to 3 minutes) | Methus leads | P0 | Day 13 | Link in README |
 | SH-05 | Code review: every PR gets one reviewer from the other group where possible | All four | P0 | ongoing | No PR merged without approval |
 
 **KB candidates** (names only; every fee, requirement and office must come from a verified source for one named locality):
@@ -110,14 +110,14 @@ barangay clearance, business permit, community tax certificate (cedula), PhilHea
 
 ---
 
-## 5. Project manager tasks (FE1)
+## 5. Project manager tasks (Methus)
 
 | ID | Task | Pri | Due | Done when |
 |----|------|-----|-----|-----------|
 | PM-01 | Confirm the deadline and convert Day numbers to real dates | P0 | Day 1 | Dates filled in above |
 | PM-02 | Invite teammates, protect `main`, check everyone can open a PR | P0 | Day 1 | Test PRs opened by all four |
 | PM-03 | Task board (GitHub Projects) with one issue per task here, labels `frontend`, `backend`, `kb`, `eval`, `docs` | P0 | Day 1 | Board matches this file |
-| PM-04 | Get the API contract approved by FE2 and BE1 (and BE2 for Explain and Translate) | P0 | Day 2 | Contract marked Agreed |
+| PM-04 | Get the API contract approved by Irish and Stephanie (and Elizah for Explain and Translate) | P0 | Day 2 | Contract marked Agreed |
 | PM-05 | Find the native Cebuano reviewer and a backup | P0 | Day 2 | One person has said yes |
 | PM-06 | Daily 15-minute check-in, track blockers, make go or no-go calls on slipping tasks | P0 | daily | |
 | PM-07 | Declare feature freeze | P0 | Day 10 | Announced in chat |
