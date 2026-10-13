@@ -7,8 +7,8 @@ Ask about government services in Bisaya and get a short, step-by-step answer in 
 **Live demo:** `TODO: add deployed URL`
 **Demo video:** `TODO: add link`
 
-<!-- Badges: replace OWNER/REPO once the repo exists -->
-![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+<!-- Badges: replace methuselahnoreen/AyaSib once the repo exists -->
+![CI](https://github.com/methuselahnoreen/AyaSib/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ---
@@ -122,8 +122,8 @@ flowchart LR
 
 ```bash
 # 1. Clone
-git clone https://github.com/OWNER/REPO.git
-cd REPO
+git clone https://github.com/methuselahnoreen/AyaSib.git
+cd AyaSib
 
 # 2. Install
 npm install
