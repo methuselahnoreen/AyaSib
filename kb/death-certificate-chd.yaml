@@ -1,0 +1,15 @@
+id: death-certificate-chd
+name_en: Death Certificate (City Health Department)
+name_ceb: null   # needs native reviewer
+locality: Cebu City
+office: "City Health Department (CHD)"
+who_may_avail: "Family members or nearest kin of a person who died at home or without medical attendance"
+scope_note: "The charter describes this for deaths in the absence of a doctor, or outside a hospital or medical facility. It is also the basis for whether the body can be embalmed."
+requirements:
+  - "Medical abstract, laboratory results or prescription, if available (from the hospital or attending physician)"
+fee: "PHP 50.00 (burial permit)"
+processing_time: "45 minutes in total"
+source_title: "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate"
+source_pages: "219-220"
+source_url: "TODO"
+last_verified: 2026-10-14

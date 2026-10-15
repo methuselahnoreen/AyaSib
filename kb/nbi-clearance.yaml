@@ -1,0 +1,22 @@
+id: nbi-clearance
+name_en: NBI Clearance
+name_ceb: null   # needs native reviewer
+locality: "National (apply online, then visit the NBI branch you choose)"
+office: "Any NBI branch, chosen during the online application at https://clearance.nbi.gov.ph"
+requirements:
+  - "An online account at the NBI Clearance portal (active mobile number and email, verified with a one-time password)"
+  - "Reference number from the portal (printed, digital or QR code)"
+  - "Proof of payment or receipt"
+  - "Two valid government-issued IDs, original and not expired (for example passport, driver's license, National ID, UMID, postal ID, or PSA birth certificate)"
+requirements_note: "First-time job seekers may be eligible for a free clearance under RA 11261 through a separate portal. They bring an original Barangay Certificate stating first-time job seeker status and a signed Oath of Undertaking."
+steps:
+  - "Register or log in at the NBI Clearance portal"
+  - "Complete the Applicant Information Form; spelling must match your valid IDs"
+  - "Click Apply for Clearance and select the ID you will bring"
+  - "Choose a branch, date and time slot"
+  - "Pay the fee and keep the reference number"
+  - "Go to the branch for biometrics (photo, fingerprints, signature) and data verification"
+  - "Receive the clearance if there is no HIT; if there is a HIT, return on the date given"
+fee: "PHP 130 basic clearance fee, plus a small e-payment service charge (the page says usually around PHP 25 to 30)"
+processing_time: "Released within minutes at the branch if there is no HIT. If there is a HIT, usually 5 to 10 working days before you return, with no extra payment."
+source_title: "NBI: NBI Clearance Application - How To & Complete Guide"

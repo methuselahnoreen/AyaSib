@@ -1,0 +1,19 @@
+id: civil-registry-local-copy
+name_en: Civil Registry Record (Local Copy)
+name_ceb: null   # needs native reviewer
+locality: Cebu City
+office: "Office of the City Civil Registrar, Issuance Division"
+who_may_avail: "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died"
+requirements:
+  - "Valid ID of the requestor, his/her parents or his/her children (1 original)"
+  - "Authorization letter executed by the document owner (1 original)"
+  - "Valid ID of the authorized representative (1 photocopy, present the original)"
+  - "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)"
+  - "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+requirements_note: "The charter does not say which requirements apply to which requester. Confirm with the office."
+fee: "PHP 50.00 for local use; PHP 100.00 for abroad"
+processing_time: "41 minutes in total"
+source_title: "Cebu City Citizen's Charter, Service 8: Issuance of Civil Registry Records (Local Copy)"
+source_pages: "624"
+source_url: "TODO"
+last_verified: 2026-10-14

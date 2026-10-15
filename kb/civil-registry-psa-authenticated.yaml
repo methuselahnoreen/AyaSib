@@ -1,0 +1,19 @@
+id: civil-registry-psa-authenticated
+name_en: PSA-Authenticated Civil Registry Record
+name_ceb: null   # needs native reviewer
+locality: Cebu City
+office: "Office of the City Civil Registrar, Issuance Division"
+who_may_avail: "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died"
+requirements:
+  - "Valid ID of the requestor, his/her parents or his/her children (1 original)"
+  - "Authorization letter executed by the document owner (1 original)"
+  - "Valid ID of the authorized representative (1 photocopy, present the original)"
+  - "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)"
+  - "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+requirements_note: "The charter does not say which requirements apply to which requester. Confirm with the office."
+fee: "Service fee PHP 50.00, plus PHP 155.00 for a birth, marriage or death certificate, or PHP 210.00 for a CENOMAR (as listed in the charter)"
+processing_time: "1 day, 1 hour and 28 minutes at the city office. Processing at the PSA itself is not included; the charter refers to the PSA's own charter for that."
+source_title: "Cebu City Citizen's Charter, Service 9: Issuance of PSA-Authenticated Civil Registry Record"
+source_pages: "625"
+source_url: "TODO"
+last_verified: 2026-10-14
