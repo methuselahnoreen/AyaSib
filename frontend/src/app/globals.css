@@ -1,12 +1,13 @@
 :root {
-     --forest: #14301f;
-     --dark: #166534;
-     --olive: #15803d;
-     --sage: #86d9a3;
-     --lime: #dcfce7;
-     --cream: #f7fdf9;
-     --radius: 16px;
-   }
+  --forest: #14301f;   /* body text */
+  --dark: #166534;     /* header bar, primary buttons */
+  --olive: #15803d;    /* links, input borders, user bubbles */
+  --sage: #86d9a3;     /* soft card borders */
+  --lime: #dcfce7;     /* light green tint: card heads, notices, chip hover */
+  --cream: #f7fdf9;    /* page background */
+  --radius: 16px;
+  --shadow: 0 2px 8px rgba(20, 48, 31, 0.08);
+}
 * { box-sizing: border-box; }
 html { font-size: 18px; }
 body {
@@ -18,21 +19,21 @@ body {
 }
 a { color: var(--olive); }
 :focus-visible { outline: 3px solid var(--olive); outline-offset: 2px; }
-
+ 
 .shell { max-width: 640px; margin: 0 auto; min-height: 100dvh; display: flex; flex-direction: column; }
 .bar { background: var(--dark); color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
 .bar a { color: #fff; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
 .bar h1 { font-size: 1.2rem; margin: 0; }
 main { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
 h2 { font-size: 1.4rem; margin: 0 0 4px; }
-
+ 
 .btn {
   min-height: 48px; padding: 10px 20px; border-radius: var(--radius); border: 2px solid var(--dark);
   background: var(--dark); color: #fff; font: inherit; font-weight: 700; cursor: pointer;
 }
 .btn.secondary { background: transparent; color: var(--forest); border-color: var(--olive); }
 .btn:disabled { opacity: 0.55; cursor: not-allowed; }
-
+ 
 .card { background: var(--cream); border: 2px solid var(--sage); border-radius: var(--radius); overflow: hidden; }
 .card-head { background: var(--lime); padding: 12px 16px; font-weight: 700; }
 .card-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
@@ -45,11 +46,11 @@ h2 { font-size: 1.4rem; margin: 0 0 4px; }
 .list input[type="checkbox"] { width: 24px; height: 24px; margin-top: 2px; accent-color: var(--dark); }
 ol.steps { margin: 0; padding-left: 1.4rem; display: flex; flex-direction: column; gap: 6px; }
 .source { font-size: 0.95rem; border-top: 1px solid var(--sage); padding-top: 10px; }
-
+ 
 .notice { background: var(--lime); border-radius: var(--radius); padding: 14px 16px; display: flex; gap: 10px; align-items: flex-start; }
 .notice.error { border: 2px solid var(--forest); }
 .notice .icon { font-weight: 700; }
-
+ 
 .chat { flex: 1; display: flex; flex-direction: column; gap: 12px; }
 .bubble { max-width: 90%; padding: 12px 16px; border-radius: var(--radius); }
 .bubble.user { align-self: flex-end; background: var(--olive); color: #fff; }
@@ -75,3 +76,41 @@ label.field { display: flex; flex-direction: column; gap: 6px; font-weight: 700;
 .hl { background: var(--lime); padding: 2px 8px; border-radius: 8px; display: inline-block; margin: 2px 4px 2px 0; }
 .small { font-size: 0.9rem; }
 .muted { color: var(--dark); }
+ 
+/* ===== UI polish: AgriPlant-inspired look ===== */
+body {
+  background: linear-gradient(180deg, var(--lime) 0, var(--cream) 240px), var(--cream);
+}
+ 
+.bar { border-radius: 0 0 var(--radius) var(--radius); box-shadow: var(--shadow); }
+ 
+.btn {
+  min-height: 56px; padding: 12px 28px; border-radius: 999px;
+  box-shadow: var(--shadow); transition: transform 0.1s, background 0.15s;
+}
+.btn:hover:not(:disabled) { background: var(--olive); border-color: var(--olive); }
+.btn.secondary:hover:not(:disabled) { background: var(--lime); color: var(--forest); }
+.btn:active:not(:disabled) { transform: scale(0.98); }
+ 
+.card { border-width: 1.5px; box-shadow: var(--shadow); }
+.feature { transition: transform 0.15s, background 0.15s; }
+.feature:hover { background: var(--lime); transform: translateY(-2px); }
+ 
+.input, textarea, select { min-height: 56px; border-radius: 14px; border-width: 1.5px; }
+.input:focus, textarea:focus, select:focus { border-color: var(--dark); }
+ 
+.inputbar {
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 -4px 12px rgba(20, 48, 31, 0.06);
+}
+.bubble.user { border-bottom-right-radius: 4px; }
+.bubble.bot { border-bottom-left-radius: 4px; }
+.chip { box-shadow: var(--shadow); }
+ 
+@media (prefers-reduced-motion: reduce) {
+  .btn, .feature { transition: none; }
+  .btn:active:not(:disabled), .feature:hover { transform: none; }
+}
+ 
+
+
