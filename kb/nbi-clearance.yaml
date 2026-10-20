@@ -20,3 +20,5 @@ steps:
 fee: "PHP 130 basic clearance fee, plus a small e-payment service charge (the page says usually around PHP 25 to 30)"
 processing_time: "Released within minutes at the branch if there is no HIT. If there is a HIT, usually 5 to 10 working days before you return, with no extra payment."
 source_title: "NBI: NBI Clearance Application - How To & Complete Guide"
+source_url: "https://nbi.gov.ph/how-to-apply-nbi-clearance/"
+last_verified: 2026-10-14
