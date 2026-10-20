@@ -1,0 +1,13 @@
+[
+  { "en": "business permit", "fil": "permit sa negosyo", "ceb": "permiso sa negosyo", "needs_review": true },
+  { "en": "requirements", "fil": "mga kinakailangan", "ceb": "mga kinahanglanon", "needs_review": true },
+  { "en": "fee", "fil": "bayad", "ceb": "bayad", "needs_review": true },
+  { "en": "processing time", "fil": "tagal ng pagproseso", "ceb": "kadugayon sa pagproseso", "needs_review": true },
+  { "en": "application form", "fil": "porma ng aplikasyon", "ceb": "porma sa aplikasyon", "needs_review": true },
+  { "en": "affidavit", "fil": "sinumpaang salaysay", "ceb": "affidavit", "needs_review": true },
+  { "en": "valid ID", "fil": "balidong ID", "ceb": "valid ID", "needs_review": true },
+  { "en": "birth certificate", "fil": "sertipiko ng kapanganakan", "ceb": "birth certificate", "needs_review": true },
+  { "en": "barangay clearance", "fil": "barangay clearance", "ceb": "barangay clearance", "needs_review": true },
+  { "en": "proof of residency", "fil": "patunay ng paninirahan", "ceb": "pamatuod nga nagpuyo sa lugar", "needs_review": true },
+  { "en": "notarize", "fil": "ipanotaryo", "ceb": "ipa-notaryo", "needs_review": true }
+]
