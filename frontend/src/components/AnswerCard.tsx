@@ -1,25 +1,38 @@
 "use client";
-
+ 
 import { useState } from "react";
 import { t } from "@/lib/strings";
 import type { AskResponse } from "@/lib/types";
-
+ 
 export function AnswerCard({ result }: { result: AskResponse }) {
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const a = result.answer;
   if (!a) return null;
-  const rows: [string, string | null][] = [
-    [t.card.office, a.office],
-    [t.card.fee, a.fee],
-    [t.card.time, a.processing_time],
-  ];
-
+  const facts = (
+    [
+      [t.card.office, a.office],
+      [t.card.fee, a.fee],
+      [t.card.time, a.processing_time],
+    ] as [string, string | null][]
+  ).filter((row): row is [string, string] => !!row[1]);
+ 
   return (
     <article className="card">
       <div className="card-head">{result.sources[0]?.title}</div>
       <div className="card-body">
         <p style={{ margin: 0 }}>{a.summary}</p>
-
+ 
+        {facts.length > 0 && (
+          <dl className="facts">
+            {facts.map(([label, value]) => (
+              <div className="fact" key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+ 
         {a.requirements.length > 0 && (
           <section aria-label={t.card.requirements}>
             <strong>{t.card.requirements}</strong>
@@ -35,16 +48,7 @@ export function AnswerCard({ result }: { result: AskResponse }) {
             </ul>
           </section>
         )}
-
-        {rows.map(([label, value]) =>
-          value ? (
-            <div className="row" key={label}>
-              <b>{label}:</b>
-              <span>{value}</span>
-            </div>
-          ) : null,
-        )}
-
+ 
         {result.sources.map((s) => (
           <div className="source" key={s.url}>
             <div>
