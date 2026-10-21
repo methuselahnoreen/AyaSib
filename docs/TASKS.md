@@ -1,170 +1,139 @@
 # AyaSib Task List
 
-**Status:** v0.2. Dates updated for the October 23 deadline, and scope reduced to fit.
-The PM can reassign anything. To swap an owner, agree in chat and edit this file.
+**Status:** v0.3 (2026-10-21). Updated to match what is actually built. The architecture pivoted (no Supabase/pgvector), the frontend team built Explain and Translate themselves, and Stephanie carried most backend work because Elizah was away. This version marks obsolete tasks, records what is done, and lists what truly remains.
 
-**Team (fill in the blank names):**
+**Team:**
 
 | Label | Name | Group | Notes |
 |-------|------|-------|-------|
 | FE1 | Methus | Frontend | Also Project Manager |
 | FE2 | Irish | Frontend | |
-| BE1 | Stephanie | Backend | |
-| BE2 | Elizah | Backend | |
+| BE1 | Stephanie | Backend | Carrying most backend work |
+| BE2 | Elizah | Backend | Limited availability; next task is Photo OCR (BE-11) |
 
-**Hackathon deadline:** Fri Oct 23, 2026. Cutoff time and timezone: `TODO: confirm with the organizers`.
-**Our internal submission target:** Thu Oct 22, evening. Fri Oct 23 is emergency buffer only. Do not plan work for it.
-**Feature freeze:** Tue Oct 20.
+**Hackathon deadline:** Fri Oct 23, 2026. **Internal submission target:** Thu Oct 22, evening. Fri is emergency buffer only.
+**Feature freeze:** passed (Tue Oct 20). Only tests, eval, accessibility, security, docs, deploy, and bug fixes from here.
 
 **Priority:** `P0` must ship, `P1` should ship, `P2` only if ahead.
-
-**Rules:** one owner per task. If you are blocked for more than a day, say so in chat right away. Every pull request needs a review from someone else.
-
----
-
-## 1. Milestones
-
-| Date | Milestone |
-|------|-----------|
-| Wed Oct 14 | Scaffold live on a public URL, API contract agreed, backend architecture decided, native reviewer found |
-| Sat Oct 17 | Feature 1 (Ask) works end to end on the live site |
-| Mon Oct 19 | All three features usable (text only), KB content merged |
-| Tue Oct 20 | **Feature freeze.** After this: tests, eval, accessibility, security, bug fixes only |
-| Wed Oct 21 | Eval run, real-phone test, README nearly final, demo script written |
-| Thu Oct 22 | Demo recorded, README final, repo public, live URL checked, submitted |
-| Fri Oct 23 | Buffer only |
+**Status key:** ✅ done · 🔄 in progress · ⬜ not started · ❎ obsolete / dropped · ➡️ owned by the other group now
 
 ---
 
-## 2. Pairings
+## 0. TL;DR — what is left before submission
 
-| Feature | Frontend owner | Backend owner |
-|---------|----------------|---------------|
-| F1 Ask in Bisaya | FE2 | BE1 |
-| F2 Explain document | FE1 | BE2 |
-| F3 Translate | FE1 | BE2 |
+These are the only things that still block a good submission. Everything else is done, obsolete, or owned by the frontend team.
 
-Each pair agrees on request and response shapes in `docs/api-contract.md` before building.
+| # | Task | Owner | Pri | Status |
+|---|------|-------|-----|--------|
+| 1 | **Photo OCR** for Explain (BE-11) — open-source OCR only | Elizah | P1 | ⬜ |
+| 2 | **Deploy to Vercel** + put the live URL in the README (BE-17 / step 4) | Stephanie + Methus | P0 | ⬜ |
+| 3 | **CI** (GitHub Actions: kb:validate + eval, frontend lint + test) (BE-15) | Stephanie | P0 | ⬜ |
+| 4 | **Security actions** (BE-16): revoke unused Gemini + Supabase keys, secret scan, `npm audit` | Stephanie | P0 | 🔄 |
+| 5 | **Make the repo public** (PM-09) | Methus | P0 | ⬜ |
+| 6 | **More KB services** (SH-01) — currently 4; each needs a verified source + native Cebuano | All | P0 | 🔄 |
+| 7 | **Demo video** (SH-04) | Methus leads | P0 | ⬜ |
+| 8 | **Confirm frontend uses the open-source model** (hard rule), not Gemini/Claude | Irish + Stephanie | P0 | 🔄 |
 
----
-
-## 3. Frontend group (FE1 + FE2)
-
-### FE2: foundation and Feature 1
-
-| ID | Task | Pri | Due | Depends on | Done when |
-|----|------|-----|-----|------------|-----------|
-| FE-01 | Scaffold Next.js in `frontend/`, lint and build pass, deploy to Vercel (Root Directory `frontend`) | P0 | Wed Oct 14 | none | Public URL loads on a phone |
-| FE-02 | Mobile-first layout, large base font, color tokens, shared UI strings file (all Cebuano text in one place for easy review) | P0 | Thu Oct 15 | FE-01 | Layout works at 360 px wide |
-| FE-04 | Typed API client module (one function per endpoint, handles error codes and timeouts) | P0 | Fri Oct 16 | FE-03 | No component calls `fetch` directly |
-| FE-05 | Chat UI for Ask: input box, message list, send button, example questions | P0 | Fri Oct 16 | FE-02, FE-04 | User can send a question and see a reply |
-| FE-06 | Answer card: summary, requirements checklist, office, fee, processing time, every source with its `last_verified` date. Hide fields that are `null` | P0 | Sat Oct 17 | FE-05 | Card matches the contract example |
-| FE-07 | All Ask states: loading, error, rate-limited, and `confident: false` ("not sure, please confirm with the office") | P0 | Sat Oct 17 | FE-06 | Each state tested against the mock |
-| FE-08 | Tests for the UI states (Ask, Explain, Translate): loading, success, error, not confident | P1 | Tue Oct 20 | FE-07, FE-10, FE-11 | `npm test` passes in CI |
-
-> Someone already pushed a branch called `feat/answer-card`. Find out who, then make that person the owner of FE-06 or merge their work into it. Do not build it twice.
-
-### FE1 (PM): mock API, Features 2 and 3, polish
-
-| ID | Task | Pri | Due | Depends on | Done when |
-|----|------|-----|-----|------------|-----------|
-| FE-03 | Mock API matching the contract, with the four cases (normal, `unknown`, `error`, `slow`). *Moved here from FE2 so FE2 can focus on the scaffold and Ask.* | P0 | Thu Oct 15 | API contract agreed, FE-01 | UI can show every state without the backend |
-| FE-09 | Home screen that presents the features and links to each, with UI text in Cebuano | P0 | Fri Oct 16 | FE-02 | User reaches any feature in one tap |
-| FE-10 | Explain UI (text only): paste box, result view with `document_type`, explanation, `what_is_asked`, `next_steps`, always-visible disclaimer | P0 | Sun Oct 18 | FE-04 | Works against the mock |
-| FE-11 | Translate UI: from/to selectors, swap button, copy button, highlight glossary terms used | P0 | Mon Oct 19 | FE-04 | Works against the mock |
-| FE-13 | Accessibility pass: text size, contrast, tap targets of at least 44 px, keyboard use, screen-reader labels | P0 | Tue Oct 20 | FE-06, FE-10, FE-11 | No blocking issues in a Lighthouse accessibility check |
-| FE-14 | Test on a real phone over slow mobile data; fix layout and loading problems | P0 | Wed Oct 21 | FE-13 | Written list of fixes, all closed |
-| FE-12 | Explain UI (photo upload): camera or file picker, preview, type and size check, show `extracted_text` | **P2** | Wed Oct 21, only if ahead | FE-10, BE-11 | Photo of a notice produces an explanation |
+> ⚠️ **Hard rule check (item 8):** the frontend's early `llm.ts` called Gemini/Anthropic. Confirm it now uses the open-weights Cloudflare Workers AI path. A closed model would break the competition's open-source requirement and outranks everything else here.
 
 ---
 
-## 4. Backend group (BE1 + BE2)
+## 1. Architecture as actually built
 
-### BE1: knowledge base, retrieval and Feature 1
+```
+kb/*.yaml  --(npm run kb:build)-->  backend/data/kb.json
+question --> Ask logic --> Cloudflare Workers AI (open-weights Qwen3 picks a service id or null)
+         --> code looks up the id and returns the curated Cebuano fields + source
+```
 
-| ID | Task | Pri | Due | Depends on | Done when |
-|----|------|-----|-----|------------|-----------|
-| BE-01 | With FE2, decide the architecture: Next.js API routes or a separate service in `backend/`. Write the decision in the README and the contract's base path | P0 | Wed Oct 14 | none | Decision merged |
-| BE-02 | Supabase project, enable pgvector, create the table for KB chunks and embeddings | P0 | Wed Oct 14 | BE-01 | Table exists and accepts a row |
-| BE-03 | KB loader and schema validator: reads `kb/*.yaml`, fails with a clear message if `source_url` or `last_verified` is missing | P0 | Thu Oct 15 | KB schema agreed | Bad files are rejected with a useful error |
-| BE-04 | Embedding script (`kb:embed`) that loads the KB into pgvector, safe to re-run | P0 | Thu Oct 15 | BE-02, BE-03 | Running it twice does not duplicate rows |
-| BE-05 | Retrieval function: top-k search with a similarity threshold, returns nothing when no file is close enough | P0 | Fri Oct 16 | BE-04 | Off-topic questions retrieve nothing |
-| BE-07 | `/api/ask`: strict grounded prompt, JSON output, refusal fallback. Fee and processing time are copied from the KB file, never produced by the model. `confident` is true only when a source supports the answer | P0 | Sat Oct 17 | BE-05, BE-06 | Matches the contract; returns `confident: false` for uncovered questions |
-| BE-14 | Tests for retrieval and the refusal behavior (including "no sources means no answer") | P0 | Mon Oct 19 | BE-07 | Tests run in CI |
-| BE-13 | Eval runner and the 30 question set, with expected answers reviewed by the native Cebuano reviewer. Includes questions the KB does not cover | P0 | Runner Tue Oct 20, run Wed Oct 21 | BE-07, SH-02 | `npm run eval` prints a pass rate |
-
-### BE2: platform, Features 2 and 3, security
-
-| ID | Task | Pri | Due | Depends on | Done when |
-|----|------|-----|-----|------------|-----------|
-| BE-06 | LLM provider wrapper: server-side only, key from environment, timeout, retry, error mapping to contract codes. Also create the LLM and hosting accounts and share keys safely (password manager or host settings, never chat) | P0 | Thu Oct 15 | BE-01 | A test call works from the server; no key in the client bundle |
-| BE-15 | CI in GitHub Actions: lint, test, eval. Then turn on "require status checks" for `main` | P0 | Fri Oct 16 | scaffold exists | Failing PRs cannot merge |
-| BE-08 | Glossary: JSON loader and prompt injection of matching terms. Collect the first 30 terms with the native reviewer | P0 | Fri Oct 16 | reviewer found | Terms from the glossary appear in outputs consistently |
-| BE-09 | `/api/translate` with glossary use and `glossary_terms_used` in the response | P0 | Sun Oct 18 | BE-06, BE-08 | Matches the contract |
-| BE-10 | `/api/explain` for text: structured explanation with the disclaimer, graceful reply for unreadable or unrelated text | P0 | Sun Oct 18 | BE-06 | Matches the contract |
-| BE-12 | Input validation, size limits, rate limiting, and the contract's error format on all routes | P0 | Mon Oct 19 | BE-06 | Oversized input returns 413, flooding returns 429 |
-| BE-16 | Security review: no secrets in repo or browser bundle, `.env.example` complete, secret scanning on, dependency audit | P0 | Wed Oct 21 | most features done | Checklist in README is true |
-| BE-17 | Deployment configuration: environment variables on the host, plus a short scalability paragraph for the README (caching repeated questions, indexes) | P1 | Wed Oct 21 | BE-07 | Documented and working in production |
-| BE-11 | OCR for photo uploads, then the same flow as BE-10. Include `extracted_text` in the response | **P2** | Wed Oct 21, only if ahead | BE-10 | Photo of a notice returns an explanation |
+- **Model:** Cloudflare Workers AI, default `@cf/qwen/qwen3-30b-a3b-fp8` (open weights, Apache-2.0). No closed models.
+- **No vector database.** With a handful of services, the router lists them in the prompt. pgvector is a future step, not MVP.
+- **The model never writes the Cebuano shown to users.** It only routes. All Cebuano comes from hand-reviewed KB fields.
+- **API lives inside the Next.js app** under `frontend/src/app/api`, not a separate service.
 
 ---
 
-## 5. Shared tasks (everyone)
+## 2. Backend status (Stephanie)
 
-| ID | Task | Owner | Pri | Due | Done when |
-|----|------|-------|-----|-----|-----------|
-| SH-01 | **Knowledge base content:** 8 to 10 services for one named locality, each with a verified source and date. About 2 services per person (see candidates below). **One file each must be merged by Thu Oct 15** so the format is proven early | All four | P0 | Mon Oct 19 | Files merged via PR, each reviewed by a second person |
-| SH-02 | Eval questions: each person writes about 8 questions in natural Bisaya for the services they added (30 in total, including some the KB does not cover) | All four | P0 | Tue Oct 20 | Questions merged and reviewed |
-| SH-03 | Each person writes the README section for their own part (setup, how it works, limits) | All four | P0 | Wed Oct 21 | Sections merged |
-| SH-04 | Demo video: script on Wed Oct 21, record and edit on Thu Oct 22 (2 to 3 minutes) | FE1 leads | P0 | Thu Oct 22 | Link in README |
-| SH-05 | Code review: every PR gets one reviewer from the other group where possible | All four | P0 | ongoing | No PR merged without approval |
+| ID | Task | Pri | Status | Note |
+|----|------|-----|--------|------|
+| BE-01 | Architecture decision, written in README/contract | P0 | ✅ | Cloudflare + Qwen, API in Next.js |
+| BE-02 | Supabase project + pgvector table | P0 | ❎ | Dropped: no vector DB in the MVP |
+| BE-03 | KB loader and schema validator | P0 | ✅ | `backend/scripts/validate-kb.mjs` |
+| BE-04 | Embedding script `kb:embed` | P0 | ❎ | Dropped with pgvector |
+| BE-05 | Retrieval function (top-k, threshold) | P0 | ❎ | Replaced by prompt-list routing |
+| BE-07 | `/api/ask`: grounded routing, refusal fallback, facts from KB only | P0 | ✅ | `backend/lib/ask.mjs` |
+| BE-13 | Eval runner + question set (KB-covered and not) | P0 | ✅ | `npm run eval`, 13 questions, 13/13 pass (2026-10-21) |
+| BE-14 | Tests for refusal behaviour | P0 | 🔄 | Eval covers refusal; a dedicated unit test is optional |
 
-**KB candidates** (names only; every fee, requirement and office must come from a verified source for one named locality):
-
-- First 8 (two per person): barangay clearance, business permit, community tax certificate (cedula), PhilHealth registration, PSA birth certificate, police clearance, NBI clearance, senior citizen ID
-- Spares if there is time: Pag-IBIG membership, PWD ID
-
----
-
-## 6. Project manager tasks (FE1)
-
-| ID | Task | Pri | Due | Done when |
-|----|------|-----|-----|-----------|
-| PM-01 | Confirm the deadline. **Done: Oct 23.** Still to confirm: cutoff time and timezone, and whether the demo video has its own deadline | P0 | Wed Oct 14 | Organizers have answered |
-| PM-02 | Invite teammates. Turn on `main` protection once a teammate has accepted and can approve a PR. Check everyone can open a PR | P0 | Wed Oct 14 | Test PRs opened by all four |
-| PM-03 | Task board (GitHub Projects) with one issue per task here, labels `frontend`, `backend`, `kb`, `eval`, `docs` | P0 | Wed Oct 14 | Board matches this file |
-| PM-04 | Get the API contract approved by FE2 and BE1 (and BE2 for Explain and Translate) | P0 | Wed Oct 14 | Contract marked Agreed |
-| PM-05 | Find the native Cebuano reviewer and a backup | P0 | Wed Oct 14 | One person has said yes |
-| PM-06 | Daily 15-minute check-in, track blockers, make go or no-go calls on slipping tasks | P0 | daily | |
-| PM-07 | Declare feature freeze | P0 | Tue Oct 20 | Announced in chat |
-| PM-08 | Keep the README accurate and free of `TODO`; record the live URL and eval results | P0 | Thu Oct 22 | A search for `TODO` finds nothing |
-| PM-09 | Final submission checklist: repo public, URL live, README accurate, demo link works, form filled | P0 | Thu Oct 22 | Submitted |
+**Also done by Stephanie (docs/housekeeping):** rewrote README and `docs/APIContract.md` to the real design; `.env.example` points at `CLOUDFLARE_*`; aligned CONTRIBUTING; set backend license to MIT; deleted `test-llm.mjs`. Merged to `main` via PR #13.
 
 ---
 
-## 7. Order of work
+## 3. Explain / Translate / platform (was Elizah's column)
 
-| Phase | Dates | Focus |
-|-------|-------|-------|
-| Foundation | Tue Oct 13 to Thu Oct 15 | PM-01 to PM-05, FE-01 to FE-03, BE-01 to BE-04, BE-06, first KB file from each person |
-| Feature 1 | Fri Oct 16 to Sat Oct 17 | BE-05, BE-07, FE-04 to FE-07, BE-08, BE-15 |
-| Features 2 and 3 | Sun Oct 18 to Mon Oct 19 | BE-09, BE-10, BE-12, BE-14, FE-10, FE-11, SH-01 finishes |
-| Freeze and quality | Tue Oct 20 to Wed Oct 21 | FE-08, FE-13, FE-14, BE-13, BE-16, BE-17, SH-02, SH-03, demo script |
-| Docs and demo | Thu Oct 22 | SH-04, PM-08, PM-09, bug fixes only |
+Most of this was **built by the frontend team** inside `frontend/`, so it is no longer Elizah's to build. Confirm and test rather than rebuild.
 
-If a P0 task slips by more than a day, the PM decides which P1 or P2 task to cut to make room.
+| ID | Task | Pri | Status | Note |
+|----|------|-----|--------|------|
+| BE-06 | LLM wrapper (server-only key, timeout, retry, error mapping) | P0 | ➡️🔄 | Built in `frontend/src/lib/llm.ts`. **Must confirm it uses the open-source model** (see item 8) |
+| BE-08 | Glossary loader + prompt injection; first terms | P0 | ➡️🔄 | `glossary/` exists on `main`; confirm terms and wiring |
+| BE-09 | `/api/translate` with `glossary_terms_used` | P0 | ➡️ | Built in `frontend/src/app/api/translate` |
+| BE-10 | `/api/explain` (text) with disclaimer | P0 | ➡️ | Built in `frontend/src/app/api/explain` |
+| BE-11 | **Photo OCR → same flow as BE-10, add `extracted_text`** | P1 | ⬜ | **Elizah's next task.** See the box below |
+| BE-12 | Input validation, size limits, rate limiting, error format | P0 | ➡️🔄 | In `frontend/src/lib/http.ts` (`LIMITS`, `rateLimit`); confirm on every route |
+| BE-15 | CI: lint, test, eval; protect `main` | P0 | ⬜ | **Stephanie.** Real open item |
+| BE-16 | Security review: no secrets, `.env.example` complete, secret scan, dependency audit | P0 | 🔄 | **Stephanie.** `.env.example` done; keys + scan + audit remain |
+| BE-17 | Deployment config + scalability note | P1 | 🔄 | **Stephanie + Methus.** Scalability note in README done; live deploy remains |
+
+### BE-11 Photo OCR — brief for Elizah
+
+- **Goal:** on the Explain feature, accept a photo of a notice/form, extract its text, then run the existing Explain flow. Return `extracted_text` so users can check the OCR.
+- **Where it lives:** extends the frontend's Explain route/UI (`frontend/src/app/api/explain` + Methus's FE-12). Coordinate with Methus.
+- **Hard-rule constraint:** OCR must be **open-source / open-weights** (for example Tesseract.js, or an open model on Cloudflare Workers AI). Do **not** use a closed cloud OCR service.
+- **Done when:** a photo of a notice produces an explanation with `extracted_text`, and type/size are validated (reject non-images and oversized files).
+- **Priority:** P1. It is a bonus feature; the P0 items in section 0 come first for the team.
 
 ---
 
-## 8. What changed from v0.1
+## 4. Frontend group (Methus + Irish) — summary
+
+Built and largely complete: Next.js app, mobile-first layout, Ask chat UI + answer card + all states, Home, Explain (text) UI, Translate UI, accessibility pass. Remaining: FE-12 photo-upload UI (pairs with BE-11), FE-14 real-phone test, and component tests (FE-08/FE-15) if not already green. Confirm status with Methus and Irish; this file no longer tracks frontend tasks in detail.
+
+---
+
+## 5. Shared tasks
+
+| ID | Task | Owner | Pri | Status | Note |
+|----|------|-------|-----|--------|------|
+| SH-01 | KB content, verified sources + native Cebuano | All four | P0 | 🔄 | 4 services done (NBI, two civil registry, death certificate). More improves the demo |
+| SH-02 | Eval questions in natural Bisaya (incl. uncovered) | All four | P0 | ✅ | 13 in `eval/questions.json`; add more as KB grows |
+| SH-03 | README sections | All four | P0 | ✅ | README rewritten and merged |
+| SH-04 | Demo video (2-3 min) | Methus leads | P0 | ⬜ | Record Thu Oct 22 |
+| SH-05 | Code review: one reviewer per PR | All four | P0 | 🔄 | Keep enforcing |
+
+**KB candidates still worth adding** (verified source + native Cebuano required): barangay clearance, business permit, cedula, PhilHealth registration, PSA birth certificate (local vs PSA already covered — check overlap), police clearance, senior citizen ID, PWD ID.
+
+---
+
+## 6. PM / submission checklist (Methus)
+
+| ID | Task | Pri | Status |
+|----|------|-----|--------|
+| PM-07 | Feature freeze declared | P0 | ✅ (Oct 20) |
+| PM-08 | README accurate, no `TODO`, live URL + eval results recorded | P0 | 🔄 (URL pending deploy) |
+| PM-09 | **Repo public**, URL live, demo link works, form submitted | P0 | ⬜ |
+
+---
+
+## 7. What changed from v0.2
 
 | Item | Change |
 |------|--------|
-| All dates | Converted from "Day N" to real dates for the Oct 23 deadline |
-| FE-03 (mock API) | Moved from FE2 to FE1 |
-| FE-08 and FE-15 | Merged into one frontend test task (FE-08) |
-| FE-12 and BE-11 (photo upload and OCR) | Moved to P2, text paste ships first |
-| FE-16 and BE-18 (advisory stretch) | Dropped |
-| SH-01 (KB content) | Target reduced from 15 to 20 services to 8 to 10 |
-| SH-02 and BE-13 (eval set) | Target reduced from 50 to 30 questions |
-| BE-17 | Reduced to a short scalability paragraph |
+| Status key + section 0 TL;DR | Added so anyone can see what is actually left at a glance |
+| BE-02, BE-04, BE-05 (Supabase/pgvector/embeddings/retrieval) | Marked **obsolete** — the design dropped vector search for the MVP |
+| BE-06, BE-09, BE-10, BE-12 | Marked **owned by the frontend team** (built in `frontend/`), confirm-not-rebuild |
+| BE-11 Photo OCR | Confirmed as **Elizah's next task**, with an open-source-OCR constraint and a short brief |
+| Open-rule check (item 8) | Added: confirm the frontend uses the open-source model, not Gemini/Claude |
+| Backend docs work | Recorded as done (PR #13): README, APIContract, .env.example, CONTRIBUTING, license, test-llm.mjs removed |
+| Real remaining work | Narrowed to: OCR, deploy, CI, security actions, repo public, more KB, demo video |
