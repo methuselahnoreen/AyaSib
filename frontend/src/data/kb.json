@@ -1,0 +1,73 @@
+[
+  {
+    "id": "civil-registry-local-copy",
+    "name_en": "Civil Registry Record (Local Copy)",
+    "name_ceb": "",
+    "locality": "Cebu City",
+    "requirements": [
+      "Valid ID of the requestor, his/her parents or his/her children (1 original)",
+      "Authorization letter executed by the document owner (1 original)",
+      "Valid ID of the authorized representative (1 photocopy, present the original)",
+      "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
+      "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+    ],
+    "fee": "PHP 50.00 for local use; PHP 100.00 for abroad",
+    "office": "Office of the City Civil Registrar, Issuance Division",
+    "processing_time": "41 minutes in total",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "notes": ""
+  },
+  {
+    "id": "civil-registry-psa-authenticated",
+    "name_en": "PSA-Authenticated Civil Registry Record",
+    "name_ceb": "",
+    "locality": "Cebu City",
+    "requirements": [
+      "Valid ID of the requestor, his/her parents or his/her children (1 original)",
+      "Authorization letter executed by the document owner (1 original)",
+      "Valid ID of the authorized representative (1 photocopy, present the original)",
+      "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
+      "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+    ],
+    "fee": "Service fee PHP 50.00, plus PHP 155.00 for a birth, marriage or death certificate, or PHP 210.00 for a CENOMAR (as listed in the charter)",
+    "office": "Office of the City Civil Registrar, Issuance Division",
+    "processing_time": "1 day, 1 hour and 28 minutes at the city office. Processing at the PSA itself is not included; the charter refers to the PSA's own charter for that.",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "notes": ""
+  },
+  {
+    "id": "death-certificate-chd",
+    "name_en": "Death Certificate (City Health Department)",
+    "name_ceb": "",
+    "locality": "Cebu City",
+    "requirements": [
+      "Medical abstract, laboratory results or prescription, if available (from the hospital or attending physician)"
+    ],
+    "fee": "PHP 50.00 (burial permit)",
+    "office": "City Health Department (CHD)",
+    "processing_time": "45 minutes in total",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "notes": ""
+  },
+  {
+    "id": "nbi-clearance",
+    "name_en": "NBI Clearance",
+    "name_ceb": "",
+    "locality": "National (apply online, then visit the NBI branch you choose)",
+    "requirements": [
+      "An online account at the NBI Clearance portal (active mobile number and email, verified with a one-time password)",
+      "Reference number from the portal (printed, digital or QR code)",
+      "Proof of payment or receipt",
+      "Two valid government-issued IDs, original and not expired (for example passport, driver's license, National ID, UMID, postal ID, or PSA birth certificate)"
+    ],
+    "fee": "PHP 130 basic clearance fee, plus a small e-payment service charge (the page says usually around PHP 25 to 30)",
+    "office": "Any NBI branch, chosen during the online application at https://clearance.nbi.gov.ph",
+    "processing_time": "Released within minutes at the branch if there is no HIT. If there is a HIT, usually 5 to 10 working days before you return, with no extra payment.",
+    "source_url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+    "last_verified": "2026-10-14",
+    "notes": ""
+  }
+]
