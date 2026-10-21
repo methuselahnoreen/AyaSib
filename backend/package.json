@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "kb:validate": "node scripts/validate-kb.mjs"
+    "kb:validate": "node scripts/validate-kb.mjs",
+    "kb:build": "node scripts/validate-kb.mjs --write"
   },
   "keywords": [],
   "author": "",

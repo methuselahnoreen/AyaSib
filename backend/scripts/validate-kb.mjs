@@ -9,7 +9,7 @@ const KB_DIR = path.resolve(here, "../../kb");
 const REQUIRED_TEXT = ["id", "name_en", "locality", "summary_ceb", "source_title", "source_url"];
 const NULLABLE_TEXT = ["office", "fee", "processing_time"];
 const OPTIONAL = ["name_ceb", "who_may_avail", "requirements_note", "requirements_note_ceb", "scope_note", "source_pages", "steps", "steps_ceb", "office_ceb", "fee_ceb", "processing_time_ceb"];
-const KNOWN = new Set([...REQUIRED_TEXT, ...NULLABLE_TEXT, ...OPTIONAL, "requirements", "requirements_ceb", "last_verified"]);  
+const KNOWN = new Set([...REQUIRED_TEXT, ...NULLABLE_TEXT, ...OPTIONAL, "requirements", "requirements_ceb", "last_verified"]);
 
 const isText = (v) => typeof v === "string" && v.trim() !== "";
 
@@ -52,6 +52,9 @@ function checkFile(file, text) {
     if (doc.id !== stem) errors.push(`id "${doc.id}" must match the file name "${stem}"`);
   }
 
+  if (!Array.isArray(doc.requirements) || doc.requirements.length === 0 || !doc.requirements.every(isText)) {
+    errors.push("requirements must be a non-empty list of text");
+  }
 
   if (!Array.isArray(doc.requirements_ceb) || doc.requirements_ceb.length === 0 || !doc.requirements_ceb.every(isText)) {
     errors.push("requirements_ceb must be a non-empty list of Cebuano text");
@@ -105,6 +108,7 @@ if (files.length === 0) {
 }
 
 let failed = 0;
+const passed = [];
 const seenIds = new Map();
 
 for (const file of files) {
@@ -118,6 +122,7 @@ for (const file of files) {
 
   if (errors.length === 0) {
     console.log(`OK    kb/${file}`);
+    passed.push(doc);
   } else {
     failed += 1;
     console.log(`FAIL  kb/${file}`);
@@ -127,4 +132,14 @@ for (const file of files) {
 }
 
 console.log(`\n${files.length - failed} of ${files.length} files passed`);
+
+if (process.argv.includes("--write")) {
+  const out = path.resolve(here, "../data/kb.json");
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  const services = passed.map((d) => ({ ...d, last_verified: toDateString(d.last_verified) }));
+  fs.writeFileSync(out, JSON.stringify(services, null, 2) + "\n");
+  console.log(`Wrote ${services.length} services to backend/data/kb.json (${failed} skipped)`);
+  process.exit(0);
+}
+
 process.exit(failed > 0 ? 1 : 0);
