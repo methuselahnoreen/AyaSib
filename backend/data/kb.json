@@ -1,5 +1,98 @@
 [
   {
+    "id": "civil-registry-local-copy",
+    "name_en": "Civil Registry Record (Local Copy)",
+    "name_ceb": null,
+    "locality": "Cebu City",
+    "office": "Office of the City Civil Registrar, Issuance Division",
+    "who_may_avail": "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died",
+    "requirements": [
+      "Valid ID of the requestor, his/her parents or his/her children (1 original)",
+      "Authorization letter executed by the document owner (1 original)",
+      "Valid ID of the authorized representative (1 photocopy, present the original)",
+      "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
+      "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+    ],
+    "requirements_note": "The charter does not say which requirements apply to which requester. Confirm with the office.",
+    "fee": "PHP 50.00 for local use; PHP 100.00 for abroad",
+    "processing_time": "41 minutes in total",
+    "source_title": "Cebu City Citizen's Charter, Service 8: Issuance of Civil Registry Records (Local Copy)",
+    "source_pages": "624",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "summary_ceb": "Kini kay para sa pagkuha og local nga kopya sa civil registry record sa Office of the City Civil Registrar (Issuance Division) sa Cebu City. Mahimong mangayo ang tag-iya sa dokumento, ang iyang ginikanan o anak, ang iyang gi-authorize nga representante, o ang labing suod nga paryente kon namatay na ang tag-iya.",
+    "office_ceb": "Office of the City Civil Registrar, Issuance Division (Cebu City)",
+    "requirements_ceb": [
+      "Valid ID sa nagpangayo, sa iyang ginikanan, o sa iyang anak (1 orihinal)",
+      "Authorization letter nga gihimo sa tag-iya sa dokumento (1 orihinal)",
+      "Valid ID sa gi-authorize nga representante (1 photocopy, ipakita ang orihinal)",
+      "Affidavit of kinship, kon ang nagpangayo dili ginikanan o anak sa namatay nga tag-iya sa dokumento (1 orihinal, gikan sa notary public o abogado)",
+      "Court order o sulat gikan sa angay nga public official, kon gikinahanglan lang sa administratibo, hudisyal o laing opisyal nga proseso aron mahibal-an kinsa ang tawo (1 orihinal)"
+    ],
+    "requirements_note_ceb": "Wala gipadayag sa charter kon unsa nga mga kinahanglanon ang magamit sa matag nagpangayo. Pangutan-a ang opisina aron makumpirma.",
+    "fee_ceb": "PHP 50.00 kon para sa local nga gamit; PHP 100.00 kon para sa abroad",
+    "processing_time_ceb": "41 ka minuto sa tanan"
+  },
+  {
+    "id": "civil-registry-psa-authenticated",
+    "name_en": "PSA-Authenticated Civil Registry Record",
+    "name_ceb": null,
+    "locality": "Cebu City",
+    "office": "Office of the City Civil Registrar, Issuance Division",
+    "who_may_avail": "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died",
+    "requirements": [
+      "Valid ID of the requestor, his/her parents or his/her children (1 original)",
+      "Authorization letter executed by the document owner (1 original)",
+      "Valid ID of the authorized representative (1 photocopy, present the original)",
+      "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
+      "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
+    ],
+    "requirements_note": "The charter does not say which requirements apply to which requester. Confirm with the office.",
+    "fee": "Service fee PHP 50.00, plus PHP 155.00 for a birth, marriage or death certificate, or PHP 210.00 for a CENOMAR (as listed in the charter)",
+    "processing_time": "1 day, 1 hour and 28 minutes at the city office. Processing at the PSA itself is not included; the charter refers to the PSA's own charter for that.",
+    "source_title": "Cebu City Citizen's Charter, Service 9: Issuance of PSA-Authenticated Civil Registry Record",
+    "source_pages": "625",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "summary_ceb": "Kini kay para sa pagkuha og PSA-authenticated nga civil registry record pinaagi sa Office of the City Civil Registrar (Issuance Division) sa Cebu City. Mahimong mangayo ang tag-iya sa dokumento, ang iyang ginikanan o anak, ang iyang gi-authorize nga representante, o ang labing suod nga paryente kon namatay na ang tag-iya.",
+    "office_ceb": "Office of the City Civil Registrar, Issuance Division (Cebu City)",
+    "requirements_ceb": [
+      "Valid ID sa nagpangayo, sa iyang ginikanan, o sa iyang anak (1 orihinal)",
+      "Authorization letter nga gihimo sa tag-iya sa dokumento (1 orihinal)",
+      "Valid ID sa gi-authorize nga representante (1 photocopy, ipakita ang orihinal)",
+      "Affidavit of kinship, kon ang nagpangayo dili ginikanan o anak sa namatay nga tag-iya sa dokumento (1 orihinal, gikan sa notary public o abogado)",
+      "Court order o sulat gikan sa angay nga public official, kon gikinahanglan lang sa administratibo, hudisyal o laing opisyal nga proseso aron mahibal-an kinsa ang tawo (1 orihinal)"
+    ],
+    "requirements_note_ceb": "Wala gipadayag sa charter kon unsa nga mga kinahanglanon ang magamit sa matag nagpangayo. Pangutan-a ang opisina aron makumpirma.",
+    "fee_ceb": "Service fee nga PHP 50.00, dugang PHP 155.00 para sa birth, marriage o death certificate, o PHP 210.00 para sa CENOMAR (sumala sa gilista sa charter)",
+    "processing_time_ceb": "1 ka adlaw, 1 ka oras ug 28 ka minuto sa opisina sa siyudad. Dili apil ang oras sa pagproseso sa PSA mismo; ang charter nagtumong sa kaugalingong charter sa PSA alang niana."
+  },
+  {
+    "id": "death-certificate-chd",
+    "name_en": "Death Certificate (City Health Department)",
+    "name_ceb": null,
+    "locality": "Cebu City",
+    "office": "City Health Department (CHD)",
+    "who_may_avail": "Family members or nearest kin of a person who died at home or without medical attendance",
+    "scope_note": "The charter describes this for deaths in the absence of a doctor, or outside a hospital or medical facility. It is also the basis for whether the body can be embalmed.",
+    "requirements": [
+      "Medical abstract, laboratory results or prescription, if available (from the hospital or attending physician)"
+    ],
+    "fee": "PHP 50.00 (burial permit)",
+    "processing_time": "45 minutes in total",
+    "source_title": "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate",
+    "source_pages": "219-220",
+    "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+    "last_verified": "2026-10-14",
+    "summary_ceb": "Kini nga death certificate gi-isyu sa City Health Department alang sa tawo nga namatay sa balay o walay doktor nga nag-atiman, o gawas sa ospital o medical facility. Mao kini ang basehan kon pwede bang embalsamohon ang patay. Ang pamilya o ang labing suod nga paryente ang mangayo.",
+    "office_ceb": "City Health Department (CHD)",
+    "requirements_ceb": [
+      "Medical abstract, resulta sa laboratoryo o reseta, kon naa (gikan sa ospital o sa doktor nga nag-atiman)"
+    ],
+    "fee_ceb": "PHP 50.00 (burial permit)",
+    "processing_time_ceb": "45 ka minuto sa tanan"
+  },
+  {
     "id": "nbi-clearance",
     "name_en": "NBI Clearance",
     "name_ceb": null,
