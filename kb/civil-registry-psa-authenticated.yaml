@@ -17,3 +17,14 @@ source_title: "Cebu City Citizen's Charter, Service 9: Issuance of PSA-Authentic
 source_pages: "625"
 source_url: "https://www.cebucity.gov.ph/transparency/citizens-charter/"
 last_verified: 2026-10-14
+summary_ceb: "Kini kay para sa pagkuha og PSA-authenticated nga civil registry record pinaagi sa Office of the City Civil Registrar (Issuance Division) sa Cebu City. Mahimong mangayo ang tag-iya sa dokumento, ang iyang ginikanan o anak, ang iyang gi-authorize nga representante, o ang labing suod nga paryente kon namatay na ang tag-iya."
+office_ceb: "Office of the City Civil Registrar, Issuance Division (Cebu City)"
+requirements_ceb:
+  - "Valid ID sa nagpangayo, sa iyang ginikanan, o sa iyang anak (1 orihinal)"
+  - "Authorization letter nga gihimo sa tag-iya sa dokumento (1 orihinal)"
+  - "Valid ID sa gi-authorize nga representante (1 photocopy, ipakita ang orihinal)"
+  - "Affidavit of kinship, kon ang nagpangayo dili ginikanan o anak sa namatay nga tag-iya sa dokumento (1 orihinal, gikan sa notary public o abogado)"
+  - "Court order o sulat gikan sa angay nga public official, kon gikinahanglan lang sa administratibo, hudisyal o laing opisyal nga proseso aron mahibal-an kinsa ang tawo (1 orihinal)"
+requirements_note_ceb: "Wala gipadayag sa charter kon unsa nga mga kinahanglanon ang magamit sa matag nagpangayo. Pangutan-a ang opisina aron makumpirma."
+fee_ceb: "Service fee nga PHP 50.00, dugang PHP 155.00 para sa birth, marriage o death certificate, o PHP 210.00 para sa CENOMAR (sumala sa gilista sa charter)"
+processing_time_ceb: "1 ka adlaw, 1 ka oras ug 28 ka minuto sa opisina sa siyudad. Dili apil ang oras sa pagproseso sa PSA mismo; ang charter nagtumong sa kaugalingong charter sa PSA alang niana."
