@@ -6,36 +6,70 @@ interface LlmRequest {
   maxTokens?: number;
 }
 
+const TIMEOUT_MS = 25_000;
+
 /**
- * Server-side call to the LLM provider (Anthropic Messages API). The key is read from the environment
- * and never leaves the server. To use another provider, replace only this function.
+ * Server-side call to the LLM provider. The key is read from the environment and never leaves the server.
+ * LLM_PROVIDER = "gemini" (free tier available) or "anthropic" (default). Only this file knows about providers.
  */
-export async function callLLM({ system, user, maxTokens = 1000 }: LlmRequest): Promise<string> {
+export async function callLLM(req: LlmRequest): Promise<string> {
   const key = process.env.LLM_API_KEY;
   if (!key) throw new LlmError("LLM_API_KEY is not set");
-  const model = process.env.LLM_MODEL || "claude-sonnet-5-5";
+  const provider = (process.env.LLM_PROVIDER || "anthropic").toLowerCase();
+  if (provider === "gemini") return callGemini(key, req);
+  if (provider === "anthropic") return callAnthropic(key, req);
+  throw new LlmError(`Unknown LLM_PROVIDER "${provider}" (use "gemini" or "anthropic")`);
+}
 
+async function postJson(url: string, headers: Record<string, string>, body: unknown): Promise<unknown> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 25_000);
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(url, {
       method: "POST",
-      headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01" },
-      body: JSON.stringify({ model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] }),
+      headers: { "content-type": "application/json", ...headers },
+      body: JSON.stringify(body),
       signal: controller.signal,
     });
     if (!res.ok) throw new LlmError(`LLM request failed with status ${res.status}`);
-    const data = (await res.json()) as { content?: { type: string; text?: string }[] };
-    const text = (data.content ?? [])
-      .filter((b) => b.type === "text" && typeof b.text === "string")
-      .map((b) => b.text)
-      .join("");
-    if (!text.trim()) throw new LlmError("LLM returned an empty reply");
-    return text;
+    return await res.json();
   } catch (e) {
     if (e instanceof LlmError) throw e;
     throw new LlmError(e instanceof Error && e.name === "AbortError" ? "LLM request timed out" : "LLM request failed");
   } finally {
     clearTimeout(timer);
   }
+}
+
+async function callAnthropic(key: string, { system, user, maxTokens = 1000 }: LlmRequest): Promise<string> {
+  const model = process.env.LLM_MODEL || "claude-sonnet-5-5";
+  const data = (await postJson(
+    "https://api.anthropic.com/v1/messages",
+    { "x-api-key": key, "anthropic-version": "2023-06-01" },
+    { model, max_tokens: maxTokens, system, messages: [{ role: "user", content: user }] },
+  )) as { content?: { type: string; text?: string }[] };
+  const text = (data.content ?? [])
+    .filter((b) => b.type === "text" && typeof b.text === "string")
+    .map((b) => b.text)
+    .join("");
+  if (!text.trim()) throw new LlmError("LLM returned an empty reply");
+  return text;
+}
+
+async function callGemini(key: string, { system, user, maxTokens = 1000 }: LlmRequest): Promise<string> {
+  const model = process.env.LLM_MODEL?.replace(/^models\//, "");
+  if (!model) throw new LlmError("LLM_MODEL is not set (required when LLM_PROVIDER=gemini)");
+  const data = (await postJson(
+    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+    { "x-goog-api-key": key },
+    {
+      systemInstruction: { parts: [{ text: system }] },
+      contents: [{ role: "user", parts: [{ text: user }] }],
+      // Some Gemini models spend part of this budget on internal reasoning, so leave headroom.
+      generationConfig: { maxOutputTokens: maxTokens * 3, temperature: 0.2 },
+    },
+  )) as { candidates?: { content?: { parts?: { text?: string }[] } }[] };
+  const text = (data.candidates?.[0]?.content?.parts ?? []).map((p) => p.text ?? "").join("");
+  if (!text.trim()) throw new LlmError("LLM returned an empty reply");
+  return text;
 }

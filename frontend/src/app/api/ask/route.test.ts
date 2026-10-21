@@ -26,6 +26,7 @@ const modelReply = (text: string) => new Response(JSON.stringify({ content: [{ t
 
 beforeEach(() => {
   process.env.LLM_API_KEY = "test-key";
+  process.env.LLM_PROVIDER = "anthropic";
   kbMock.kb = [entry];
 });
 afterEach(() => vi.unstubAllGlobals());
@@ -67,6 +68,15 @@ describe("POST /api/ask", () => {
     const res = await call({ question: "hello" }, "5.5.5.5");
     expect(res.status).toBe(502);
     expect(JSON.stringify(await res.json())).not.toContain("test-key");
+  });
+
+  it("answers a repeated question from the cache without calling the model again", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(modelReply('{"service_id":"nbi-clearance","summary":"ok","requirements":["Valid ID"]}'));
+    vi.stubGlobal("fetch", fetchMock);
+    await call({ question: "Cache  Test question" }, "7.7.7.7");
+    const second = await (await call({ question: "cache test QUESTION" }, "7.7.7.8")).json();
+    expect(second.confident).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it("validates input", async () => {
