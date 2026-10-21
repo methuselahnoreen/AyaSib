@@ -22,3 +22,21 @@ processing_time: "Released within minutes at the branch if there is no HIT. If t
 source_title: "NBI: NBI Clearance Application - How To & Complete Guide"
 source_url: "https://nbi.gov.ph/how-to-apply-nbi-clearance/"
 last_verified: 2026-10-14
+summary_ceb: "Ang NBI clearance gi-apply una online, unya moadto ka sa NBI branch nga imong gipili para sa biometrics (litrato, fingerprints, ug pirma). Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto."
+office_ceb: "Bisan unsang NBI branch, pilion samtang nag-apply online sa https://clearance.nbi.gov.ph"
+requirements_ceb:
+  - "Online account sa NBI Clearance portal (aktibong mobile number ug email, kumpirmahon pinaagi sa one-time password o OTP)"
+  - "Reference number gikan sa portal (naka-print, digital, o QR code)"
+  - "Resibo o proof of payment"
+  - "Duha ka valid nga government-issued ID, orihinal ug wala pa mag-expire (pananglitan: passport, driver's license, National ID, UMID, postal ID, o PSA birth certificate)"
+requirements_note_ceb: "Ang mga first-time job seeker mahimong makakuha og libre nga clearance ubos sa RA 11261, pinaagi sa lahi nga portal. Dad-a ang orihinal nga Barangay Certificate nga nagpakita nga first-time job seeker ka, ug ang imong pirmado nga Oath of Undertaking."
+steps_ceb:
+  - "Mag-register o mag-log in sa NBI Clearance portal."
+  - "Pun-a ang Applicant Information Form. Siguroha nga parehas ang spelling sa imong ngalan sa imong mga valid ID."
+  - "I-klik ang 'Apply for Clearance' ug pilia ang ID nga imong dad-on."
+  - "Pili og branch, petsa, ug oras sa imong appointment."
+  - "Bayari ang fee ug i-save ang imong reference number."
+  - "Adto sa branch para sa biometrics (litrato, fingerprints, ug pirma) ug pagsusi sa imong datos."
+  - "Kon walay HIT, madawat dayon ang clearance. Kon naay HIT, balik sa petsa nga ihatag kanimo."
+fee_ceb: "PHP 130 nga basic clearance fee, dugangan og gamay nga e-payment service charge (kasagaran mga PHP 25 hangtod 30)"
+processing_time_ceb: "Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto sa branch. Kon naay HIT, balik human sa 5 ngadto sa 10 ka adlaw nga pagtrabaho (kasagaran), walay dugang bayad."

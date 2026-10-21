@@ -6,10 +6,10 @@ import { load } from "js-yaml";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const KB_DIR = path.resolve(here, "../../kb");
 
-const REQUIRED_TEXT = ["id", "name_en", "locality", "source_title", "source_url"];
+const REQUIRED_TEXT = ["id", "name_en", "locality", "summary_ceb", "source_title", "source_url"];
 const NULLABLE_TEXT = ["office", "fee", "processing_time"];
-const OPTIONAL = ["name_ceb", "who_may_avail", "requirements_note", "scope_note", "source_pages", "steps"];
-const KNOWN = new Set([...REQUIRED_TEXT, ...NULLABLE_TEXT, ...OPTIONAL, "requirements", "last_verified"]);
+const OPTIONAL = ["name_ceb", "who_may_avail", "requirements_note", "requirements_note_ceb", "scope_note", "source_pages", "steps", "steps_ceb", "office_ceb", "fee_ceb", "processing_time_ceb"];
+const KNOWN = new Set([...REQUIRED_TEXT, ...NULLABLE_TEXT, ...OPTIONAL, "requirements", "requirements_ceb", "last_verified"]);  
 
 const isText = (v) => typeof v === "string" && v.trim() !== "";
 
@@ -52,8 +52,15 @@ function checkFile(file, text) {
     if (doc.id !== stem) errors.push(`id "${doc.id}" must match the file name "${stem}"`);
   }
 
-  if (!Array.isArray(doc.requirements) || doc.requirements.length === 0 || !doc.requirements.every(isText)) {
-    errors.push("requirements must be a non-empty list of text");
+
+  if (!Array.isArray(doc.requirements_ceb) || doc.requirements_ceb.length === 0 || !doc.requirements_ceb.every(isText)) {
+    errors.push("requirements_ceb must be a non-empty list of Cebuano text");
+  } else if (Array.isArray(doc.requirements) && doc.requirements_ceb.length !== doc.requirements.length) {
+    errors.push("requirements_ceb must have the same number of items as requirements");
+  }
+
+  if (Array.isArray(doc.steps) && (!Array.isArray(doc.steps_ceb) || doc.steps_ceb.length !== doc.steps.length)) {
+    errors.push("steps_ceb must have the same number of items as steps");
   }
 
   if (isText(doc.source_url)) {
