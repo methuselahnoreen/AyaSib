@@ -7,6 +7,8 @@ beforeEach(() => {
   process.env.LLM_API_KEY = "secret-key-123";
   delete process.env.LLM_PROVIDER;
   delete process.env.LLM_MODEL;
+  delete process.env.LLM_FALLBACK_MODELS;
+  process.env.LLM_RETRY_DELAY_MS = "0";
 });
 afterEach(() => vi.unstubAllGlobals());
 
@@ -62,5 +64,51 @@ describe("callLLM", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({}, 429)));
     await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("status 429");
     await callLLM({ system: "s", user: "u" }).catch((e: Error) => expect(e.message).not.toContain("secret-key-123"));
+  });
+
+  describe("gemini retries and fallback", () => {
+    const ok = () => json({ candidates: [{ content: { parts: [{ text: "ok" }] } }] });
+    beforeEach(() => {
+      process.env.LLM_PROVIDER = "gemini";
+      process.env.LLM_MODEL = "primary";
+    });
+
+    it("retries once on a 503 and then succeeds", async () => {
+      const f = vi.fn().mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(ok());
+      vi.stubGlobal("fetch", f);
+      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
+      expect(f).toHaveBeenCalledTimes(2);
+      expect(f.mock.calls[1][0]).toContain("/models/primary:");
+    });
+
+    it("falls back to the next model when the first stays overloaded", async () => {
+      process.env.LLM_FALLBACK_MODELS = "models/backup-one, backup-two";
+      const f = vi.fn().mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(ok());
+      vi.stubGlobal("fetch", f);
+      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
+      expect(f).toHaveBeenCalledTimes(3);
+      expect(f.mock.calls[2][0]).toContain("/models/backup-one:");
+    });
+
+    it("moves to the fallback right away on a 404 (wrong model name)", async () => {
+      process.env.LLM_FALLBACK_MODELS = "backup";
+      const f = vi.fn().mockResolvedValueOnce(json({}, 404)).mockResolvedValueOnce(ok());
+      vi.stubGlobal("fetch", f);
+      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
+      expect(f).toHaveBeenCalledTimes(2);
+    });
+
+    it("does not retry a non-temporary error when there is no fallback", async () => {
+      const f = vi.fn().mockResolvedValue(json({}, 403));
+      vi.stubGlobal("fetch", f);
+      await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("status 403");
+      expect(f).toHaveBeenCalledTimes(1);
+    });
+
+    it("throws the last error when every model fails", async () => {
+      process.env.LLM_FALLBACK_MODELS = "backup";
+      vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({}, 503)));
+      await expect(callLLM({ system: "s", user: "u" })).rejects.toBeInstanceOf(LlmError);
+    });
   });
 });

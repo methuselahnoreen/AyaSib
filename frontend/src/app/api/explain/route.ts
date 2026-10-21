@@ -4,6 +4,7 @@ import { callLLM } from "@/lib/llm";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 30; // seconds; leaves room for a retry on a busy model
 
 export async function POST(req: Request) {
   if (!rateLimit(`explain:${clientIp(req)}`)) return apiError("rate_limited", "Too many requests");

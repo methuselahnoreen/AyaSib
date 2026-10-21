@@ -7,6 +7,7 @@ import type { GlossaryEntry } from "@/lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 30; // seconds; leaves room for a retry on a busy model
 
 const glossary = glossaryData as GlossaryEntry[];
 
