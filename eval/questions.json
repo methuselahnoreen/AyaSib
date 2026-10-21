@@ -1,0 +1,67 @@
+[
+  {
+    "question": "Unsaon pag-apply ug NBI clearance?",
+    "expected": "nbi-clearance",
+    "note": "Direct NBI question, names the service."
+  },
+  {
+    "question": "Pila ang bayad sa NBI clearance?",
+    "expected": "nbi-clearance",
+    "note": "Fee question for NBI, still names the service."
+  },
+  {
+    "question": "Unsa ang kinahanglan dad-on para sa NBI?",
+    "expected": "nbi-clearance",
+    "note": "Short, informal, uses only the agency name NBI."
+  },
+  {
+    "question": "Unsaon pagkuha ug death certificate sa City Health?",
+    "expected": "death-certificate-chd",
+    "note": "Names the document and the City Health Department."
+  },
+  {
+    "question": "Namatay ang akong lolo sa balay, asa mi mangayo ug death certificate?",
+    "expected": "death-certificate-chd",
+    "note": "Informal scenario, death at home, no doctor."
+  },
+  {
+    "question": "Unsaon pagkuha ug kopya sa civil registry record?",
+    "expected": "civil-registry-local-copy",
+    "note": "Local copy of a civil registry record."
+  },
+  {
+    "question": "Asa ko makakuha ug local nga kopya sa akong birth certificate sa Cebu City?",
+    "expected": "civil-registry-local-copy",
+    "note": "Local copy phrasing, Cebu City civil registrar."
+  },
+  {
+    "question": "Unsaon pagkuha ug PSA birth certificate?",
+    "expected": "civil-registry-psa-authenticated",
+    "note": "PSA-authenticated record via the city civil registrar."
+  },
+  {
+    "question": "Kinahanglan nako ug PSA authenticated nga marriage certificate, unsaon?",
+    "expected": "civil-registry-psa-authenticated",
+    "note": "PSA-authenticated certificate request."
+  },
+  {
+    "question": "Pila ang bayad sa barangay clearance?",
+    "expected": null,
+    "note": "Barangay clearance is not in the KB. Must refuse."
+  },
+  {
+    "question": "Unsaon pagkuha ug passport sa DFA?",
+    "expected": null,
+    "note": "Passport / DFA is a different service, not in the KB."
+  },
+  {
+    "question": "Clearance",
+    "expected": null,
+    "note": "Single vague word. Too ambiguous to route."
+  },
+  {
+    "question": "Unsa ang panahon karon?",
+    "expected": null,
+    "note": "Unrelated question (asks about the weather)."
+  }
+]
