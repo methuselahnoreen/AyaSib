@@ -25,17 +25,19 @@ New here? Look for issues labelled `good first issue`.
 ## Getting set up
 
 1. Fork the repo (outside contributors) or clone it (team members).
-2. Install dependencies and configure your environment by following **Getting started** in the [README](README.md).
-3. Copy `.env.example` to `.env.local` and fill in your own keys.
-4. Confirm it runs locally before you change anything:
+2. Configure your environment by following **Getting started** in the [README](README.md): copy `.env.example` to `.env.local` and fill in `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`.
+3. The knowledge-base tooling lives in `backend/`. Confirm it runs before you change anything:
 
-```bash
+```powershell
+cd backend
 npm install
-npm run dev
-npm test
+npm run kb:validate
+npm run eval
 ```
 
-> **Never commit `.env.local` or any real key.** See [Security](#security).
+4. The web app lives in `frontend/` and has its own scripts (`npm run dev`, `npm run build`).
+
+> **Never commit `.env.local` or any real key, and never paste a key in chat.** See [Security](#security).
 
 ---
 
@@ -81,12 +83,20 @@ test: cover refusal when no sources are retrieved
 
 ## Before you open a PR
 
-Run these and make sure they pass:
+Run the checks for the part you changed.
 
-```bash
+Backend / knowledge base (from `backend/`):
+
+```powershell
+npm run kb:validate
+npm run eval     # if you changed the KB or the Ask logic
+```
+
+Frontend (from `frontend/`):
+
+```powershell
 npm run lint
 npm test
-npm run eval     # if you changed prompts, retrieval, the KB, or the glossary
 ```
 
 Then check:
@@ -95,9 +105,7 @@ Then check:
 - [ ] Tests added or updated for new behaviour
 - [ ] No secrets, keys, or personal data in the diff
 - [ ] Docs updated if behaviour, setup, or the API changed
-- [ ] If the API changed, `docs/api-contract.md` is updated **and** the other side (frontend or backend) has been told
-
-> `TODO: confirm script names match package.json.`
+- [ ] If the API changed, `docs/APIContract.md` is updated **and** the other side (frontend or backend) has been told
 
 ---
 
@@ -105,13 +113,14 @@ Then check:
 
 Accuracy matters more than quantity. A wrong fee or requirement can send someone to the wrong office, so these rules are strict.
 
-1. **One YAML file per service** in `/kb`, using the format in the README.
-2. **Every file needs `source_url` and `last_verified`.** Prefer official government pages. If the source is an office visit or phone call, say so in `notes` and add the date.
-3. **Do not guess.** If you cannot verify a field, leave it empty or omit it. Empty is better than wrong.
+1. **One YAML file per service** in `kb/`, using the format and field list in the README (**How to add a service**). The file name must match the `id`.
+2. **Every file needs `source_title`, `source_url`, and `last_verified`.** Prefer official government pages. Use the date you actually checked the source.
+3. **Do not guess.** If you cannot verify a field, use `null` or omit it. A missing fact is better than a wrong one.
 4. **State the locality.** Fees and steps differ by city and barangay. Say which one the file covers.
-5. **Update `last_verified`** whenever you re-check or edit a file.
-6. **Write for a person.** Requirements should be short, concrete items (for example, "Valid ID with address").
-7. **Describe your evidence in the PR**: link the source, and say how you confirmed it.
+5. **Write the Cebuano `_ceb` fields.** Keep `requirements_ceb` in the same order and length as `requirements`. Do not machine-translate; have a native speaker write or review them. Leave `name_ceb: null` until a native speaker supplies it.
+6. **Validate and build** from `backend/`: run `npm run kb:validate` until it passes, then `npm run kb:build`.
+7. **Update `last_verified`** whenever you re-check or edit a file.
+8. **Describe your evidence in the PR**: link the source, and say how you confirmed it.
 
 Reviewers will reject entries without a verifiable source.
 
@@ -122,20 +131,18 @@ Reviewers will reject entries without a verifiable source.
 Natural Cebuano matters here, and this is where a native speaker helps most.
 
 - **Glossary** (`glossary/glossary.json`): propose one term at a time. In the PR, give the English or Filipino term, your Cebuano rendering, and a short note on why it is the natural choice (and whether it differs by region, such as Cebu City versus outlying areas).
-- **Eval questions** (`/eval`): write the question the way a real person would ask it, including casual spelling and mixed English where that is realistic. Add the expected answer or the expected source file.
+- **Eval questions** (`eval/questions.json`): write the question the way a real person would ask it, including casual spelling and mixed English where that is realistic. Add the `expected` service id, or `null` if the KB should not answer it.
 - If you are not a native speaker, mark the PR `needs-native-review`. We will not merge Cebuano content without review.
 
 ---
 
 ## Code style
 
-- Run the formatter and linter before committing (`npm run lint`, `npm run format`).
+- Frontend: run the linter before committing (`npm run lint` in `frontend/`).
 - Prefer clear names and small functions over comments that explain tangled code.
 - Keep UI components mobile-first and test at a narrow width.
 - Do not hard-code user-facing strings in components if a shared strings file exists; this keeps Cebuano text easy to review.
 - Handle all response states in the UI: loading, success, error, and **`confident: false`**.
-
-> `TODO: add any ESLint/Prettier specifics once configured.`
 
 ---
 
@@ -163,7 +170,7 @@ When you review, check in this order:
 
 1. **Correctness:** does it do what the issue asks?
 2. **Safety:** any secrets, unsafe input handling, or invented information?
-3. **Contract:** does it match `docs/api-contract.md`?
+3. **Contract:** does it match `docs/APIContract.md`?
 4. **Tests and CI:** present and green?
 5. **Readability:** could a new contributor follow it?
 

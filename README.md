@@ -1,22 +1,18 @@
-﻿# AyaSib - Cebuano-first Services Assistant
+﻿# AyaSib - Cebuano-first Government Services Assistant
 
-> *AyaSib* means "help" in Cebuano. (Working name - rename freely.)
+> *AyaSib* means "help" in Cebuano (Bisaya).
 
-Ask about government services in Bisaya and get a short, step-by-step answer in Bisaya, with the source and the date it was last verified.
+Ask about a Cebu City government service in Bisaya, Filipino, or English, and get a short checklist back **in Bisaya**: a summary, what to bring, where to go, the fee, and how long it takes, each answer shown with its official source and the date it was last verified. If the knowledge base does not cover your question, AyaSib says it is not sure and tells you to confirm with the office. It never guesses.
 
-**Live demo:** `TODO: add deployed URL`
-**Demo video:** `TODO: add link`
-
-<!-- Badges: replace methuselahnoreen/AyaSib once the repo exists -->
-![CI](https://github.com/methuselahnoreen/AyaSib/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+**Live demo:** _to be added once deployed (see [Deployment](#deployment))._
+**Built for:** Hacktoberfest Cebu 2026 open-source competition.
 
 ---
 
 ## Table of contents
 
 1. [The problem](#the-problem)
-2. [What AyaSib does](#what-AyaSib-does)
+2. [What AyaSib does](#what-ayasib-does)
 3. [How it avoids wrong answers](#how-it-avoids-wrong-answers)
 4. [Architecture](#architecture)
 5. [Tech stack](#tech-stack)
@@ -24,7 +20,7 @@ Ask about government services in Bisaya and get a short, step-by-step answer in 
 7. [Environment variables](#environment-variables)
 8. [Project structure](#project-structure)
 9. [Knowledge base format](#knowledge-base-format)
-10. [Glossary format](#glossary-format)
+10. [How to add a service](#how-to-add-a-service)
 11. [API reference](#api-reference)
 12. [Testing and evaluation](#testing-and-evaluation)
 13. [Security](#security)
@@ -39,300 +35,287 @@ Ask about government services in Bisaya and get a short, step-by-step answer in 
 
 ## The problem
 
-Most government and service information in Cebu (permits, clearances, PhilHealth steps, disaster advisories) is written in English or formal Filipino. Many Cebuano speakers, especially older people and people in outlying barangays, do not read these comfortably. Generic translators handle Cebuano poorly and know nothing about local procedures. People end up asking relatives or fixers, or standing in the wrong line at the wrong office.
+Most government information in Cebu (clearances, civil registry documents, permits) is written in English or formal Filipino. Many Cebuano speakers, especially older people and those in outlying barangays, do not read these comfortably. Generic translators handle Cebuano poorly and know nothing about local procedures, so people end up asking relatives or fixers, or lining up at the wrong office.
 
 ## What AyaSib does
 
-Three features, deliberately and no more.
+### Ask in Bisaya (working today)
 
-### 1. Ask in Bisaya
-Type a question such as *"Unsaon pag-apply ug barangay clearance?"* and receive a short checklist:
+Type a question such as *"Unsaon pagkuha ug death certificate sa City Health?"* and get a short checklist drawn from a curated knowledge base:
 
-- Requirements
-- Where to go
-- Typical fee
-- Processing time
-- Source link and **last verified** date
+- Summary of the service
+- Requirements (what to bring)
+- Steps, when the service has them
+- Office, fee, and processing time
+- The official source link and its **last verified** date
 
-### 2. Explain this document
-Paste text or upload a photo of a notice or form. AyaSib explains in plain Cebuano what the document is, what it asks for, and what to do next.
+If no service in the knowledge base matches, AyaSib replies *"Dili ko sigurado niini. Palihug kumpirmaha sa opisina."* ("I'm not sure about this. Please confirm with the office.")
 
-### 3. Translate with government vocabulary
-English or Filipino to Cebuano and back, using a small curated glossary so terms like *affidavit* or *business permit* are translated consistently instead of guessed.
+### Explain a document and Translate (frontend-owned)
 
-**Stretch (not required):** turn PAGASA / NDRRMC advisories into simple Cebuano.
+The web app also has an **Explain this document** feature and a **Translate** feature, built and owned by the frontend team under `frontend/src/app`. They follow the same hard rule as Ask: only open-source models, and no invented facts. This README focuses on the Ask backend; see the frontend sources for those two.
 
 ## How it avoids wrong answers
 
-Wrong information about a government process can cost people time and money, so reliability is the core design goal, not an afterthought.
+Wrong information about a government process costs people time and money, so reliability is the core design goal.
 
 | Safeguard | How it works |
 |-----------|--------------|
-| **Grounded answers only** | The model may answer only from retrieved knowledge-base files. |
-| **Citations on every answer** | Each answer shows its source URL and `last_verified` date. |
-| **Refusal fallback** | If sources do not cover the question, AyaSib says it is not sure and tells the user to confirm with the office. |
-| **Curated glossary** | Government terms use fixed Cebuano renderings. |
-| **Evaluation set** | 30-50 Cebuano questions with expected answers, run in CI, reviewed by a native speaker. |
+| **The model only routes, it never writes facts** | For Ask, the model's only job is to pick which knowledge-base service a question is about, or answer `null`. It does not write the answer text. |
+| **Curated Cebuano, not machine Cebuano** | Every Cebuano string shown to users is hand-written and reviewed by a native speaker in the KB file. The model is not trusted to produce Cebuano, because its own Cebuano contained real errors in testing. |
+| **Facts come only from the KB** | Fees, offices, requirements, the source URL, and `last_verified` all come from the YAML file, never from the model. |
+| **Citations on every answer** | Each answer carries its source title, URL, and `last_verified` date. |
+| **Refusal fallback** | If the model picks nothing, or picks an id that is not in the KB, the answer is an honest "not sure". |
+| **Evaluation set** | A set of Bisaya questions (including ones the KB does not cover and deliberately vague ones) is run with `npm run eval` and checked against expected results. |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    U[User on phone] --> FE[Next.js frontend]
-    FE -->|/api/ask, /api/explain, /api/translate| API[Server-side API routes]
-    API --> R[Retriever]
-    R --> DB[(Supabase pgvector)]
-    KB[/kb/*.yaml/] -->|embed script| DB
-    API --> G[glossary.json]
-    API --> LLM[LLM API]
-    LLM --> API
-    API --> FE
+    U[User] --> FE[Next.js app in frontend/]
+    FE -->|POST /api/ask| R[Ask route]
+    KB[/kb/*.yaml/] -->|npm run kb:build| J[(kb.json)]
+    J --> R
+    R -->|routing prompt| LLM[Cloudflare Workers AI<br/>open-weights model]
+    LLM -->|service id or null| R
+    R -->|curated Cebuano + source| FE
 ```
 
-1. Service information lives as YAML files in `/kb`.
-2. An embedding script loads them into Supabase pgvector.
-3. On each question, the API retrieves the most relevant files.
-4. A strict prompt, plus the glossary, instructs the LLM to answer in Cebuano using only those files.
-5. The API returns a structured answer with sources, or a "not sure" response.
+1. Each service is one YAML file in `kb/`. These are the source of truth.
+2. `npm run kb:build` validates the files and writes `backend/data/kb.json` with only the services that pass.
+3. On each question, the Ask logic sends the question plus a short list of services to an **open-weights model on Cloudflare Workers AI**. The model replies with one service id, or `null`.
+4. The code looks that id up in the KB and returns the curated Cebuano fields plus the source. If the id is missing or `null`, it returns the "not sure" response.
 
-> `TODO: replace with the final diagram once the architecture is settled.`
+There is no vector database in the current design. With only a handful of services, a plain list in the prompt is enough to route reliably. A pgvector-based retriever is kept as a future step for when the KB grows (see [Roadmap](#roadmap)).
 
 ## Tech stack
 
 | Layer | Choice |
 |-------|--------|
-| Frontend | Next.js, mobile-first, large-text chat layout |
-| Backend | Next.js API routes (or separate service - `TODO: confirm`) |
-| Database / vectors | Supabase Postgres with pgvector |
-| LLM | `TODO: provider and model` |
-| OCR (Feature 2, images) | `TODO: choose` |
-| Tests | `TODO: e.g. Vitest + Playwright` |
-| CI | GitHub Actions |
-| Hosting | `TODO: e.g. Vercel` |
+| Frontend + API | Next.js (App Router), API routes under `frontend/src/app/api` |
+| Ask routing model | Cloudflare Workers AI, default `@cf/qwen/qwen3-30b-a3b-fp8` (open weights) |
+| Knowledge base | YAML files in `kb/`, validated and built into JSON |
+| KB tooling | Node scripts in `backend/` (`js-yaml`) |
+| Tests / eval | Node scripts; `npm run eval` for the question set |
+| Hosting | Vercel (root directory `frontend`) |
+
+**Why this model.** The competition requires any AI model to be open source / open weights, so closed models such as Gemini and Claude are not used. Qwen3 is released under the Apache 2.0 license ([Qwen3 model card on Hugging Face](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4)), and Cloudflare Workers AI hosts it with a free daily allocation, which fits a hackathon budget. A second open model, `@cf/openai/gpt-oss-120b`, can be selected via `LLM_MODEL` for comparison. (Content rephrased for licensing compliance.)
 
 ## Getting started
 
+The knowledge-base tooling and the Ask logic live in `backend/`. The web app lives in `frontend/`. The commands below set up the backend tooling and run the command-line Ask tester.
+
 ### Prerequisites
 
-- Node.js `TODO: version` and a package manager (`npm`, `pnpm`, or `yarn`)
-- A Supabase project with the `pgvector` extension enabled
-- An API key for the chosen LLM provider
+- Node.js 20 or newer (the scripts use `--env-file`, available from Node 20)
+- A Cloudflare account with Workers AI enabled, and an API token with the Workers AI permission
 
-### Setup
+### Setup (backend tooling)
 
-```bash
-# 1. Clone
-git clone https://github.com/methuselahnoreen/AyaSib.git
-cd AyaSib
-
-# 2. Install
-npm install
-
-# 3. Configure environment
+```powershell
+# From the repository root:
 cp .env.example .env.local
-# then fill in the values (see "Environment variables")
+# then open .env.local and fill in CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN
 
-# 4. Load the knowledge base into the vector store
-npm run kb:embed
-
-# 5. Run locally
-npm run dev
+cd backend
+npm install
+npm run kb:validate     # check every kb/*.yaml file
+npm run kb:build        # write backend/data/kb.json from the files that pass
 ```
 
-Open `http://localhost:3000`.
+### Try the Ask logic from the command line
 
-> `TODO: confirm every script name matches package.json.`
+```powershell
+# still inside backend/
+node --env-file=../.env.local scripts/ask-cli.mjs "Unsaon pagkuha ug death certificate sa City Health?"
+```
+
+Pass your own questions as arguments, or run with no arguments to use a built-in set. Set `DEBUG_ROUTER=1` in the terminal to print the raw model reply.
+
+### Run the web app
+
+The Next.js app is in `frontend/`. See `frontend/` for its own README and scripts (`npm run dev`, `npm run build`). The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` and fill in:
+Copy `.env.example` to `.env.local` (git-ignored) and fill in:
 
 | Variable | Used by | Notes |
 |----------|---------|-------|
-| `LLM_API_KEY` | Server only | **Never** prefix with `NEXT_PUBLIC_` |
-| `SUPABASE_URL` | Server | Project URL |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Full-access key; never expose to the browser |
-| `NEXT_PUBLIC_APP_URL` | Browser | Safe to expose; no secrets here |
+| `CLOUDFLARE_ACCOUNT_ID` | Server only | Your Cloudflare account ID |
+| `CLOUDFLARE_API_TOKEN` | Server only | Token with the Workers AI permission. **Never** prefix with `NEXT_PUBLIC_` |
+| `LLM_MODEL` | Server only | Optional. Overrides the default model id |
 
-> `TODO: reconcile with the final .env.example.`
-
-Real keys must never be committed. `.env*` files are git-ignored.
+Real keys must never be committed or pasted in chat. `.env.local` and all `.env.*` files are git-ignored (except `.env.example`).
 
 ## Project structure
 
 ```
 .
-â”œâ”€â”€ web/                 # Next.js app (UI and API routes)
-â”œâ”€â”€ kb/                  # One YAML file per service
-â”œâ”€â”€ glossary/
-â”‚   â””â”€â”€ glossary.json    # Preferred Cebuano terms
-â”œâ”€â”€ eval/                # Question set and runner
-â”œâ”€â”€ scripts/             # Embedding and maintenance scripts
-â”œâ”€â”€ docs/
-â”‚   â”œâ”€â”€ api-contract.md
-â”‚   â””â”€â”€ TEAM_KICKOFF.md
-â”œâ”€â”€ .github/             # CI workflows, PR and issue templates
-â”œâ”€â”€ .env.example
-â”œâ”€â”€ CONTRIBUTING.md
-â””â”€â”€ LICENSE
+├── backend/
+│   ├── data/kb.json            # generated; only services that pass validation
+│   ├── lib/ask.mjs             # answerQuestion(): routes a question, returns the API shape
+│   ├── scripts/
+│   │   ├── validate-kb.mjs     # kb:validate and kb:build
+│   │   ├── ask-cli.mjs         # command-line Ask tester
+│   │   └── eval.mjs            # runs eval/questions.json, prints a pass rate
+│   └── package.json            # kb:validate, kb:build, eval scripts
+├── frontend/                   # Next.js app and its API routes (frontend team)
+├── kb/                         # one YAML file per service (source of truth)
+├── eval/
+│   └── questions.json          # Bisaya eval questions with expected service ids
+├── docs/
+│   ├── APIContract.md
+│   ├── TASKS.md
+│   └── TeamKickoff.md
+├── .env.example
+├── CONTRIBUTING.md
+└── LICENSE
 ```
-
-> `TODO: update to match the real layout.`
 
 ## Knowledge base format
 
-Each service is one YAML file in `/kb`:
+Each service is one YAML file in `kb/`. The file name (without `.yaml`) must equal the `id`. English fields describe the service; the `_ceb` fields are the hand-reviewed Cebuano shown to users.
 
 ```yaml
-id: barangay-clearance
-name_en: Barangay Clearance
-name_ceb: Barangay Clearance
+id: death-certificate-chd            # must match the file name
+name_en: Death Certificate (City Health Department)
+name_ceb: null                       # null until a native speaker supplies it
+locality: Cebu City
+office: "City Health Department (CHD)"
 requirements:
-  - Valid ID
-  - Proof of residency
-fee: "TODO"
-office: "Barangay Hall of your residence"
-processing_time: "TODO"
-source_url: "https://example.gov.ph/..."
-last_verified: 2026-10-01
+  - "Medical abstract, laboratory results or prescription, if available"
+fee: "PHP 50.00 (burial permit)"
+processing_time: "45 minutes in total"
+source_title: "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate"
+source_url: "https://www.cebucity.gov.ph/transparency/citizens-charter/"
+last_verified: 2026-10-14
+summary_ceb: "Kini nga death certificate gi-isyu sa City Health Department..."
+requirements_ceb:
+  - "Medical abstract, resulta sa laboratoryo o reseta, kon naa"
+office_ceb: "City Health Department (CHD)"
+fee_ceb: "PHP 50.00 (burial permit)"
+processing_time_ceb: "45 ka minuto sa tanan"
 ```
 
-Rules for contributors:
+Rules enforced by `npm run kb:validate`:
 
-- Every file **must** have `source_url` and `last_verified`.
-- Do not guess fees or requirements. If you cannot verify it, leave it out.
-- Fees and procedures differ by city and barangay; say which locality the file covers.
-- Re-verify and update `last_verified` whenever you change a file.
+- `id`, `name_en`, `locality`, `summary_ceb`, `source_title`, `source_url` must be present.
+- `office`, `fee`, `processing_time` must be present or explicitly `null`.
+- `requirements` and `requirements_ceb` must be non-empty lists of the **same length**.
+- If `steps` is present, `steps_ceb` must have the same number of items.
+- `source_url` must be a real `https://` address (no `TODO`, no `example.*`).
+- `last_verified` must be a real date, not in the future.
 
-## Glossary format
+Only files that pass are written into `kb.json` by `npm run kb:build`.
 
-```json
-{
-  "affidavit": "sinumpaang pahayag",
-  "business permit": "permiso sa negosyo"
-}
-```
+## How to add a service
 
-> The values above are **examples only** and must be reviewed by a native Cebuano speaker before use.
+1. Copy an existing file in `kb/` (for example `kb/nbi-clearance.yaml`) to `kb/<your-service-id>.yaml`.
+2. Fill in the English fields from an **official source**. Record `source_title`, `source_url`, and the `last_verified` date you actually checked it.
+3. Write the Cebuano `_ceb` fields. Keep `requirements_ceb` in the same order and length as `requirements`. Do not machine-translate; have a native speaker write or review them. Leave `name_ceb: null` until a native speaker supplies it.
+4. Do not guess a fee or requirement. If you cannot verify it, use `null` or leave it out. A missing fact is better than a wrong one.
+5. From `backend/`, run `npm run kb:validate` until it passes, then `npm run kb:build`.
+6. Test it: `node --env-file=../.env.local scripts/ask-cli.mjs "a question about your service"`.
+7. Open a pull request. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## API reference
 
-Full details in [`docs/api-contract.md`](docs/api-contract.md).
+Full details in [`docs/APIContract.md`](docs/APIContract.md).
 
 ### `POST /api/ask`
 
 ```json
 // request
-{ "question": "Unsaon pag-apply ug barangay clearance?" }
+{ "question": "Unsaon pagkuha ug death certificate sa City Health?" }
 
-// response
+// response (confident)
 {
+  "confident": true,
   "answer": {
-    "summary": "...",
-    "requirements": ["..."],
-    "office": "...",
-    "fee": "...",
-    "processing_time": "..."
+    "summary": "Kini nga death certificate gi-isyu sa City Health Department...",
+    "requirements": ["Medical abstract, resulta sa laboratoryo o reseta, kon naa"],
+    "requirements_note": null,
+    "steps": [],
+    "office": "City Health Department (CHD)",
+    "fee": "PHP 50.00 (burial permit)",
+    "processing_time": "45 ka minuto sa tanan"
   },
   "sources": [
-    { "title": "...", "url": "...", "last_verified": "2026-10-01" }
-  ],
-  "confident": true
+    {
+      "title": "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate",
+      "url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+      "last_verified": "2026-10-14"
+    }
+  ]
 }
 ```
 
-When `confident` is `false`, the UI shows the "not sure, please confirm with the office" message instead of a checklist.
-
-### `POST /api/explain`
-
-```json
-// request
-{ "text": "..." }
-// response
-{ "explanation": "...", "next_steps": ["..."] }
-```
-
-### `POST /api/translate`
-
-```json
-// request
-{ "text": "...", "from": "en", "to": "ceb" }
-// response
-{ "translation": "..." }
-```
+When `confident` is `false`, `answer` is `null` and a Cebuano `message` is included. The UI shows the "not sure, please confirm with the office" state.
 
 ## Testing and evaluation
 
-```bash
-npm run lint
-npm test
-npm run eval      # runs the Cebuano question set
+```powershell
+cd backend
+npm run kb:validate
+npm run eval          # routes each eval question and prints a pass rate
 ```
 
-- **Unit and integration tests** cover retrieval, the refusal fallback, and glossary injection.
-- **Evaluation set** (`/eval`): 30-50 Cebuano questions with expected answers, reviewed by a native speaker. CI runs it on every pull request.
+The eval set (`eval/questions.json`) contains Bisaya questions that should map to a service and others that should be refused (out-of-KB services and deliberately vague ones). `backend/scripts/eval.mjs` runs each through the Ask logic, compares the resolved service id (or "not sure") to the expected value, and exits non-zero if any case fails.
 
-**Latest eval results:** `TODO: add pass rate and date after the first run.`
+**Latest eval run:** 13 of 13 passed (2026-10-21). Because the router is a live model, a rerun can occasionally differ on a borderline item; the harness reports the pass rate rather than hiding it.
 
 ## Security
 
-- API keys are used server-side only and are never sent to the browser.
-- No secrets are committed; `.env*` is git-ignored.
-- Rate limiting and input-size limits on all API routes. `TODO: confirm implemented.`
-- Uploaded images are validated by type and size. `TODO: confirm implemented.`
-- Found a vulnerability? Please open a private security advisory on GitHub rather than a public issue.
+- Provider keys are used server-side only and never sent to the browser. No key is prefixed with `NEXT_PUBLIC_`.
+- No secrets are committed. `.env.local` and all `.env.*` files are git-ignored (except `.env.example`).
+- The Ask route enforces an input-size limit (2,000 characters) and a rate limit (20 requests/minute per IP), returning the contract's `413` and `429` errors.
+- If a key is ever committed, rotate it immediately in the provider's console; removing it in a later commit is not enough.
+- Report a vulnerability privately through a GitHub security advisory rather than a public issue.
 
 ## Deployment
 
-- **Hosting:** `TODO`
-- **Environment variables:** set in the host's settings, never in the repo.
-- **Steps:** `TODO: document the exact deploy steps and how the KB is re-embedded after changes.`
-- **Scalability notes:** `TODO: e.g. stateless API routes, pgvector index, caching of repeated questions.`
+- **Hosting:** Vercel, with the project's **Root Directory set to `frontend`**.
+- **Environment variables:** set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in the Vercel project settings, never in the repo.
+- **Knowledge base:** `kb.json` is produced from `kb/*.yaml`. The frontend's build step syncs the KB data, so redeploy after changing a KB file.
+- **Scalability notes:** the API routes are stateless, so they scale horizontally. Repeated questions are served from an in-memory cache. Routing uses a short prompt (no vector search), which keeps latency and cost low for the current KB size; pgvector retrieval is the planned step when the KB grows.
 
 ## Limitations
 
 Please read these before relying on AyaSib.
 
-- **Not official.** AyaSib is an independent project and is not affiliated with any government office.
-- **Information can go out of date.** Always check the "last verified" date and confirm with the office for anything important.
-- **Limited coverage.** Only the services in `/kb` are supported. Other questions get the "not sure" response.
-- **Cebuano quality.** LLMs are weaker in Cebuano than in English. The glossary and eval set reduce this risk but do not remove it.
-- **Local variation.** Fees and steps can differ by city, barangay, and office.
-- **Photo explanations** may misread blurry or handwritten text.
+- **Not official.** AyaSib is an independent student/hackathon project and is not affiliated with any government office.
+- **Small coverage.** Only the services in `kb/` are answered. Everything else returns "not sure". The current KB is a few Cebu City services (NBI clearance, two civil registry records, a death certificate).
+- **Information can go out of date.** Always check the `last_verified` date and confirm with the office for anything important. Fees and steps change.
+- **Cebuano is curated, not generated.** This makes answers trustworthy but means a question only gets a full answer if its service already has reviewed Cebuano in the KB.
+- **Routing is probabilistic.** The model occasionally mismatches a borderline question; the design prefers to refuse rather than guess.
+- **Local variation.** Fees and steps differ by city, barangay, and office.
 
 ## Roadmap
 
 - [ ] More services and more localities
-- [ ] PAGASA / NDRRMC advisory simplifier
-- [ ] Offline-friendly or low-bandwidth mode
-- [ ] Voice input and read-aloud for users who read less comfortably
-- [ ] Community process for reporting outdated KB entries
+- [ ] pgvector retrieval once the KB is large enough to need it
+- [ ] "Explain this document" and photo OCR hardening
+- [ ] A community process for reporting outdated KB entries
 
 ## Contributing
 
-Contributions are welcome, especially **verified knowledge-base entries** and **Cebuano glossary and eval reviews**.
+Contributions are welcome, especially **verified knowledge-base entries** and **Cebuano reviews**.
 
 1. Read [`CONTRIBUTING.md`](CONTRIBUTING.md).
-2. Pick an issue labelled `good first issue`, `kb`, `glossary`, or `eval`.
-3. Branch from `main` (`feat/...`, `fix/...`, `docs/...`).
-4. Open a pull request using the template and make sure the checklist passes.
+2. Pick an issue labelled `good first issue`, `kb`, or `docs`.
+3. Branch from `main` (`feat/...`, `fix/...`, `kb/...`, `docs/...`).
+4. Open a pull request using the template and make sure the checks pass.
 
 ## Team
 
 | Name | Role |
 |------|------|
-| `TODO` | Project Manager, Frontend |
-| `TODO` | Frontend |
-| `TODO` | Backend |
-| `TODO` | Backend |
-
-Native Cebuano reviewer: `TODO`
+| Methus | Project Manager, Frontend |
+| Irish | Frontend |
+| Stephanie | Backend |
+| Elizah | Backend |
 
 ## License
 
-`TODO: MIT` - see [`LICENSE`](LICENSE).
-
-## Acknowledgements
-
-Built for `TODO: hackathon name`. Thanks to everyone who reviewed our Cebuano and verified service information.
-
+Released under the MIT License. See [`LICENSE`](LICENSE).

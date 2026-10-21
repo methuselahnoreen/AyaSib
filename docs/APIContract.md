@@ -1,10 +1,19 @@
 # API Contract
 
-**Status:** Draft v0.1 - proposed starting point. Becomes binding once frontend and backend leads both approve it.
-**Owners:** `TODO: frontend lead` and `TODO: backend lead`
-**Rule:** Changes require a PR that updates this file and is approved by **both** sides. The frontend builds against a mock of this contract until the real endpoints are ready.
+**Status:** v1.0. `POST /api/ask` is approved on the backend side and matches the implementation in `backend/lib/ask.mjs`. The `explain` and `translate` endpoints are owned by the frontend team and are marked **(frontend-owned)** below.
+**Owners:** Frontend: Methus / Irish. Backend (`/api/ask`): Stephanie.
+**Rule:** Changes require a PR that updates this file and is approved by **both** sides.
 
-Items marked **(proposed)** are suggestions that the team should confirm or change.
+---
+
+## 0. Ground rules that the contract exists to protect
+
+These come from the project's hard rules and are not negotiable:
+
+1. **Open-source model only.** The router runs on Cloudflare Workers AI using an open-weights model (default `@cf/qwen/qwen3-30b-a3b-fp8`, Apache-2.0). No closed models (e.g. Gemini, Claude).
+2. **The model never writes the Cebuano shown to users.** For `/api/ask`, the model only picks which service the question is about (or `null`). Every Cebuano string in the response is a hand-reviewed field from the knowledge base.
+3. **Never invent government facts.** Fees, offices, requirements, source URL and `last_verified` all come from the KB file, never from the model. A missing fact is returned as `null` or omitted, never guessed.
+4. **Refuse when unsure.** If no KB service clearly matches, the API returns `200` with `confident: false`, not an error.
 
 ---
 
@@ -12,17 +21,15 @@ Items marked **(proposed)** are suggestions that the team should confirm or chan
 
 | Topic | Rule |
 |-------|------|
-| Base path | `/api` |
-| Format | JSON, UTF-8, `Content-Type: application/json` (except image upload, see 4.2) |
-| Method | `POST` for all three endpoints |
+| Base path | `/api` (Next.js route handlers inside `frontend/`) |
+| Format | JSON, UTF-8, `Content-Type: application/json` |
+| Method | `POST` |
 | Auth | None for users. Provider keys live on the server only and are never in any response |
 | Field naming | `snake_case` |
-| Dates | ISO 8601, date only for `last_verified` (`2026-10-01`) |
+| Dates | ISO 8601, date only for `last_verified` (`2026-10-14`) |
 | Language codes | `ceb` Cebuano, `fil` Filipino, `en` English |
-| Max text length | 2,000 characters for `question`, 8,000 for `text` **(proposed)** |
-| Rate limit | 20 requests/minute per IP **(proposed)**; exceeded returns `429` |
-
-The API **never invents information**. If sources do not cover a question, it returns a successful response with `confident: false`, not an error.
+| Max text length | 2,000 characters for `question` |
+| Rate limit | 20 requests/minute per IP; exceeded returns `429` |
 
 ---
 
@@ -32,52 +39,44 @@ The API **never invents information**. If sources do not cover a question, it re
 
 ```json
 {
-  "title": "Barangay Clearance - Cebu City",
-  "url": "https://example.gov.ph/...",
-  "last_verified": "2026-10-01"
+  "title": "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate",
+  "url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+  "last_verified": "2026-10-14"
 }
 ```
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `title` | string | yes | Human-readable source name |
-| `url` | string | yes | Absolute URL |
-| `last_verified` | string (date) | yes | Taken from the KB file |
+| `title` | string | yes | Source name, from the KB file's `source_title` |
+| `url` | string | yes | Absolute URL, from the KB file's `source_url` |
+| `last_verified` | string (date) | yes | From the KB file |
 
 ### Error
 
 ```json
-{
-  "error": {
-    "code": "invalid_request",
-    "message": "question is required"
-  }
-}
+{ "error": { "code": "invalid_request", "message": "question is required" } }
 ```
 
 | `code` | HTTP | Meaning |
 |--------|------|---------|
 | `invalid_request` | 400 | Missing or malformed field |
-| `payload_too_large` | 413 | Text or image over the limit |
-| `unsupported_media_type` | 415 | Image type not allowed |
+| `payload_too_large` | 413 | `question` over 2,000 characters |
 | `rate_limited` | 429 | Too many requests |
-| `upstream_error` | 502 | LLM or database failed |
-| `internal_error` | 500 | Anything else |
+| `upstream_error` | 502 | The language model could not be reached |
+| `internal_error` | 500 | Anything else (for example, model credentials not configured) |
 
 `message` is for developers and logs. The frontend shows its own friendly Cebuano text based on `code`; it never displays `message` directly to users.
 
 ---
 
-## 3. `POST /api/ask` - Feature 1
+## 3. `POST /api/ask` - Feature 1 (backend-approved)
 
-Answer a question about a government service, using only knowledge-base sources.
+Answer a question about a Cebu City government service, using only knowledge-base files. Implemented by `answerQuestion()` in `backend/lib/ask.mjs`.
 
 ### Request
 
 ```json
-{
-  "question": "Unsaon pag-apply ug barangay clearance?"
-}
+{ "question": "Unsaon pagkuha ug death certificate sa City Health?" }
 ```
 
 | Field | Type | Required | Notes |
@@ -90,20 +89,21 @@ Answer a question about a government service, using only knowledge-base sources.
 {
   "confident": true,
   "answer": {
-    "summary": "Mag-adto sa barangay hall ug dad-a ang mga kinahanglanon.",
+    "summary": "Kini nga death certificate gi-isyu sa City Health Department alang sa tawo nga namatay sa balay o walay doktor nga nag-atiman...",
     "requirements": [
-      "Valid ID nga naay address",
-      "Proof of residency"
+      "Medical abstract, resulta sa laboratoryo o reseta, kon naa (gikan sa ospital o sa doktor nga nag-atiman)"
     ],
-    "office": "Barangay Hall sa imong lugar",
-    "fee": "TODO sample only",
-    "processing_time": "TODO sample only"
+    "requirements_note": null,
+    "steps": [],
+    "office": "City Health Department (CHD)",
+    "fee": "PHP 50.00 (burial permit)",
+    "processing_time": "45 ka minuto sa tanan"
   },
   "sources": [
     {
-      "title": "Barangay Clearance - Cebu City",
-      "url": "https://example.gov.ph/...",
-      "last_verified": "2026-10-01"
+      "title": "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate",
+      "url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
+      "last_verified": "2026-10-14"
     }
   ]
 }
@@ -124,135 +124,37 @@ Answer a question about a government service, using only knowledge-base sources.
 
 | Field | Rule |
 |-------|------|
-| `confident` | `true` only when at least one retrieved source supports the answer |
+| `confident` | `true` only when the model picked a service id that exists in the KB |
 | `answer` | Object when `confident` is `true`; `null` otherwise |
-| `answer.summary` | Short Cebuano text, 1-3 sentences |
-| `answer.requirements` | Array of short strings; may be empty |
-| `answer.office` | String or `null` if the KB file has none |
-| `answer.fee` | String or `null`. Never estimated by the model; copied from the KB |
-| `answer.processing_time` | String or `null`. Same rule as `fee` |
-| `sources` | **Must be non-empty when `confident` is `true`** |
-| `message` | Present only when `confident` is `false`, in Cebuano |
+| `answer.summary` | Curated Cebuano (`summary_ceb`). Written/reviewed by a native speaker, not the model |
+| `answer.requirements` | Curated Cebuano list (`requirements_ceb`), same order and length as the English requirements |
+| `answer.requirements_note` | Curated Cebuano note (`requirements_note_ceb`) or `null` |
+| `answer.steps` | Curated Cebuano list (`steps_ceb`); `[]` when the service has no step list |
+| `answer.office` | Curated Cebuano (`office_ceb`), falling back to English `office`, or `null` |
+| `answer.fee` | Curated Cebuano (`fee_ceb`), falling back to English `fee`, or `null`. Never estimated by the model |
+| `answer.processing_time` | Curated Cebuano (`processing_time_ceb`), falling back to English, or `null` |
+| `sources` | Exactly one entry when `confident` is `true`; empty when `false` |
+| `message` | Present (in Cebuano) only when `confident` is `false` |
 
-**Frontend obligations:** render the "not sure" state when `confident` is `false`; always show every source and its `last_verified` date; if a field is `null`, hide it rather than showing "null".
-
----
-
-## 4. `POST /api/explain` - Feature 2
-
-Explain a notice or form in plain Cebuano.
-
-### 4.1 Text request
-
-```json
-{
-  "text": "NOTICE OF HEARING ... you are hereby required to appear ..."
-}
-```
-
-| Field | Type | Required | Notes |
-|-------|------|----------|-------|
-| `text` | string | yes | 1-8,000 chars |
-
-### 4.2 Image request **(proposed)**
-
-Ship text first; add image support after. Proposed shape: `multipart/form-data` with one field `image`.
-
-| Rule | Value |
-|------|-------|
-| Types | `image/jpeg`, `image/png` |
-| Max size | 5 MB **(proposed)** |
-| Handling | Backend extracts the text (OCR), then follows the same flow as 4.1 |
-
-### Response 200
-
-```json
-{
-  "document_type": "Notice of hearing",
-  "explanation": "Kini usa ka pahibalo nga gipatawag ka sa pagpakita sa...",
-  "what_is_asked": ["Moadto sa opisina sa ...", "Magdala ug valid ID"],
-  "next_steps": ["Susiha ang petsa ug oras", "Pangutana sa opisina kung dili ka kaadto"],
-  "extracted_text": "NOTICE OF HEARING ...",
-  "disclaimer": "Kini dili legal nga tambag. Palihug pangutana sa opisina o abogado."
-}
-```
-
-| Field | Type | Notes |
-|-------|------|-------|
-| `document_type` | string or `null` | Best-effort label; `null` if unclear |
-| `explanation` | string | Plain Cebuano |
-| `what_is_asked` | string[] | May be empty |
-| `next_steps` | string[] | May be empty |
-| `extracted_text` | string or `null` | Only for image requests, so users can check the OCR |
-| `disclaimer` | string | Always present; frontend always shows it |
-
-When the text is too short, unreadable, or unrelated to a document, return `200` with `explanation` saying so in Cebuano and empty arrays, not an error.
+**Frontend obligations:** render the "not sure" state when `confident` is `false`; always show the source and its `last_verified` date; if a field is `null` or an empty list, hide it rather than showing "null" or an empty section.
 
 ---
 
-## 5. `POST /api/translate` - Feature 3
+## 4. `POST /api/explain` - Feature 2 (frontend-owned)
 
-Translate between English or Filipino and Cebuano, using the glossary.
-
-### Request
-
-```json
-{
-  "text": "Please submit your affidavit and business permit.",
-  "from": "en",
-  "to": "ceb"
-}
-```
-
-| Field | Type | Required | Notes |
-|-------|------|----------|-------|
-| `text` | string | yes | 1-8,000 chars |
-| `from` | string | yes | `en`, `fil`, or `ceb` |
-| `to` | string | yes | `en`, `fil`, or `ceb`; must differ from `from` |
-
-### Response 200
-
-```json
-{
-  "translation": "...",
-  "glossary_terms_used": [
-    { "source": "affidavit", "target": "..." }
-  ]
-}
-```
-
-| Field | Type | Notes |
-|-------|------|-------|
-| `translation` | string | The translated text |
-| `glossary_terms_used` | array | Terms matched from the glossary; may be empty. Lets the UI highlight them |
+Explain a notice or form in plain Cebuano. Owned and implemented by the frontend team (`frontend/src/app/api/explain`). Shape is defined there; this section is a pointer, not a backend commitment. It must still obey the open-source-model rule in section 0.
 
 ---
 
-## 6. Stretch: `POST /api/advisory` **(proposed, not committed)**
+## 5. `POST /api/translate` - Feature 3 (frontend-owned)
 
-Only specified if the team reaches the stretch feature. Request `{ "text": "..." }`, response `{ "summary": "...", "actions": ["..."], "source": Source | null }`.
-
----
-
-## 7. Mock server (frontend)
-
-Until the real API exists, the frontend uses a mock that returns the examples above.
-
-Required mock cases for `/api/ask`:
-
-| Trigger | Returns |
-|---------|---------|
-| Any normal question | The confident example |
-| Question containing `unknown` | The not-confident example |
-| Question containing `error` | `502 upstream_error` |
-| Question containing `slow` | The confident example after a 5-second delay |
-
-These cases let the UI team build every state (loading, success, refusal, error) without waiting on the backend.
+Translate between English/Filipino and Cebuano using the curated glossary. Owned and implemented by the frontend team (`frontend/src/app/api/translate`). Shape is defined there; this section is a pointer, not a backend commitment. It must still obey the open-source-model rule in section 0.
 
 ---
 
-## 8. Change log
+## 6. Change log
 
 | Version | Date | Change | Approved by |
 |---------|------|--------|-------------|
-| 0.1 | | Initial draft | |
+| 0.1 | 2026-10-14 | Initial draft (Supabase/pgvector, generic LLM) | |
+| 1.0 | 2026-10-21 | Rewrote `/api/ask` to match `backend/lib/ask.mjs`: curated Cebuano fields, added `requirements_note` and `steps`, recorded the open-source-model rule, marked explain/translate as frontend-owned | Backend (Stephanie) |
