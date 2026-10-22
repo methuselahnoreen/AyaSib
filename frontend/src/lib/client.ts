@@ -22,7 +22,8 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return data as T;
 }
 
-export const askQuestion = (question: string) => post<AskResponse>("/api/ask", { question });
+export const askQuestion = (question: string, context?: string) =>
+  post<AskResponse>("/api/ask", context ? { question, context } : { question });
 export const explainText = (text: string) => post<ExplainResponse>("/api/explain", { text });
 export const translateText = (text: string, from: Lang, to: Lang) => post<TranslateResponse>("/api/translate", { text, from, to });
 

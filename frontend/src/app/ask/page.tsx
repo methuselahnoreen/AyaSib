@@ -19,6 +19,9 @@ export default function AskPage() {
   const [loading, setLoading] = useState(false);
   const nextId = useRef(1);
   const endRef = useRef<HTMLDivElement>(null);
+  // The previous user question, sent as context so short follow-ups like
+  // "pila ang bayad niini?" can be resolved to the service just discussed.
+  const lastQuestion = useRef("");
  
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -30,9 +33,13 @@ export default function AskPage() {
     if (addUser) setMsgs((m) => [...m, { id: nextId.current++, role: "user", text: q }]);
     setInput("");
     setLoading(true);
+    const context = lastQuestion.current;
     try {
-      const result = await askQuestion(q);
+      const result = await askQuestion(q, context);
       setMsgs((m) => [...m, { id: nextId.current++, role: "assistant", result }]);
+      // Only keep a question as context if it actually resolved to a service, so an
+      // unanswered or off-topic question does not mislead the next follow-up.
+      lastQuestion.current = result.confident ? q : "";
     } catch (e) {
       setMsgs((m) => [...m, { id: nextId.current++, role: "assistant", error: errorText(e), question: q }]);
     } finally {

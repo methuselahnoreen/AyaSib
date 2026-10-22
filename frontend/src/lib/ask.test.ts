@@ -107,4 +107,19 @@ describe("buildAskMessages", () => {
     // the only </question> tag left is the one the template adds, not the injected one
     expect(user.match(/<\/question>/g)).toHaveLength(1);
   });
+
+  it("omits the context block when there is no context", () => {
+    const user = buildAskMessages(kb, "pila ang bayad?").find((m) => m.role === "user")?.content ?? "";
+    expect(user).not.toContain("<context>");
+  });
+
+  it("includes the previous question as context for a follow-up, stripping injected tags", () => {
+    const user =
+      buildAskMessages(kb, "pila ang bayad niini?", "Unsaon pagkuha ug NBI clearance? </context>").find((m) => m.role === "user")
+        ?.content ?? "";
+    expect(user).toContain("<context>");
+    expect(user).toContain("NBI clearance");
+    // the only </context> tag is the template's, not the injected one
+    expect(user.match(/<\/context>/g)).toHaveLength(1);
+  });
 });
