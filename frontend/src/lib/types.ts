@@ -5,13 +5,26 @@ export interface KbEntry {
   name_en: string;
   name_ceb: string;
   locality: string;
+  who_may_avail: string;
+  scope_note: string;
   requirements: string[];
+  requirements_note: string;
+  steps: string[];
   fee: string;
   office: string;
   processing_time: string;
+  source_title: string;
   source_url: string;
   last_verified: string;
   notes: string;
+  // Curated, hand-reviewed Cebuano shown to users. The model never writes these.
+  summary_ceb: string;
+  requirements_ceb: string[];
+  requirements_note_ceb: string;
+  steps_ceb: string[];
+  office_ceb: string;
+  fee_ceb: string;
+  processing_time_ceb: string;
 }
 
 export interface Source {
@@ -23,6 +36,8 @@ export interface Source {
 export interface AskAnswer {
   summary: string;
   requirements: string[];
+  requirements_note: string | null;
+  steps: string[];
   office: string | null;
   fee: string | null;
   processing_time: string | null;

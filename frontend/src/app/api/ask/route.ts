@@ -1,4 +1,4 @@
-import { assembleAnswer, buildAskPrompt, notConfident, parseAsk } from "@/lib/ask";
+import { assembleAnswer, buildAskMessages, notConfident, parseServiceId } from "@/lib/ask";
 import { TtlCache } from "@/lib/cache";
 import { apiError, clientIp, failure, LIMITS, rateLimit, readJson, readText } from "@/lib/http";
 import { kb } from "@/lib/kb";
@@ -27,9 +27,8 @@ export async function POST(req: Request) {
   if (cached) return Response.json(cached);
 
   try {
-    const { system, user } = buildAskPrompt(kb, q.text);
-    const raw = await callLLM({ system, user, maxTokens: 800 });
-    const answer = assembleAnswer(kb, parseAsk(raw));
+    const raw = await callLLM({ messages: buildAskMessages(kb, q.text), maxTokens: 800 });
+    const answer = assembleAnswer(kb, parseServiceId(raw, kb));
     cache.set(cacheKey, answer);
     return Response.json(answer);
   } catch (e) {
