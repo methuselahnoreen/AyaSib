@@ -24,6 +24,7 @@ export const t = {
   },
   card: {
     requirements: "Mga kinahanglanon",
+    steps: "Mga lakang",
     office: "Asa moadto",
     fee: "Bayad",
     time: "Kadugayon",
