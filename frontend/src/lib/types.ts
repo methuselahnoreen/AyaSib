@@ -12,6 +12,24 @@ export interface KbEntry {
   source_url: string;
   last_verified: string;
   notes: string;
+  // Optional, additive fields for AyaSib — Andam Na (Feature: ayasib-andam-na).
+  // Existing entries omit these and stay valid unchanged.
+  requirements_ceb?: string[];
+  next_step?: string;
+  next_step_ceb?: string;
+  related?: string[];
+  review_status?: "verified" | "needs_review" | "unconfirmed";
+  review_due?: string;
+}
+
+// FUTURE (durable server-side reporting is deferred; unused in the MVP).
+export interface ReportRequest {
+  id: string;
+  message: string;
+}
+export interface ReportResponse {
+  received: true;
+  message: string;
 }
 
 export interface Source {

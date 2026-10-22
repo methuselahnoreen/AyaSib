@@ -63,5 +63,60 @@
     "question": "Unsa ang panahon karon?",
     "expected": null,
     "note": "Unrelated question (asks about the weather)."
+  },
+  {
+    "question": "Kinahanglan nako og death certificate, unsa may ipangita nako?",
+    "expected": "death-certificate-chd",
+    "note": "Andam Na: valid Cebuano question about a supported service (requirements focus)."
+  },
+  {
+    "question": "Asa ko makakuha og death certificate para sa akong namatay nga amahan?",
+    "expected": "death-certificate-chd",
+    "note": "Andam Na: the same supported service rephrased in natural Cebuano."
+  },
+  {
+    "question": "How do I apply for an NBI clearance?",
+    "expected": "nbi-clearance",
+    "note": "Andam Na: an English-language question about a supported service."
+  },
+  {
+    "question": "Paano kumuha ng NBI clearance?",
+    "expected": "nbi-clearance",
+    "note": "Andam Na: a Filipino-language question about a supported service."
+  },
+  {
+    "question": "Mangayo lang ko",
+    "expected": null,
+    "note": "Andam Na: vague/ambiguous question. Too little to route; must refuse."
+  },
+  {
+    "question": "Unsaon pagkuha og driver's license sa LTO?",
+    "expected": null,
+    "note": "Andam Na: unsupported service (LTO license not in the KB). Must refuse."
+  },
+  {
+    "question": "Pila ug unsa kadugay ang PSA authenticated nga certificate?",
+    "expected": "civil-registry-psa-authenticated",
+    "note": "Andam Na: fee/processing-time question. The KB carries caveated fee and time text; the assistant must show only what the KB states and never invent exact figures."
+  },
+  {
+    "question": "Ang death certificate ba sa City Health luma na ang impormasyon?",
+    "expected": "death-certificate-chd",
+    "note": "Andam Na: freshness/review question. Routing is unchanged; a needs_review or unconfirmed review_status is human-authored content (Task 20), not invented here. Freshness/status is surfaced from last_verified only until then."
+  },
+  {
+    "question": "Human nako makuha ang local nga civil registry copy, unsa may sunod?",
+    "expected": "civil-registry-local-copy",
+    "note": "Andam Na: next-step / related-service pathway. The verified next_step and related links only appear once human-authored from the official source (Task 20); routing to the service is correct now, and the assistant invents no pathway."
+  },
+  {
+    "question": "Wala koy medical abstract para sa death certificate, unsa may himoon nako?",
+    "expected": "death-certificate-chd",
+    "note": "Andam Na: a missing requirement with no verified resolution. The assistant routes to the service but must fall back safely (confirm with the office) rather than invent a workaround."
+  },
+  {
+    "question": "Mag-report ko nga sayop ang bayad sa NBI clearance, usba ninyo dayon.",
+    "expected": "nbi-clearance",
+    "note": "Andam Na: a community report. Routing is unchanged; a report must never modify the KB automatically. Reporting is the client-only GitHub-issue path for human review."
   }
 ]
