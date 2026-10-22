@@ -4,6 +4,8 @@
     "name_en": "Civil Registry Record (Local Copy)",
     "name_ceb": "",
     "locality": "Cebu City",
+    "who_may_avail": "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died",
+    "scope_note": "",
     "requirements": [
       "Valid ID of the requestor, his/her parents or his/her children (1 original)",
       "Authorization letter executed by the document owner (1 original)",
@@ -11,18 +13,36 @@
       "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
       "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
     ],
+    "requirements_note": "The charter does not say which requirements apply to which requester. Confirm with the office.",
+    "steps": [],
     "fee": "PHP 50.00 for local use; PHP 100.00 for abroad",
     "office": "Office of the City Civil Registrar, Issuance Division",
     "processing_time": "41 minutes in total",
+    "source_title": "Cebu City Citizen's Charter, Service 8: Issuance of Civil Registry Records (Local Copy)",
     "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
     "last_verified": "2026-10-14",
-    "notes": ""
+    "notes": "",
+    "summary_ceb": "Kini kay para sa pagkuha og local nga kopya sa civil registry record sa Office of the City Civil Registrar (Issuance Division) sa Cebu City. Mahimong mangayo ang tag-iya sa dokumento, ang iyang ginikanan o anak, ang iyang gi-authorize nga representante, o ang labing suod nga paryente kon namatay na ang tag-iya.",
+    "requirements_ceb": [
+      "Valid ID sa nagpangayo, sa iyang ginikanan, o sa iyang anak (1 orihinal)",
+      "Authorization letter nga gihimo sa tag-iya sa dokumento (1 orihinal)",
+      "Valid ID sa gi-authorize nga representante (1 photocopy, ipakita ang orihinal)",
+      "Affidavit of kinship, kon ang nagpangayo dili ginikanan o anak sa namatay nga tag-iya sa dokumento (1 orihinal, gikan sa notary public o abogado)",
+      "Court order o sulat gikan sa angay nga public official, kon gikinahanglan lang sa administratibo, hudisyal o laing opisyal nga proseso aron mahibal-an kinsa ang tawo (1 orihinal)"
+    ],
+    "requirements_note_ceb": "Wala gipadayag sa charter kon unsa nga mga kinahanglanon ang magamit sa matag nagpangayo. Pangutan-a ang opisina aron makumpirma.",
+    "steps_ceb": [],
+    "office_ceb": "Office of the City Civil Registrar, Issuance Division (Cebu City)",
+    "fee_ceb": "PHP 50.00 kon para sa local nga gamit; PHP 100.00 kon para sa abroad",
+    "processing_time_ceb": "41 ka minuto sa tanan"
   },
   {
     "id": "civil-registry-psa-authenticated",
     "name_en": "PSA-Authenticated Civil Registry Record",
     "name_ceb": "",
     "locality": "Cebu City",
+    "who_may_avail": "Any person, his/her parents or children, or an authorized representative; or the nearest kin if the person has died",
+    "scope_note": "",
     "requirements": [
       "Valid ID of the requestor, his/her parents or his/her children (1 original)",
       "Authorization letter executed by the document owner (1 original)",
@@ -30,44 +50,152 @@
       "Affidavit of kinship, if the requesting party is not the parent or child of the deceased document owner (1 original, from a notary public or lawyer)",
       "Court order or letter from an appropriate public official, only when necessary in administrative, judicial or other official proceedings to determine identity (1 original)"
     ],
+    "requirements_note": "The charter does not say which requirements apply to which requester. Confirm with the office.",
+    "steps": [],
     "fee": "Service fee PHP 50.00, plus PHP 155.00 for a birth, marriage or death certificate, or PHP 210.00 for a CENOMAR (as listed in the charter)",
     "office": "Office of the City Civil Registrar, Issuance Division",
     "processing_time": "1 day, 1 hour and 28 minutes at the city office. Processing at the PSA itself is not included; the charter refers to the PSA's own charter for that.",
+    "source_title": "Cebu City Citizen's Charter, Service 9: Issuance of PSA-Authenticated Civil Registry Record",
     "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
     "last_verified": "2026-10-14",
-    "notes": ""
+    "notes": "",
+    "summary_ceb": "Kini kay para sa pagkuha og PSA-authenticated nga civil registry record pinaagi sa Office of the City Civil Registrar (Issuance Division) sa Cebu City. Mahimong mangayo ang tag-iya sa dokumento, ang iyang ginikanan o anak, ang iyang gi-authorize nga representante, o ang labing suod nga paryente kon namatay na ang tag-iya.",
+    "requirements_ceb": [
+      "Valid ID sa nagpangayo, sa iyang ginikanan, o sa iyang anak (1 orihinal)",
+      "Authorization letter nga gihimo sa tag-iya sa dokumento (1 orihinal)",
+      "Valid ID sa gi-authorize nga representante (1 photocopy, ipakita ang orihinal)",
+      "Affidavit of kinship, kon ang nagpangayo dili ginikanan o anak sa namatay nga tag-iya sa dokumento (1 orihinal, gikan sa notary public o abogado)",
+      "Court order o sulat gikan sa angay nga public official, kon gikinahanglan lang sa administratibo, hudisyal o laing opisyal nga proseso aron mahibal-an kinsa ang tawo (1 orihinal)"
+    ],
+    "requirements_note_ceb": "Wala gipadayag sa charter kon unsa nga mga kinahanglanon ang magamit sa matag nagpangayo. Pangutan-a ang opisina aron makumpirma.",
+    "steps_ceb": [],
+    "office_ceb": "Office of the City Civil Registrar, Issuance Division (Cebu City)",
+    "fee_ceb": "Service fee nga PHP 50.00, dugang PHP 155.00 para sa birth, marriage o death certificate, o PHP 210.00 para sa CENOMAR (sumala sa gilista sa charter)",
+    "processing_time_ceb": "1 ka adlaw, 1 ka oras ug 28 ka minuto sa opisina sa siyudad. Dili apil ang oras sa pagproseso sa PSA mismo; ang charter nagtumong sa kaugalingong charter sa PSA alang niana."
   },
   {
     "id": "death-certificate-chd",
     "name_en": "Death Certificate (City Health Department)",
     "name_ceb": "",
     "locality": "Cebu City",
+    "who_may_avail": "Family members or nearest kin of a person who died at home or without medical attendance",
+    "scope_note": "The charter describes this for deaths in the absence of a doctor, or outside a hospital or medical facility. It is also the basis for whether the body can be embalmed.",
     "requirements": [
       "Medical abstract, laboratory results or prescription, if available (from the hospital or attending physician)"
     ],
+    "requirements_note": "",
+    "steps": [],
     "fee": "PHP 50.00 (burial permit)",
     "office": "City Health Department (CHD)",
     "processing_time": "45 minutes in total",
+    "source_title": "Cebu City Citizen's Charter, Service 6: Issuance of Death Certificate",
     "source_url": "https://www.cebucity.gov.ph/transparency/citizens-charter/",
     "last_verified": "2026-10-14",
-    "notes": ""
+    "notes": "",
+    "summary_ceb": "Kini nga death certificate gi-isyu sa City Health Department alang sa tawo nga namatay sa balay o walay doktor nga nag-atiman, o gawas sa ospital o medical facility. Mao kini ang basehan kon pwede bang embalsamohon ang patay. Ang pamilya o ang labing suod nga paryente ang mangayo.",
+    "requirements_ceb": [
+      "Medical abstract, resulta sa laboratoryo o reseta, kon naa (gikan sa ospital o sa doktor nga nag-atiman)"
+    ],
+    "requirements_note_ceb": "",
+    "steps_ceb": [],
+    "office_ceb": "City Health Department (CHD)",
+    "fee_ceb": "PHP 50.00 (burial permit)",
+    "processing_time_ceb": "45 ka minuto sa tanan"
   },
   {
     "id": "nbi-clearance",
     "name_en": "NBI Clearance",
     "name_ceb": "",
     "locality": "National (apply online, then visit the NBI branch you choose)",
+    "who_may_avail": "",
+    "scope_note": "",
     "requirements": [
       "An online account at the NBI Clearance portal (active mobile number and email, verified with a one-time password)",
       "Reference number from the portal (printed, digital or QR code)",
       "Proof of payment or receipt",
       "Two valid government-issued IDs, original and not expired (for example passport, driver's license, National ID, UMID, postal ID, or PSA birth certificate)"
     ],
+    "requirements_note": "First-time job seekers may be eligible for a free clearance under RA 11261 through a separate portal. They bring an original Barangay Certificate stating first-time job seeker status and a signed Oath of Undertaking.",
+    "steps": [
+      "Register or log in at the NBI Clearance portal",
+      "Complete the Applicant Information Form; spelling must match your valid IDs",
+      "Click Apply for Clearance and select the ID you will bring",
+      "Choose a branch, date and time slot",
+      "Pay the fee and keep the reference number",
+      "Go to the branch for biometrics (photo, fingerprints, signature) and data verification",
+      "Receive the clearance if there is no HIT; if there is a HIT, return on the date given"
+    ],
     "fee": "PHP 130 basic clearance fee, plus a small e-payment service charge (the page says usually around PHP 25 to 30)",
     "office": "Any NBI branch, chosen during the online application at https://clearance.nbi.gov.ph",
     "processing_time": "Released within minutes at the branch if there is no HIT. If there is a HIT, usually 5 to 10 working days before you return, with no extra payment.",
+    "source_title": "NBI: NBI Clearance Application - How To & Complete Guide",
     "source_url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
     "last_verified": "2026-10-14",
-    "notes": ""
+    "notes": "",
+    "summary_ceb": "Ang NBI clearance gi-apply una online, unya moadto ka sa NBI branch nga imong gipili para sa biometrics (litrato, fingerprints, ug pirma). Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto.",
+    "requirements_ceb": [
+      "Online account sa NBI Clearance portal (aktibong mobile number ug email, kumpirmahon pinaagi sa one-time password o OTP)",
+      "Reference number gikan sa portal (naka-print, digital, o QR code)",
+      "Resibo o proof of payment",
+      "Duha ka valid nga government-issued ID, orihinal ug wala pa mag-expire (pananglitan: passport, driver's license, National ID, UMID, postal ID, o PSA birth certificate)"
+    ],
+    "requirements_note_ceb": "Ang mga first-time job seeker mahimong makakuha og libre nga clearance ubos sa RA 11261, pinaagi sa lahi nga portal. Dad-a ang orihinal nga Barangay Certificate nga nagpakita nga first-time job seeker ka, ug ang imong pirmado nga Oath of Undertaking.",
+    "steps_ceb": [
+      "Mag-register o mag-log in sa NBI Clearance portal.",
+      "Pun-a ang Applicant Information Form. Siguroha nga parehas ang spelling sa imong ngalan sa imong mga valid ID.",
+      "I-klik ang 'Apply for Clearance' ug pilia ang ID nga imong dad-on.",
+      "Pili og branch, petsa, ug oras sa imong appointment.",
+      "Bayari ang fee ug i-save ang imong reference number.",
+      "Adto sa branch para sa biometrics (litrato, fingerprints, ug pirma) ug pagsusi sa imong datos.",
+      "Kon walay HIT, madawat dayon ang clearance. Kon naay HIT, balik sa petsa nga ihatag kanimo."
+    ],
+    "office_ceb": "Bisan unsang NBI branch, pilion samtang nag-apply online sa https://clearance.nbi.gov.ph",
+    "fee_ceb": "PHP 130 nga basic clearance fee, dugangan og gamay nga e-payment service charge (kasagaran mga PHP 25 hangtod 30)",
+    "processing_time_ceb": "Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto sa branch. Kon naay HIT, balik human sa 5 ngadto sa 10 ka adlaw nga pagtrabaho (kasagaran), walay dugang bayad."
+  },
+  {
+    "id": "philhealth-enrolment-ofw",
+    "name_en": "Enrolment Procedures (Walk-in and through E-mail)",
+    "name_ceb": "",
+    "locality": "National",
+    "who_may_avail": "Migrant Workers, Filipinos Living Abroad and Filipinos with Dual Citizenship",
+    "scope_note": "",
+    "requirements": [
+      "Original copy of duly accomplished PhilHealth Member Registration Form (PMRF); scanned copy if through e-mail",
+      "Photocopy of Birth/Baptismal Certificate with registry number, or any valid government-issued ID with date of birth (original must be presented); if through e-mail, a scanned copy plus a selfie of the registrant holding the valid ID",
+      "For OFWs, proof of being an active OFW. Land-based: valid Overseas Employment Certificate (OEC) or e-receipt, valid working visa or re-entry permit, valid job employment contract, valid workers' ID card issued by the host country, or an equivalent document approved by a PhilHealth officer. Sea-based: PhilHealth Report of Employee-Members (ER2) accomplished by the current employer or manning agency",
+      "Proof of income, subject to PhilHealth validation. Land-based OFW: OEC or e-receipt, job employment contract, overseas employment offer letter, certificate of employment with income, current payslip, or other acceptable document. Filipinos with dual citizenship and other Filipinos living abroad: income tax return, duly notarized affidavit of income declaration, or other acceptable proof"
+    ],
+    "requirements_note": "If through a representative: original authorization letter issued by the member and a photocopy of at least 1 valid photo-bearing ID of the representative (original ID must be presented). If through e-mail: scanned copies of the authorization letter and of the IDs of the representative and the member. The PMRF and ER2 can be secured from any PhilHealth office, downloaded from the PhilHealth website, or requested through ofp@philhealth.gov.ph.",
+    "steps": [
+      "Submit the required documents to the assigned staff (walk-in) or e-mail them to ofp@philhealth.gov.ph",
+      "PhilHealth checks the completeness of the documents and the correctness of the data, and checks the database. If you are not yet a member, you are registered; if you are already a member, your membership category is updated as applicable",
+      "Receive and check your Member Data Record (MDR) and PhilHealth Identification Card (walk-in), or your updated MDR sent to your e-mail address (through e-mail), and verify that all data are correct",
+      "Pay the required premium contributions at any PhilHealth office or accredited collecting agent and keep the official receipt"
+    ],
+    "fee": "Registration does not require a service fee. Contributions based on the premium schedule are paid at any PhilHealth office or accredited collecting agent.",
+    "office": "Member Management Group - Special Programs Department (submit to the assigned staff for walk-in, or e-mail ofp@philhealth.gov.ph)",
+    "processing_time": "10 minutes per PMRF (walk-in); 3 days (through e-mail, but still depends on the number of e-mails received)",
+    "source_title": "PhilHealth Citizen's Charter 2024, Volume 7 (Member Management Group External Services), Service 3: Enrolment Procedures (Walk-in and through E-mail)",
+    "source_url": "https://www.philhealth.gov.ph/arta/articles/handbook/external/MemberManagementGroup_ExternalServices_PCC2024Volume7_1stEdition.pdf",
+    "last_verified": "2026-10-22",
+    "notes": "",
+    "summary_ceb": "Kini nga serbisyo para sa unang rehistro ug enrolment sa National Health Insurance Program, alang sa mga migrant worker, Pilipino nga nagpuyo sa gawas sa nasud, ug Pilipino nga may dual citizenship. Ipasa ang mga dokumento sa assigned staff o i-email sa ofp@philhealth.gov.ph. Walay service fee sa pagrehistro, apan kinahanglan mobayad og premium contributions.",
+    "requirements_ceb": [
+      "Orihinal nga kopya sa hingpit nga napunan nga PhilHealth Member Registration Form (PMRF); scanned nga kopya kon pinaagi sa email",
+      "Photocopy sa Birth/Baptismal Certificate nga naay registry number, o bisan unsang valid nga government-issued ID nga naay petsa sa pagkatawo (ipakita ang orihinal); kon pinaagi sa email, scanned nga kopya ug selfie sa nagrehistro nga gikuptan ang valid nga ID",
+      "Para sa mga OFW, pamatuod nga aktibo kang OFW. Land-based: valid nga Overseas Employment Certificate (OEC) o e-receipt, valid nga working visa o re-entry permit, valid nga job employment contract, valid nga workers' ID gikan sa host country, o susama nga dokumento nga aprobahan sa PhilHealth officer. Sea-based: PhilHealth Report of Employee-Members (ER2) nga gipunan sa karon nga employer o manning agency",
+      "Pamatuod sa kita, ubos sa validation sa PhilHealth. Land-based OFW: OEC o e-receipt, job employment contract, overseas employment offer letter, certificate of employment nga naay kita, karon nga payslip, o lain nga madawat nga dokumento. Pilipino nga may dual citizenship ug uban pang Pilipino sa gawas sa nasud: income tax return, notarized nga affidavit of income declaration, o lain nga madawat nga pamatuod"
+    ],
+    "requirements_note_ceb": "Kon pinaagi sa representative: orihinal nga authorization letter gikan sa miyembro ug photocopy sa labing menos 1 ka valid nga ID nga naay litrato sa representative (ipakita ang orihinal nga ID). Kon pinaagi sa email: scanned nga kopya sa authorization letter ug sa mga ID sa representative ug sa miyembro. Ang PMRF ug ER2 makuha sa bisan unsang PhilHealth office, ma-download sa PhilHealth website, o mahangyo pinaagi sa ofp@philhealth.gov.ph.",
+    "steps_ceb": [
+      "Ipasa ang mga gikinahanglan nga dokumento sa assigned staff (walk-in) o i-email kini sa ofp@philhealth.gov.ph.",
+      "Susihon sa PhilHealth kon kompleto ang mga dokumento ug husto ang datos, ug susihon ang database. Kon dili pa ka miyembro, irehistro ka; kon miyembro na, i-update ang imong membership category kon kinahanglan.",
+      "Madawat ug susihon ang imong Member Data Record (MDR) ug PhilHealth Identification Card (walk-in), o ang gi-update nga MDR nga gipadala sa imong email (pinaagi sa email), ug siguroha nga husto ang tanang datos.",
+      "Bayri ang gikinahanglan nga premium contributions sa bisan unsang PhilHealth office o accredited collecting agent ug i-save ang opisyal nga resibo."
+    ],
+    "office_ceb": "Member Management Group - Special Programs Department (ipasa sa assigned staff para sa walk-in, o i-email sa ofp@philhealth.gov.ph)",
+    "fee_ceb": "Walay service fee sa pagrehistro. Ang premium contributions base sa premium schedule ug bayran sa bisan unsang PhilHealth office o accredited collecting agent.",
+    "processing_time_ceb": "10 minutos matag PMRF (walk-in); 3 ka adlaw (pinaagi sa email, apan nagdepende gihapon sa gidaghanon sa mga email nga madawat)"
   }
 ]

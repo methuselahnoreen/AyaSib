@@ -48,6 +48,18 @@ export function AnswerCard({ result }: { result: AskResponse }) {
                 <li key={i}>{r}</li>
               ))}
             </ul>
+            {a.requirements_note && <p className="muted" style={{ marginTop: 8 }}>{a.requirements_note}</p>}
+          </section>
+        )}
+ 
+        {a.steps.length > 0 && (
+          <section aria-label={t.card.steps}>
+            <strong>{t.card.steps}</strong>
+            <ol className="list" style={{ marginTop: 8 }}>
+              {a.steps.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ol>
           </section>
         )}
 

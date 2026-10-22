@@ -139,5 +139,49 @@
     ],
     "fee_ceb": "PHP 130 nga basic clearance fee, dugangan og gamay nga e-payment service charge (kasagaran mga PHP 25 hangtod 30)",
     "processing_time_ceb": "Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto sa branch. Kon naay HIT, balik human sa 5 ngadto sa 10 ka adlaw nga pagtrabaho (kasagaran), walay dugang bayad."
+  },
+  {
+    "id": "philhealth-enrolment-ofw",
+    "name_en": "Enrolment Procedures (Walk-in and through E-mail)",
+    "name_ceb": null,
+    "locality": "National",
+    "office": "Member Management Group - Special Programs Department (submit to the assigned staff for walk-in, or e-mail ofp@philhealth.gov.ph)",
+    "who_may_avail": "Migrant Workers, Filipinos Living Abroad and Filipinos with Dual Citizenship",
+    "requirements": [
+      "Original copy of duly accomplished PhilHealth Member Registration Form (PMRF); scanned copy if through e-mail",
+      "Photocopy of Birth/Baptismal Certificate with registry number, or any valid government-issued ID with date of birth (original must be presented); if through e-mail, a scanned copy plus a selfie of the registrant holding the valid ID",
+      "For OFWs, proof of being an active OFW. Land-based: valid Overseas Employment Certificate (OEC) or e-receipt, valid working visa or re-entry permit, valid job employment contract, valid workers' ID card issued by the host country, or an equivalent document approved by a PhilHealth officer. Sea-based: PhilHealth Report of Employee-Members (ER2) accomplished by the current employer or manning agency",
+      "Proof of income, subject to PhilHealth validation. Land-based OFW: OEC or e-receipt, job employment contract, overseas employment offer letter, certificate of employment with income, current payslip, or other acceptable document. Filipinos with dual citizenship and other Filipinos living abroad: income tax return, duly notarized affidavit of income declaration, or other acceptable proof"
+    ],
+    "requirements_note": "If through a representative: original authorization letter issued by the member and a photocopy of at least 1 valid photo-bearing ID of the representative (original ID must be presented). If through e-mail: scanned copies of the authorization letter and of the IDs of the representative and the member. The PMRF and ER2 can be secured from any PhilHealth office, downloaded from the PhilHealth website, or requested through ofp@philhealth.gov.ph.",
+    "steps": [
+      "Submit the required documents to the assigned staff (walk-in) or e-mail them to ofp@philhealth.gov.ph",
+      "PhilHealth checks the completeness of the documents and the correctness of the data, and checks the database. If you are not yet a member, you are registered; if you are already a member, your membership category is updated as applicable",
+      "Receive and check your Member Data Record (MDR) and PhilHealth Identification Card (walk-in), or your updated MDR sent to your e-mail address (through e-mail), and verify that all data are correct",
+      "Pay the required premium contributions at any PhilHealth office or accredited collecting agent and keep the official receipt"
+    ],
+    "fee": "Registration does not require a service fee. Contributions based on the premium schedule are paid at any PhilHealth office or accredited collecting agent.",
+    "processing_time": "10 minutes per PMRF (walk-in); 3 days (through e-mail, but still depends on the number of e-mails received)",
+    "source_title": "PhilHealth Citizen's Charter 2024, Volume 7 (Member Management Group External Services), Service 3: Enrolment Procedures (Walk-in and through E-mail)",
+    "source_pages": "11-16",
+    "source_url": "https://www.philhealth.gov.ph/arta/articles/handbook/external/MemberManagementGroup_ExternalServices_PCC2024Volume7_1stEdition.pdf",
+    "last_verified": "2026-10-22",
+    "summary_ceb": "Kini nga serbisyo para sa unang rehistro ug enrolment sa National Health Insurance Program, alang sa mga migrant worker, Pilipino nga nagpuyo sa gawas sa nasud, ug Pilipino nga may dual citizenship. Ipasa ang mga dokumento sa assigned staff o i-email sa ofp@philhealth.gov.ph. Walay service fee sa pagrehistro, apan kinahanglan mobayad og premium contributions.",
+    "requirements_ceb": [
+      "Orihinal nga kopya sa hingpit nga napunan nga PhilHealth Member Registration Form (PMRF); scanned nga kopya kon pinaagi sa email",
+      "Photocopy sa Birth/Baptismal Certificate nga naay registry number, o bisan unsang valid nga government-issued ID nga naay petsa sa pagkatawo (ipakita ang orihinal); kon pinaagi sa email, scanned nga kopya ug selfie sa nagrehistro nga gikuptan ang valid nga ID",
+      "Para sa mga OFW, pamatuod nga aktibo kang OFW. Land-based: valid nga Overseas Employment Certificate (OEC) o e-receipt, valid nga working visa o re-entry permit, valid nga job employment contract, valid nga workers' ID gikan sa host country, o susama nga dokumento nga aprobahan sa PhilHealth officer. Sea-based: PhilHealth Report of Employee-Members (ER2) nga gipunan sa karon nga employer o manning agency",
+      "Pamatuod sa kita, ubos sa validation sa PhilHealth. Land-based OFW: OEC o e-receipt, job employment contract, overseas employment offer letter, certificate of employment nga naay kita, karon nga payslip, o lain nga madawat nga dokumento. Pilipino nga may dual citizenship ug uban pang Pilipino sa gawas sa nasud: income tax return, notarized nga affidavit of income declaration, o lain nga madawat nga pamatuod"
+    ],
+    "requirements_note_ceb": "Kon pinaagi sa representative: orihinal nga authorization letter gikan sa miyembro ug photocopy sa labing menos 1 ka valid nga ID nga naay litrato sa representative (ipakita ang orihinal nga ID). Kon pinaagi sa email: scanned nga kopya sa authorization letter ug sa mga ID sa representative ug sa miyembro. Ang PMRF ug ER2 makuha sa bisan unsang PhilHealth office, ma-download sa PhilHealth website, o mahangyo pinaagi sa ofp@philhealth.gov.ph.",
+    "steps_ceb": [
+      "Ipasa ang mga gikinahanglan nga dokumento sa assigned staff (walk-in) o i-email kini sa ofp@philhealth.gov.ph.",
+      "Susihon sa PhilHealth kon kompleto ang mga dokumento ug husto ang datos, ug susihon ang database. Kon dili pa ka miyembro, irehistro ka; kon miyembro na, i-update ang imong membership category kon kinahanglan.",
+      "Madawat ug susihon ang imong Member Data Record (MDR) ug PhilHealth Identification Card (walk-in), o ang gi-update nga MDR nga gipadala sa imong email (pinaagi sa email), ug siguroha nga husto ang tanang datos.",
+      "Bayri ang gikinahanglan nga premium contributions sa bisan unsang PhilHealth office o accredited collecting agent ug i-save ang opisyal nga resibo."
+    ],
+    "office_ceb": "Member Management Group - Special Programs Department (ipasa sa assigned staff para sa walk-in, o i-email sa ofp@philhealth.gov.ph)",
+    "fee_ceb": "Walay service fee sa pagrehistro. Ang premium contributions base sa premium schedule ug bayran sa bisan unsang PhilHealth office o accredited collecting agent.",
+    "processing_time_ceb": "10 minutos matag PMRF (walk-in); 3 ka adlaw (pinaagi sa email, apan nagdepende gihapon sa gidaghanon sa mga email nga madawat)"
   }
 ]

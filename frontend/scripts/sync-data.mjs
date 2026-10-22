@@ -44,13 +44,26 @@ function syncKb() {
       name_en: str(doc.name_en ?? doc.name ?? doc.title) || id,
       name_ceb: str(doc.name_ceb),
       locality: str(doc.locality),
+      who_may_avail: str(doc.who_may_avail),
+      scope_note: str(doc.scope_note),
       requirements: list(doc.requirements),
+      requirements_note: str(doc.requirements_note),
+      steps: list(doc.steps),
       fee: str(doc.fee),
       office: str(doc.office),
       processing_time: str(doc.processing_time),
+      source_title: str(doc.source_title),
       source_url: str(doc.source_url),
       last_verified: str(doc.last_verified),
       notes: str(doc.notes),
+      // Curated, hand-reviewed Cebuano shown to users. The model never writes these.
+      summary_ceb: str(doc.summary_ceb),
+      requirements_ceb: list(doc.requirements_ceb),
+      requirements_note_ceb: str(doc.requirements_note_ceb),
+      steps_ceb: list(doc.steps_ceb),
+      office_ceb: str(doc.office_ceb),
+      fee_ceb: str(doc.fee_ceb),
+      processing_time_ceb: str(doc.processing_time_ceb),
     };
     // Feature: ayasib-andam-na — optional, additive fields appended ONLY when present in the source
     // YAML, so entries that do not define them serialize exactly as before.

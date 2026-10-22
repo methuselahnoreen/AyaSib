@@ -23,6 +23,18 @@ function entry(over: Partial<KbEntry>): KbEntry {
     source_url: "https://example.org",
     last_verified: "2026-01-01",
     notes: "",
+    who_may_avail: "",
+    scope_note: "",
+    requirements_note: "",
+    steps: [],
+    source_title: "Source",
+    summary_ceb: "",
+    requirements_ceb: [],
+    requirements_note_ceb: "",
+    steps_ceb: [],
+    office_ceb: "",
+    fee_ceb: "",
+    processing_time_ceb: "",
     ...over,
   };
 }

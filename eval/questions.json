@@ -45,6 +45,16 @@
     "note": "PSA-authenticated certificate request."
   },
   {
+    "question": "Unsaon pag-enroll sa PhilHealth para sa OFW?",
+    "expected": "philhealth-enrolment-ofw",
+    "note": "PhilHealth enrolment for an OFW, names the agency."
+  },
+  {
+    "question": "Kinahanglan ba mobayad para maka-register sa PhilHealth?",
+    "expected": "philhealth-enrolment-ofw",
+    "note": "Fee-style question about PhilHealth registration."
+  },
+  {
     "question": "Pila ang bayad sa barangay clearance?",
     "expected": null,
     "note": "Barangay clearance is not in the KB. Must refuse."

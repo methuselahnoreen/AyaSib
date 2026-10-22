@@ -1,114 +1,61 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { callLLM, LlmError } from "./llm";
+import { callLLM, DEFAULT_MODEL, LlmError } from "./llm";
 
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
+const cfOk = (text: string) => json({ success: true, result: { response: text } });
 
 beforeEach(() => {
-  process.env.LLM_API_KEY = "secret-key-123";
-  delete process.env.LLM_PROVIDER;
+  process.env.CLOUDFLARE_ACCOUNT_ID = "acct-123";
+  process.env.CLOUDFLARE_API_TOKEN = "secret-token-xyz";
   delete process.env.LLM_MODEL;
-  delete process.env.LLM_FALLBACK_MODELS;
-  process.env.LLM_RETRY_DELAY_MS = "0";
 });
 afterEach(() => vi.unstubAllGlobals());
 
-describe("callLLM", () => {
-  it("fails clearly when no key is set", async () => {
-    delete process.env.LLM_API_KEY;
-    await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("LLM_API_KEY is not set");
+describe("callLLM (Cloudflare Workers AI, open-source model)", () => {
+  it("fails clearly when credentials are missing", async () => {
+    delete process.env.CLOUDFLARE_ACCOUNT_ID;
+    await expect(callLLM({ user: "u", fetchImpl: vi.fn() })).rejects.toThrow("Cloudflare credentials are not configured");
   });
 
-  it("rejects an unknown provider", async () => {
-    process.env.LLM_PROVIDER = "nope";
-    await expect(callLLM({ system: "s", user: "u" })).rejects.toBeInstanceOf(LlmError);
-  });
-
-  it("calls Anthropic by default with the key in a header", async () => {
-    const f = vi.fn().mockResolvedValue(json({ content: [{ type: "text", text: "hello" }] }));
-    vi.stubGlobal("fetch", f);
-    expect(await callLLM({ system: "s", user: "u" })).toBe("hello");
-    expect(f.mock.calls[0][0]).toBe("https://api.anthropic.com/v1/messages");
-    expect(f.mock.calls[0][1].headers["x-api-key"]).toBe("secret-key-123");
-  });
-
-  it("calls Gemini with the model in the URL and the key in a header, not the URL", async () => {
-    process.env.LLM_PROVIDER = "gemini";
-    process.env.LLM_MODEL = "models/gemini-test-flash";
-    const f = vi.fn().mockResolvedValue(json({ candidates: [{ content: { parts: [{ text: "a" }, { text: "b" }] } }] }));
-    vi.stubGlobal("fetch", f);
-    expect(await callLLM({ system: "sys", user: "usr" })).toBe("ab");
+  it("posts to the Cloudflare endpoint with the default model and a Bearer token", async () => {
+    const f = vi.fn().mockResolvedValue(cfOk("hello"));
+    expect(await callLLM({ system: "s", user: "u", fetchImpl: f })).toBe("hello");
     const [url, init] = f.mock.calls[0];
-    expect(url).toBe("https://generativelanguage.googleapis.com/v1beta/models/gemini-test-flash:generateContent");
-    expect(url).not.toContain("secret-key-123");
-    expect(init.headers["x-goog-api-key"]).toBe("secret-key-123");
-    const sent = JSON.parse(init.body);
-    expect(sent.systemInstruction.parts[0].text).toBe("sys");
-    expect(sent.contents[0].parts[0].text).toBe("usr");
+    expect(url).toBe(`https://api.cloudflare.com/client/v4/accounts/acct-123/ai/run/${DEFAULT_MODEL}`);
+    expect(init.headers.Authorization).toBe("Bearer secret-token-xyz");
   });
 
-  it("requires LLM_MODEL for Gemini", async () => {
-    process.env.LLM_PROVIDER = "gemini";
-    await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("LLM_MODEL is not set");
+  it("uses LLM_MODEL when set", async () => {
+    process.env.LLM_MODEL = "@cf/openai/gpt-oss-120b";
+    const f = vi.fn().mockResolvedValue(cfOk("ok"));
+    await callLLM({ user: "u", fetchImpl: f });
+    expect(f.mock.calls[0][0]).toContain("@cf/openai/gpt-oss-120b");
   });
 
-  it("treats a blocked or empty Gemini reply as an error", async () => {
-    process.env.LLM_PROVIDER = "gemini";
-    process.env.LLM_MODEL = "m";
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({ promptFeedback: { blockReason: "OTHER" } })));
-    await expect(callLLM({ system: "s", user: "u" })).rejects.toBeInstanceOf(LlmError);
+  it("stringifies a non-string response object (Cloudflare quirk)", async () => {
+    const f = vi.fn().mockResolvedValue(json({ success: true, result: { response: { service_id: "x" } } }));
+    expect(await callLLM({ user: "u", fetchImpl: f })).toBe('{"service_id":"x"}');
   });
 
-  it("never includes the key in error messages", async () => {
-    process.env.LLM_PROVIDER = "gemini";
-    process.env.LLM_MODEL = "m";
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({}, 429)));
-    await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("status 429");
-    await callLLM({ system: "s", user: "u" }).catch((e: Error) => expect(e.message).not.toContain("secret-key-123"));
+  it("treats a failed call as an LlmError and never leaks the token", async () => {
+    const f = vi.fn().mockResolvedValue(json({ success: false }, 500));
+    await expect(callLLM({ user: "u", fetchImpl: f })).rejects.toBeInstanceOf(LlmError);
+    await callLLM({ user: "u", fetchImpl: f }).catch((e: Error) => expect(e.message).not.toContain("secret-token-xyz"));
   });
 
-  describe("gemini retries and fallback", () => {
-    const ok = () => json({ candidates: [{ content: { parts: [{ text: "ok" }] } }] });
-    beforeEach(() => {
-      process.env.LLM_PROVIDER = "gemini";
-      process.env.LLM_MODEL = "primary";
-    });
+  it("treats an empty reply as an error", async () => {
+    const f = vi.fn().mockResolvedValue(cfOk("   "));
+    await expect(callLLM({ user: "u", fetchImpl: f })).rejects.toThrow("empty reply");
+  });
 
-    it("retries once on a 503 and then succeeds", async () => {
-      const f = vi.fn().mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(ok());
-      vi.stubGlobal("fetch", f);
-      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
-      expect(f).toHaveBeenCalledTimes(2);
-      expect(f.mock.calls[1][0]).toContain("/models/primary:");
-    });
-
-    it("falls back to the next model when the first stays overloaded", async () => {
-      process.env.LLM_FALLBACK_MODELS = "models/backup-one, backup-two";
-      const f = vi.fn().mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(json({}, 503)).mockResolvedValueOnce(ok());
-      vi.stubGlobal("fetch", f);
-      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
-      expect(f).toHaveBeenCalledTimes(3);
-      expect(f.mock.calls[2][0]).toContain("/models/backup-one:");
-    });
-
-    it("moves to the fallback right away on a 404 (wrong model name)", async () => {
-      process.env.LLM_FALLBACK_MODELS = "backup";
-      const f = vi.fn().mockResolvedValueOnce(json({}, 404)).mockResolvedValueOnce(ok());
-      vi.stubGlobal("fetch", f);
-      expect(await callLLM({ system: "s", user: "u" })).toBe("ok");
-      expect(f).toHaveBeenCalledTimes(2);
-    });
-
-    it("does not retry a non-temporary error when there is no fallback", async () => {
-      const f = vi.fn().mockResolvedValue(json({}, 403));
-      vi.stubGlobal("fetch", f);
-      await expect(callLLM({ system: "s", user: "u" })).rejects.toThrow("status 403");
-      expect(f).toHaveBeenCalledTimes(1);
-    });
-
-    it("throws the last error when every model fails", async () => {
-      process.env.LLM_FALLBACK_MODELS = "backup";
-      vi.stubGlobal("fetch", vi.fn().mockResolvedValue(json({}, 503)));
-      await expect(callLLM({ system: "s", user: "u" })).rejects.toBeInstanceOf(LlmError);
-    });
+  it("builds messages from the system/user convenience pair", async () => {
+    const f = vi.fn().mockResolvedValue(cfOk("ok"));
+    await callLLM({ system: "SYS", user: "USR", fetchImpl: f });
+    const sent = JSON.parse(f.mock.calls[0][1].body);
+    expect(sent.messages).toEqual([
+      { role: "system", content: "SYS" },
+      { role: "user", content: "USR" },
+    ]);
+    expect(sent.temperature).toBe(0);
   });
 });

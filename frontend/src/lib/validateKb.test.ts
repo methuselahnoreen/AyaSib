@@ -152,13 +152,17 @@ describe("validate-kb (duplicate-normalized requirements)", () => {
 });
 
 describe("validate-kb (backward compatibility)", () => {
-  it("the four existing KB entries still pass", () => {
+  it("all existing KB entries still pass", () => {
     const realKb = path.resolve(here, "../../../kb");
     const res = spawnSync(process.execPath, [SCRIPT], {
       env: { ...process.env, KB_DIR: realKb },
       encoding: "utf8",
     });
     expect(res.status).toBe(0);
-    expect(res.stdout).toContain("4 of 4 files passed");
+    // Every KB file must pass (N of N), independent of how many entries exist.
+    const summary = /(\d+) of (\d+) files passed/.exec(res.stdout);
+    expect(summary).not.toBeNull();
+    expect(summary![1]).toBe(summary![2]); // passed === total
+    expect(res.stdout).not.toContain("FAIL");
   });
 });
