@@ -29,6 +29,17 @@ const features: Feature[] = [
     ),
   },
   {
+    href: "/basaha",
+    title: "Basaha ang litrato",
+    text: "Kuhaa ug litrato sa dokumento ug ipasabot sa Bisaya.",
+    icon: (
+      <>
+        <path d="M3 7h3l2-2h8l2 2h3v12H3z" />
+        <circle cx="12" cy="13" r="3.5" />
+      </>
+    ),
+  },
+  {
     href: "/translate",
     title: "Hubad",
     text: "Hubara ang teksto tali sa English, Filipino, ug Bisaya.",

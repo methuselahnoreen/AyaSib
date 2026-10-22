@@ -1,11 +1,13 @@
 "use client";
-
+  
 import { useState } from "react";
 import { Notice } from "@/components/Notice";
 import { Shell } from "@/components/Shell";
 import { errorText, explainText } from "@/lib/client";
 import { t } from "@/lib/strings";
 import type { ExplainResponse } from "@/lib/types";
+
+const MAX_CHARS = 8000;
 
 export default function ExplainPage() {
   const [text, setText] = useState("");
@@ -32,7 +34,12 @@ export default function ExplainPage() {
       <main>
         <label className="field">
           <span className="small">{t.explain.title}</span>
-          <textarea value={text} maxLength={8000} placeholder={t.explain.placeholder} onChange={(e) => setText(e.target.value)} />
+          <textarea
+            value={text}
+            maxLength={MAX_CHARS}
+            placeholder={t.explain.placeholder}
+            onChange={(e) => setText(e.target.value)}
+          />
         </label>
         <button className="btn" onClick={run} disabled={loading || !text.trim()}>
           {loading ? t.ask.loading : t.explain.button}

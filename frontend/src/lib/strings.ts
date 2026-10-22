@@ -8,6 +8,7 @@ export const t = {
   home: {
     ask: { title: "Pangutana", desc: "Pangutana bahin sa permit, clearance, ug uban pa." },
     explain: { title: "Ipasabot ang dokumento", desc: "I-paste ang sulat o porma ug ipasabot sa Bisaya." },
+    photo: { title: "Basaha ang litrato", desc: "Kuhaa ug litrato sa dokumento ug ipasabot sa Bisaya." },
     translate: { title: "Hubad", desc: "Hubara ang teksto tali sa English, Filipino, ug Bisaya." },
   },
   ask: {
@@ -46,6 +47,12 @@ export const t = {
     nextSteps: "Unsay buhaton",
     disclaimer:
       "Kini nga pagpasabot tabang lang ug dili legal nga tambag. Palihug pangutana sa opisina o abogado kung dili ka sigurado.",
+  },
+  photo: {
+    title: "Basaha ang litrato",
+    intro: "Kuhaa o pili ug litrato sa dokumento. Basahon ang teksto, dayon susiha ug ayoha kung kinahanglan una ipasabot.",
+    textLabel: "Teksto nga nabasa",
+    placeholder: "Magpakita dinhi ang teksto gikan sa litrato. Mahimo sab nimo i-type o i-paste...",
   },
   translate: {
     title: "Hubad",
