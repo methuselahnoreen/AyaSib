@@ -40,7 +40,7 @@ export default function PhotoPage() {
         <PhotoReader onText={(extracted: string) => setText(extracted.slice(0, MAX_CHARS))} />
 
         <label className="field">
-          <span className="small">{t.photo.textLabel}</span>
+          <span className="small">{t.photo.extractedTag}</span>
           <textarea
             value={text}
             maxLength={MAX_CHARS}
@@ -56,7 +56,7 @@ export default function PhotoPage() {
           {error && <Notice kind="error" text={error} action={{ label: t.errors.retry, onClick: run }} />}
           {result && (
             <article className="card">
-              <div className="card-head">{result.document_type ?? t.explain.whatItIs}</div>
+              <div className="card-head">{t.photo.explanationTag}: {result.document_type ?? t.explain.whatItIs}</div>
               <div className="card-body">
                 <section>
                   <strong>{t.explain.whatItIs}</strong>

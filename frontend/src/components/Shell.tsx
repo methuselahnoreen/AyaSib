@@ -1,19 +1,22 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
-import { t } from "@/lib/strings";
+import { TabBar } from "@/components/TabBar";
 
-export function Shell({ title, back = true, children }: { title: string; back?: boolean; children: ReactNode }) {
+export function Shell({
+  title,
+  tabs = true,
+  children,
+}: {
+  title: string;
+  /** Show the bottom tab bar (the standard app chrome). */
+  tabs?: boolean;
+  children: ReactNode;
+}) {
   return (
-    <div className="shell">
-      <header className="bar">
-        {back && (
-          <Link href="/" aria-label={t.back}>
-            ← {t.back}
-          </Link>
-        )}
-        <h1>{title}</h1>
-      </header>
+    <div className={`shell ${tabs ? "has-tabs" : ""}`}>
+      {/* No header logo — the app leads with the hero. Title kept for screen readers. */}
+      <h1 className="sr-only">{title}</h1>
       {children}
+      {tabs && <TabBar />}
     </div>
   );
 }

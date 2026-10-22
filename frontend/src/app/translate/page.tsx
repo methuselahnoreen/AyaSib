@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Notice } from "@/components/Notice";
 import { Shell } from "@/components/Shell";
 import { errorText, translateText } from "@/lib/client";
@@ -8,10 +9,22 @@ import { t } from "@/lib/strings";
 import type { Lang, TranslateResponse } from "@/lib/types";
 
 const LANGS: Lang[] = ["en", "fil", "ceb"];
+const isLangCode = (v: string | null): v is Lang => v === "en" || v === "fil" || v === "ceb";
 
 export default function TranslatePage() {
+  return (
+    <Suspense fallback={null}>
+      <TranslatePageInner />
+    </Suspense>
+  );
+}
+
+function TranslatePageInner() {
+  const searchParams = useSearchParams();
+  // Honor the language selector's /translate?to=<lang> deep link for the initial target language.
+  const toParam = searchParams.get("to");
   const [from, setFrom] = useState<Lang>("en");
-  const [to, setTo] = useState<Lang>("ceb");
+  const [to, setTo] = useState<Lang>(isLangCode(toParam) ? toParam : "ceb");
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<TranslateResponse | null>(null);
