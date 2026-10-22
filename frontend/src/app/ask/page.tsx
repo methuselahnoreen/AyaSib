@@ -1,6 +1,7 @@
 "use client";
  
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnswerCard } from "@/components/AnswerCard";
 import { HeroArt } from "@/components/HeroArt";
 import { Notice } from "@/components/Notice";
@@ -14,11 +15,21 @@ type Msg =
   | { id: number; role: "assistant"; result?: AskResponse; error?: string; question?: string };
  
 export default function AskPage() {
+  return (
+    <Suspense fallback={null}>
+      <AskPageInner />
+    </Suspense>
+  );
+}
+
+function AskPageInner() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const nextId = useRef(1);
   const endRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const prefilled = useRef(false);
   // The previous user question, sent as context so short follow-ups like
   // "pila ang bayad niini?" can be resolved to the service just discussed.
   const lastQuestion = useRef("");
@@ -26,6 +37,17 @@ export default function AskPage() {
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [msgs, loading]);
+
+  // Accept a question handed over from the home search (/ask?q=...) and submit it once.
+  useEffect(() => {
+    if (prefilled.current) return;
+    const q = searchParams.get("q");
+    if (q && q.trim()) {
+      prefilled.current = true;
+      send(q);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
  
   async function send(raw: string, addUser = true) {
     const q = raw.trim();

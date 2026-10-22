@@ -55,6 +55,18 @@ If no service in the knowledge base matches, AyaSib replies *"Dili ko sigurado n
 
 The web app also has an **Explain this document** feature and a **Translate** feature, built and owned by the frontend team under `frontend/src/app`. They follow the same hard rule as Ask: only open-source models, and no invented facts. This README focuses on the Ask backend; see the frontend sources for those two.
 
+### Readiness view — "Andam Na?" (working today)
+
+Each supported service has a per-service readiness view at `/andam/<service-id>` that is built entirely from existing KB fields. It never invents a fact.
+
+- **Readiness checklist.** One item per requirement, drawn from the service's `requirements_ceb` (falling back to `requirements`). Each item can be marked *Naa na* (have it), *Kinahanglan pa* (still need), or *Susihon* (confirm). Progress is saved **only on your device** (browser `localStorage`), attached to the requirement's text rather than its position, so reordering or editing the list never moves your marks to the wrong item. When a service has no requirements listed, the view says so instead of showing an empty checklist.
+- **Next recommended action.** A single Cebuano hint derived only from the service's verified `next_step`/`next_step_ceb`, or from your remaining items, with a safe "confirm with the office" fallback. It never claims acceptance or eligibility.
+- **Verified navigation.** A next step and links to officially related services, shown **only** when the KB entry already carries that data (`next_step`/`next_step_ceb` and a `related` list of other service ids). Unresolved related ids are dropped.
+- **Freshness and information status.** The view shows the service's `last_verified` date and a computed status — *Na-verify* (Verified), *Kinahanglan susihon* (Needs review), *Wala pa ma-kumpirma* (Unconfirmed), or a distinct **verification-date-unavailable** notice when the date is missing, unparseable, or in the future. A Cebuano clarifier reminds the user that a verification date is not a guarantee that requirements are unchanged.
+- **Report outdated info.** A client-only control opens a **prefilled GitHub issue** in the public project repository for a maintainer to review against an official source. It makes no server call, stores nothing on any AyaSib server, and exposes no secret. If no repository is configured, it shows a plain "confirm with the office" message instead.
+
+All Cebuano strings here are first-draft and flagged for native-speaker review, like the rest of `frontend/src/lib/strings.ts`.
+
 ## How it avoids wrong answers
 
 Wrong information about a government process costs people time and money, so reliability is the core design goal.
@@ -145,8 +157,10 @@ Copy `.env.example` to `.env.local` (git-ignored) and fill in:
 | `CLOUDFLARE_ACCOUNT_ID` | Server only | Your Cloudflare account ID |
 | `CLOUDFLARE_API_TOKEN` | Server only | Token with the Workers AI permission. **Never** prefix with `NEXT_PUBLIC_` |
 | `LLM_MODEL` | Server only | Optional. Overrides the default model id |
+| `NEXT_PUBLIC_GITHUB_REPO` | Client (public) | Optional. `owner/name` of the public repo the "report outdated info" control files issues against. Defaults to `methuselahnoreen/AyaSib`. This is a public repo path, not a secret. |
+| `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` | Client (public) | Optional. Whole number of days before a `last_verified` date is treated as stale. Defaults to 180. |
 
-Real keys must never be committed or pasted in chat. `.env.local` and all `.env.*` files are git-ignored (except `.env.example`).
+Only `NEXT_PUBLIC_GITHUB_REPO` and `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` are exposed to the browser; both are non-secret configuration. The Cloudflare and `LLM_*` values stay server-side. Real keys must never be committed or pasted in chat. `.env.local` and all `.env.*` files are git-ignored (except `.env.example`).
 
 ## Project structure
 
@@ -206,8 +220,20 @@ Rules enforced by `npm run kb:validate`:
 - If `steps` is present, `steps_ceb` must have the same number of items.
 - `source_url` must be a real `https://` address (no `TODO`, no `example.*`).
 - `last_verified` must be a real date, not in the future.
+- No two requirements may be identical after normalization (trim and collapse internal whitespace; case and punctuation preserved), checked separately for `requirements` and `requirements_ceb`.
 
 Only files that pass are written into `kb.json` by `npm run kb:build`.
+
+### Optional fields for the readiness view (additive)
+
+These five fields are optional. Existing entries omit them and stay valid. They are validated only when present and must be authored from the same official source as the rest of the entry — never invented.
+
+| Field | Meaning | Validation when present |
+|-------|---------|-------------------------|
+| `next_step` / `next_step_ceb` | The official next action after this service (English / Cebuano). | Non-empty text. |
+| `related` | Service ids officially related to this one. | A list of lowercase-hyphenated ids, each resolving to a validated entry. |
+| `review_status` | Reliability flag. | One of `verified`, `needs_review`, `unconfirmed`. |
+| `review_due` | Date the entry is due for rechecking. | A real calendar date. |
 
 ## How to add a service
 
@@ -261,9 +287,11 @@ npm run kb:validate
 npm run eval          # routes each eval question and prints a pass rate
 ```
 
-The eval set (`eval/questions.json`) contains Bisaya questions that should map to a service and others that should be refused (out-of-KB services and deliberately vague ones). `backend/scripts/eval.mjs` runs each through the Ask logic, compares the resolved service id (or "not sure") to the expected value, and exits non-zero if any case fails.
+The eval set (`eval/questions.json`) contains Bisaya, Filipino, and English questions that should map to a service and others that should be refused (out-of-KB services and deliberately vague ones). It also covers readiness-view scenarios: a fee/processing-time question, a freshness/review question, a next-step/related pathway, a missing requirement with no verified resolution, and a community report that must not modify the KB automatically. `backend/scripts/eval.mjs` runs each through the Ask logic, compares the resolved service id (or "not sure") to the expected value, and exits non-zero if any case fails.
 
-**Latest eval run:** 13 of 13 passed (2026-10-21). Because the router is a live model, a rerun can occasionally differ on a borderline item; the harness reports the pass rate rather than hiding it.
+The harness routes through a **live** open-weights model, so it needs `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` set (run it as `npm run eval`, which loads `../.env.local`). Without credentials every case reports `internal_error`. Because the router is a live model, a rerun can occasionally differ on a borderline item; the harness reports the pass rate rather than hiding it, and difficult/refusal cases are kept in the set rather than removed.
+
+The TypeScript unit and property tests (frontend Vitest, `npm test` in `frontend/`) do not need credentials and cover the readiness, persistence, navigation, freshness/status, next-action, GitHub-issue URL, and KB-validation logic.
 
 ## Security
 
@@ -296,7 +324,9 @@ Please read these before relying on AyaSib.
 - [ ] More services and more localities
 - [ ] pgvector retrieval once the KB is large enough to need it
 - [ ] "Explain this document" and photo OCR hardening
-- [ ] A community process for reporting outdated KB entries
+- [x] Report outdated KB entries via a client-only GitHub issue for maintainer review
+- [ ] A durable server-side report queue (deferred until approved durable storage exists; the current Vercel deployment has no database and an ephemeral filesystem)
+- [ ] Human-authored `next_step`/`related`/`review_status`/`review_due` content for more services, from official sources only
 
 ## Contributing
 

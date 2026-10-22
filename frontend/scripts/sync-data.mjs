@@ -65,6 +65,18 @@ function syncKb() {
       fee_ceb: str(doc.fee_ceb),
       processing_time_ceb: str(doc.processing_time_ceb),
     };
+    // Feature: ayasib-andam-na — optional, additive fields appended ONLY when present in the source
+    // YAML, so entries that do not define them serialize exactly as before.
+    const next_step = str(doc.next_step);
+    if (next_step) entry.next_step = next_step;
+    const next_step_ceb = str(doc.next_step_ceb);
+    if (next_step_ceb) entry.next_step_ceb = next_step_ceb;
+    const related = list(doc.related);
+    if (related.length) entry.related = related;
+    const review_status = str(doc.review_status);
+    if (review_status) entry.review_status = review_status;
+    const review_due = str(doc.review_due);
+    if (review_due) entry.review_due = review_due;
     if (!entry.source_url || !entry.last_verified) {
       console.warn(`[sync] ${f}: missing source_url or last_verified, so it will never be used to answer`);
     }

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { interpretOcr, MAX_UPLOAD_BYTES, prepareImage, validateImage } from "@/lib/ocr";
 import { OcrCancelled, OcrError, readPhoto, type OcrErrorCode } from "@/lib/ocrClient";
-import { photoText as p } from "@/lib/photoString";
+import { photoText as p } from "@/lib/photoStrings";
 import styles from "./PhotoReader.module.css";
 
 type Message = { kind: "info" | "error"; text: string } | null;

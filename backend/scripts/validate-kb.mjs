@@ -4,11 +4,12 @@ import { fileURLToPath } from "node:url";
 import { load } from "js-yaml";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const KB_DIR = path.resolve(here, "../../kb");
+// KB_DIR override (env) lets tests point at fixture directories; defaults to the real kb/ folder.
+const KB_DIR = process.env.KB_DIR ? path.resolve(process.env.KB_DIR) : path.resolve(here, "../../kb");
 
 const REQUIRED_TEXT = ["id", "name_en", "locality", "summary_ceb", "source_title", "source_url"];
 const NULLABLE_TEXT = ["office", "fee", "processing_time"];
-const OPTIONAL = ["name_ceb", "who_may_avail", "requirements_note", "requirements_note_ceb", "scope_note", "source_pages", "steps", "steps_ceb", "office_ceb", "fee_ceb", "processing_time_ceb"];
+const OPTIONAL = ["name_ceb", "who_may_avail", "requirements_note", "requirements_note_ceb", "scope_note", "source_pages", "steps", "steps_ceb", "office_ceb", "fee_ceb", "processing_time_ceb", "next_step", "next_step_ceb", "related", "review_status", "review_due"];
 const KNOWN = new Set([...REQUIRED_TEXT, ...NULLABLE_TEXT, ...OPTIONAL, "requirements", "requirements_ceb", "last_verified"]);
 
 const isText = (v) => typeof v === "string" && v.trim() !== "";
@@ -91,6 +92,42 @@ function checkFile(file, text) {
     if (date > limit) errors.push(`last_verified (${date}) is in the future`);
   }
 
+  // Feature: ayasib-andam-na — optional additive fields, checked only when present.
+  if ("next_step" in doc && !isText(doc.next_step)) errors.push("next_step must be non-empty text");
+  if ("next_step_ceb" in doc && !isText(doc.next_step_ceb)) errors.push("next_step_ceb must be non-empty text");
+  if ("related" in doc) {
+    const idRe = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+    if (!Array.isArray(doc.related) || !doc.related.every((r) => typeof r === "string" && idRe.test(r))) {
+      errors.push("related must be a list of lowercase-hyphenated ids");
+    }
+  }
+  if ("review_status" in doc && !["verified", "needs_review", "unconfirmed"].includes(doc.review_status)) {
+    errors.push("review_status must be one of: verified, needs_review, unconfirmed");
+  }
+  if ("review_due" in doc) {
+    const due = toDateString(doc.review_due);
+    if (!due || !isRealDate(due)) errors.push("review_due must be a real date like 2026-10-14");
+  }
+
+  // Duplicate-normalized requirements: two items that normalize equal would share one stored
+  // checklist state. Same normalization the app's requirementKey uses: trim + collapse whitespace,
+  // preserve case and punctuation. Checked independently for requirements and requirements_ceb.
+  const normReq = (s) => String(s).trim().replace(/\s+/g, " ");
+  for (const field of ["requirements", "requirements_ceb"]) {
+    if (!Array.isArray(doc[field])) continue;
+    const seen = new Set();
+    let dup = false;
+    for (const item of doc[field]) {
+      const n = normReq(item);
+      if (seen.has(n)) {
+        dup = true;
+        break;
+      }
+      seen.add(n);
+    }
+    if (dup) errors.push(`${field} contains duplicate items after normalization`);
+  }
+
   for (const key of Object.keys(doc)) {
     if (!KNOWN.has(key)) warnings.push(`unknown field "${key}" (typo?)`);
   }
@@ -122,7 +159,7 @@ for (const file of files) {
 
   if (errors.length === 0) {
     console.log(`OK    kb/${file}`);
-    passed.push(doc);
+    passed.push({ file, doc });
   } else {
     failed += 1;
     console.log(`FAIL  kb/${file}`);
@@ -131,12 +168,25 @@ for (const file of files) {
   for (const w of warnings) console.log(`        ! warning: ${w}`);
 }
 
+// Feature: ayasib-andam-na — second pass: every `related` id must resolve to a validated entry.
+// Runs only over files that passed their own checks, using the collected id set.
+const validIds = new Set(passed.map(({ doc }) => doc.id).filter((id) => typeof id === "string"));
+for (const { file, doc } of passed) {
+  const rels = Array.isArray(doc.related) ? doc.related : [];
+  const unresolved = rels.filter((rid) => !validIds.has(rid));
+  if (unresolved.length > 0) {
+    failed += 1;
+    console.log(`FAIL  kb/${file}`);
+    for (const rid of unresolved) console.log(`        - related id "${rid}" does not resolve to a validated entry`);
+  }
+}
+
 console.log(`\n${files.length - failed} of ${files.length} files passed`);
 
 if (process.argv.includes("--write")) {
   const out = path.resolve(here, "../data/kb.json");
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  const services = passed.map((d) => ({ ...d, last_verified: toDateString(d.last_verified) }));
+  const services = passed.map(({ doc }) => ({ ...doc, last_verified: toDateString(doc.last_verified) }));
   fs.writeFileSync(out, JSON.stringify(services, null, 2) + "\n");
   console.log(`Wrote ${services.length} services to backend/data/kb.json (${failed} skipped)`);
   process.exit(0);

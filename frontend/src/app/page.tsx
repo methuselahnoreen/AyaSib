@@ -1,81 +1,94 @@
+"use client";
+
+// Feature: ayasib-frontend-redesign (v3)
+import { useState } from "react";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { HeroArt } from "@/components/HeroArt";
+import { useRouter } from "next/navigation";
 import { Shell } from "@/components/Shell";
- 
-interface Feature {
-  href: string;
-  title: string;
-  text: string;
-  icon: ReactNode;
-}
- 
-const features: Feature[] = [
-  {
-    href: "/ask",
-    title: "Pangutana",
-    text: "Pangutana bahin sa permit, clearance, ug uban pa.",
-    icon: <path d="M4 5h16v11H9l-5 4V5z" />,
-  },
-  {
-    href: "/explain",
-    title: "Ipasabot ang dokumento",
-    text: "I-paste ang sulat o porma ug ipasabot sa Bisaya.",
-    icon: (
-      <>
-        <path d="M6 3h9l4 4v14H6z" />
-        <path d="M14 3v5h5M9 13h6M9 17h6" />
-      </>
-    ),
-  },
-  {
-    href: "/translate",
-    title: "Hubad",
-    text: "Hubara ang teksto tali sa English, Filipino, ug Bisaya.",
-    icon: (
-      <>
-        <path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M12 5c0 3-3 7-7 9" />
-        <path d="M13 20l4-9 4 9M14.5 17h5" />
-      </>
-    ),
-  },
-];
- 
+import { Icon } from "@/components/Icon";
+import { FooterNote } from "@/components/FooterNote";
+import { t } from "@/lib/strings";
+
 export default function Home() {
+  const router = useRouter();
+  const [q, setQ] = useState("");
+
+  function ask(question: string) {
+    const query = question.trim();
+    if (query) router.push(`/ask?q=${encodeURIComponent(query)}`);
+  }
+
   return (
-    <Shell title="AyaSib" back={false}>
+    <Shell title={t.appName}>
       <main>
-        <section className="hero">
-          <HeroArt />
-          <p>Tabang sa pagsabot sa mga serbisyo sa gobyerno, sa Bisaya.</p>
+        {/* Hero card */}
+        <section className="hero-card">
+          <span className="hero-kicker">{t.homePage.kicker}</span>
+          <h1 className="display">{t.homePage.heroHeading}</h1>
+          <p className="hero-sub">{t.homePage.heroSupport}</p>
+
+          {/* Aya on the left, speech bubble on the right */}
+          <div className="hero-aya">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
+            <p className="aya-speech">{t.homePage.ayaBubble}</p>
+          </div>
+
+          {/* Name story */}
+          <div className="name-story">
+            <strong>{t.homePage.nameStory}</strong>
+            <span>{t.homePage.nameGloss}</span>
+          </div>
         </section>
- 
-        <nav className="features">
-          {features.map((f) => (
-            <Link key={f.href} href={f.href} className="card feature">
-              <span className="badge" aria-hidden="true">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {f.icon}
-                </svg>
-              </span>
-              <span>
-                <strong>{f.title}</strong>
-                <span className="desc">{f.text}</span>
-              </span>
-            </Link>
-          ))}
+
+        {/* Search */}
+        <form
+          className="searchpill"
+          onSubmit={(e) => {
+            e.preventDefault();
+            ask(q);
+          }}
+        >
+          <Icon name="search" size={22} className="search-icon" />
+          <input value={q} maxLength={2000} placeholder={t.homePage.searchPlaceholder} aria-label={t.homePage.searchPlaceholder} onChange={(e) => setQ(e.target.value)} />
+          <button className="go" type="submit" disabled={!q.trim()} aria-label={t.homePage.searchButton}>
+            <Icon name="chat" size={20} />
+          </button>
+        </form>
+
+        {/* Three tiles */}
+        <nav className="tiles" aria-label={t.tabs.label}>
+          <Link href="/ask" className="tile">
+            <Icon name="chat" size={28} className="tile-icon" />
+            <strong>{t.homePage.tileAsk}</strong>
+            <span>{t.homePage.tileAskSub}</span>
+          </Link>
+          <Link href="/services" className="tile">
+            <Icon name="doc" size={28} className="tile-icon" />
+            <strong>{t.homePage.tileServices}</strong>
+            <span>{t.homePage.tileServicesSub}</span>
+          </Link>
+          <Link href="/services" className="tile">
+            <Icon name="checklist" size={28} className="tile-icon" />
+            <strong>{t.homePage.tileChecklist}</strong>
+            <span>{t.homePage.tileChecklistSub}</span>
+          </Link>
         </nav>
+
+        {/* Suggested question */}
+        <button type="button" className="suggest" onClick={() => ask(t.homePage.suggestQ)}>
+          <Icon name="sparkle" size={26} className="s-icon" />
+          <span>
+            <span className="s-kicker">{t.homePage.suggestKicker}</span>
+            <span className="s-body" style={{ display: "block" }}>
+              {t.homePage.suggestQ}
+            </span>
+          </span>
+          <Icon name="external" size={18} className="s-go" />
+        </button>
+
+        <FooterNote />
       </main>
     </Shell>
   );
 }
- 
