@@ -104,6 +104,31 @@ describe("POST /api/ask", () => {
     expect((await call({ question: "x".repeat(2001) }, "6.6.6.7")).status).toBe(413);
   });
 
+  it("uses prior context to resolve a short follow-up, and keeps it out of the standalone cache", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(modelReply("nbi-clearance"));
+    vi.stubGlobal("fetch", fetchMock);
+
+    // Follow-up with context resolves to the service and includes the context in the prompt.
+    const withCtx = await (
+      await POST(
+        new Request("http://x/api/ask", {
+          method: "POST",
+          headers: { "x-forwarded-for": "8.8.8.1" },
+          body: JSON.stringify({ question: "Pila ang bayad niini?", context: "Unsaon pag-apply ug NBI?" }),
+        }),
+      )
+    ).json();
+    expect(withCtx.confident).toBe(true);
+    const sentBody = JSON.parse(fetchMock.mock.calls[0][1].body);
+    const userMsg = sentBody.messages.find((m: { role: string }) => m.role === "user").content;
+    expect(userMsg).toContain("<context>");
+
+    // The same bare question with no context is a different cache key, so it still refuses.
+    fetchMock.mockResolvedValue(modelReply(null));
+    const noCtx = await (await call({ question: "Pila ang bayad niini?" }, "8.8.8.2")).json();
+    expect(noCtx.confident).toBe(false);
+  });
+
   it("rate limits after 20 requests per minute", async () => {
     vi.stubGlobal("fetch", vi.fn().mockImplementation(async () => modelReply(null)));
     let last = 200;
