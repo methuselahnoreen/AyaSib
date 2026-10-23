@@ -2,14 +2,14 @@
 
 // Feature: ayasib-frontend-redesign
 // Checklist landing (Pangandam tab). Shows the last-opened service's checklist directly; if none
-// has been opened yet, prompts the user to pick a service. A checklist always belongs to a service.
+// has been opened yet, offers a search + service cards that open that service's CHECKLIST.
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { kb } from "@/lib/kb";
 import { t } from "@/lib/strings";
 import { Shell } from "@/components/Shell";
 import { Icon } from "@/components/Icon";
 import { ReadinessChecklist } from "@/components/ReadinessChecklist";
+import { ServiceSearch } from "@/components/ServiceSearch";
 import { FooterNote } from "@/components/FooterNote";
 import { getLastService } from "@/lib/readinessStore";
 import type { KbEntry } from "@/lib/types";
@@ -31,23 +31,19 @@ export default function ChecklistLandingPage() {
         {!resolved ? null : entry ? (
           <>
             <ReadinessChecklist entry={entry} />
-            <Link href="/services" className="btn secondary btn-block">
+            <button type="button" className="btn secondary btn-block" onClick={() => setEntry(null)}>
               <Icon name="grid" size={18} /> {t.checklistLanding.changeService}
-            </Link>
+            </button>
           </>
         ) : (
           <>
             <span className="muted-kicker">{t.readinessUi.kicker}</span>
             <h1 className="page-title">{t.checklistLanding.title}</h1>
-            <div className="guide-note">
-              <Icon name="checklist" size={24} className="g-icon" />
-              <span>
-                <span>{t.checklistLanding.empty}</span>
-              </span>
-            </div>
-            <Link href="/services" className="btn btn-block">
-              <Icon name="grid" size={18} /> {t.checklistLanding.pick}
-            </Link>
+            <p className="muted" style={{ margin: "0 0 4px" }}>
+              {t.checklistLanding.empty}
+            </p>
+            {/* Search + cards that open each service's CHECKLIST directly. */}
+            <ServiceSearch destination="checklist" />
           </>
         )}
         <FooterNote />

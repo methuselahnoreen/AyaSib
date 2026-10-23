@@ -29,7 +29,10 @@ function iconFor(entry: KbEntry): IconName {
 
 type Filter = "all" | "local" | "national";
 
-export function ServiceSearch() {
+// Where a card should lead. "detail" -> /andam/[id] (Serbisyo); "checklist" -> /andam/[id]/checklist (Pangandam).
+type Destination = "detail" | "checklist";
+
+export function ServiceSearch({ destination = "detail" }: { destination?: Destination }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -84,7 +87,11 @@ export function ServiceSearch() {
       ) : (
         <div className="svc-grid">
           {results.map((entry, i) => (
-            <Link key={entry.id} href={`/andam/${entry.id}`} className={`svc-card ${i === 0 ? "selected" : ""}`}>
+            <Link
+              key={entry.id}
+              href={destination === "checklist" ? `/andam/${entry.id}/checklist` : `/andam/${entry.id}`}
+              className={`svc-card ${i === 0 ? "selected" : ""}`}
+            >
               <div className="svc-top">
                 <Icon name={iconFor(entry)} size={26} className="svc-ic" />
                 <Icon name="external" size={18} className="arrow" />
