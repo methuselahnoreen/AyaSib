@@ -66,6 +66,7 @@ describe("POST /api/ask", () => {
     const data = await (await call({ question: "Unsaon pag-apply ug passport?" }, "3.3.3.3")).json();
     expect(data.confident).toBe(false);
     expect(data.answer).toBeNull();
+    expect(data.message).toContain("Dili ko sigurado");
   });
 
   it("returns confident:false when the model names an id not in the KB", async () => {
@@ -83,6 +84,22 @@ describe("POST /api/ask", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("responds to greetings without calling the model", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (await call({ question: "Hi!!!" }, "3.3.3.7")).json();
+    expect(data.message).toContain("Kumusta!");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("responds to farewells without calling the model", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (await call({ question: "bye" }, "3.3.3.6")).json();
+    expect(data.message).toContain("amping");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it("never calls the model when the knowledge base is empty", async () => {
     kbMock.kb = [];
     const fetchMock = vi.fn();
@@ -94,16 +111,41 @@ describe("POST /api/ask", () => {
 
   it("maps a provider failure to upstream_error without leaking the token", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("boom", { status: 500 })));
-    const res = await call({ question: "hello" }, "5.5.5.5");
+    const res = await call({ question: "Unsaon pagkuha og passport?" }, "5.5.5.5");
     expect(res.status).toBe(502);
     expect(JSON.stringify(await res.json())).not.toContain("test-token");
+  });
+
+  it("redirects unrelated questions to supported topics", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (await call({ question: "Unsa ang panahon?" }, "5.5.5.6")).json();
+    expect(data.confident).toBe(false);
+    expect(data.message).toContain("opisyal nga dokumento");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("keeps follow-up questions in scope when prior context names a service", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(modelReply("nbi-clearance"));
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (
+      await POST(
+        new Request("http://x/api/ask", {
+          method: "POST",
+          headers: { "x-forwarded-for": "5.5.5.7" },
+          body: JSON.stringify({ question: "How much does it cost?", context: "Unsaon pagkuha og NBI clearance?" }),
+        }),
+      )
+    ).json();
+    expect(data.confident).toBe(true);
+    expect(fetchMock).toHaveBeenCalledOnce();
   });
 
   it("answers a repeated question from the cache without calling the model again", async () => {
     const fetchMock = vi.fn().mockResolvedValue(modelReply("nbi-clearance"));
     vi.stubGlobal("fetch", fetchMock);
-    await call({ question: "Cache  Test question" }, "7.7.7.7");
-    const second = await (await call({ question: "cache test QUESTION" }, "7.7.7.8")).json();
+    await call({ question: "How do I apply for this service?" }, "7.7.7.7");
+    const second = await (await call({ question: "how do i apply for this SERVICE?" }, "7.7.7.8")).json();
     expect(second.confident).toBe(true);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });

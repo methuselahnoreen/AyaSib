@@ -209,5 +209,8 @@ export const t = {
 // Text the API itself returns (kept separate because the server must not import UI code).
 export const serverText = {
   notSure: t.notSure,
+  greeting: "Kumusta! Makatabang ko bahin sa mga opisyal nga dokumento ug serbisyo. Unsa imong gustong mahibal-an?",
+  farewell: "Sige, amping! Mobalik lang kung naa kay pangutana bahin sa mga dokumento o serbisyo.",
+  outOfScope: "Makatabang ko sa mga opisyal nga dokumento ug serbisyo nga anaa sa akong lista. Isulti lang kung unsang dokumento o serbisyo ang imong pangutan-an.",
   explainDisclaimer: t.explain.disclaimer,
 };
