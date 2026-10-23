@@ -77,23 +77,21 @@ export function PhotoLens() {
 
   // Tier 2 overlay path: Tesseract in-browser boxes -> per-line translate -> positioned overlays.
   // Returns true if it produced usable overlays; false means "fall back to the panel".
+  // Runs in the background AFTER the panel is shown. Never touches phase/status (so it can't
+  // disturb the visible panel). recognizeLines has its own timeout, so this cannot hang.
   async function overlayPath(image: Blob): Promise<boolean> {
     try {
-      setStatus(p.locating);
       const { lines, width, height } = await recognizeLines(image);
       const base = toOverlayLines(lines, width, height);
       if (base.length === 0) return false;
 
-      setPhase("translating");
-      setStatus(p.translating);
       const joined = linesToText(base);
       const result = await translateText(joined, "en", "ceb");
       const ceb = splitTranslation(result.translation, base.length);
       setOverlays(base.map((b, i) => ({ ...b, ceb: ceb[i] || b.text })));
-      setOriginal(joined);
       return true;
     } catch {
-      return false; // any Tesseract/translate failure -> panel fallback
+      return false; // any Tesseract/translate failure -> keep the panel
     }
   }
 
@@ -110,23 +108,23 @@ export function PhotoLens() {
     const controller = new AbortController();
     abortRef.current = controller;
     try {
-      // Try the Lens overlay first; if it yields nothing usable, fall back to the cloud panel.
-      const gotOverlay = await overlayPath(image);
+      // Panel-first: get the fast, reliable cloud result and show it right away. This is the
+      // baseline the user always gets — no long wait, no frozen screen.
+      const ok = await cloudPanel(image, controller.signal);
       if (controller.signal.aborted) {
         setPhase("idle");
         return;
       }
-      if (gotOverlay) {
-        setView("overlay");
-        setPhase("result");
-        return;
-      }
-      // Fallback to Tier 1.
+      if (!ok) return; // cloudPanel already set the error/empty state
       setView("panel");
-      setPhase("scanning");
-      setStatus(p.scanning);
-      const ok = await cloudPanel(image, controller.signal);
-      if (ok) setPhase("result");
+      setPhase("result");
+
+      // Overlay as a silent upgrade: try the in-browser box OCR in the background. If it produces
+      // usable positioned lines, offer the overlay view. Any stall/failure is swallowed (timeout
+      // inside recognizeLines guarantees it can't hang), leaving the working panel in place.
+      void overlayPath(image).then((gotOverlay) => {
+        if (!controller.signal.aborted && gotOverlay) setView("overlay");
+      });
     } catch (e) {
       if (e instanceof OcrCancelled) {
         setPhase("idle");
