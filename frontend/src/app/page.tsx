@@ -18,40 +18,21 @@ export default function Home() {
   }
 
   return (
-    <Shell title={t.appName}>
+    <Shell title={t.appName} header>
       <main className="home">
-        {/* Hero panel: heading, Aya + bubble, motto, and the 3-step flow */}
+        {/* Hero panel: kicker, "Andam Na?" heading, support line, and Aya intro */}
         <section className="hero-card hero">
-          <h1 className="display">{t.homePage.heroName}</h1>
+          <span className="hero-kicker">{t.homePage.kicker}</span>
+          <h1 className="display">{t.homePage.heroHeading}</h1>
+          <p className="hero-sub">{t.homePage.heroSupport}</p>
 
           <div className="hero-aya">
-            <div className="hero-aya-col">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
-              <span className="hero-motto">{t.homePage.mottoReverse}</span>
+            <div className="aya-speech">
+              <strong>{t.homePage.ayaIntroTitle}</strong>
+              <span>{t.homePage.ayaIntroBody}</span>
             </div>
-            <p className="aya-speech">{t.homePage.ayaBubble}</p>
-          </div>
-
-          {/* Tulo ra ka lakang */}
-          <div className="flow-card">
-            <strong className="flow-title">{t.homePage.flowHeading}</strong>
-            <div className="flow">
-              <div className="flow-step">
-                <span className="flow-ring"><Icon name="question" size={28} /></span>
-                <span>{t.homePage.flow1}</span>
-              </div>
-              <Icon name="chevron" size={32} className="flow-arrow" />
-              <div className="flow-step">
-                <span className="flow-ring"><Icon name="bulb" size={28} /></span>
-                <span>{t.homePage.flow2}</span>
-              </div>
-              <Icon name="chevron" size={32} className="flow-arrow" />
-              <div className="flow-step">
-                <span className="flow-ring"><Icon name="check" size={28} /></span>
-                <span>{t.homePage.flow3}</span>
-              </div>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
           </div>
         </section>
 
@@ -70,6 +51,44 @@ export default function Home() {
               <Icon name="chat" size={20} />
             </button>
           </form>
+
+          {/* Three quick tiles */}
+          <div className="tiles">
+            <button type="button" className="tile" onClick={() => router.push("/ask")}>
+              <Icon name="chat" size={26} className="tile-icon" />
+              <strong>{t.homePage.tileAsk}</strong>
+              <span>{t.homePage.tileAskSub}</span>
+            </button>
+            <button type="button" className="tile" onClick={() => router.push("/services")}>
+              <Icon name="doc" size={26} className="tile-icon" />
+              <strong>{t.homePage.tileServices}</strong>
+              <span>{t.homePage.tileServicesSub}</span>
+            </button>
+            <button type="button" className="tile" onClick={() => router.push("/checklist")}>
+              <Icon name="checklist" size={26} className="tile-icon" />
+              <strong>{t.homePage.tileChecklist}</strong>
+              <span>{t.homePage.tileChecklistSub}</span>
+            </button>
+          </div>
+
+          {/* Tulo ra ka lakang */}
+          <h2 className="sec-title">{t.homePage.flowHeading}</h2>
+          <div className="flow">
+            <div className="flow-step">
+              <span className="flow-ring"><Icon name="question" size={22} /></span>
+              <span>{t.homePage.flow1}</span>
+            </div>
+            <Icon name="chevron" size={18} className="flow-arrow" />
+            <div className="flow-step">
+              <span className="flow-ring"><Icon name="bulb" size={22} /></span>
+              <span>{t.homePage.flow2}</span>
+            </div>
+            <Icon name="chevron" size={18} className="flow-arrow" />
+            <div className="flow-step">
+              <span className="flow-ring"><Icon name="check" size={22} /></span>
+              <span>{t.homePage.flow3}</span>
+            </div>
+          </div>
 
           <h2 className="sec-title">{t.homePage.suggestionsTitle}</h2>
           <div className="suggest-list">
