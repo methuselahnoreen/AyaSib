@@ -447,7 +447,7 @@
       "Proof of residence in the city or municipality (for example a barangay certificate or a valid ID showing your address)",
       "For a non-apparent disability: a medical certificate or clinical abstract from a licensed physician confirming the disability"
     ],
-    "requirements_note": "A PhilSys (national ID) number is NOT required to register. For an apparent disability (one that can be seen), a medical certificate is no longer required - visual confirmation by the issuing office is enough. The exact supporting documents can vary slightly by LGU, so confirm with your local office.",
+    "requirements_note": "A PhilSys (national ID) number is NOT required to register. For an apparent disability (one that can be seen), a medical certificate is no longer required - visual confirmation by the issuing office is enough. For renewal, bring your expired PWD ID and the accomplished renewal form; if your card was lost, bring an Affidavit of Loss instead. The exact supporting documents can vary slightly by LGU, so confirm with your local office.",
     "steps": [
       "Go to your city or municipal Persons with Disability Affairs Office (PDAO) or Social Welfare and Development Office (CSWDO/MSWDO) and ask for the PWD ID registration form",
       "Fill out the form and attach your two 1x1 photos and proof of residence",
@@ -455,7 +455,7 @@
       "Submit everything to the office for verification and approval",
       "Wait for your Unified PWD ID to be printed and released by the local office; some LGUs release it the same day while others ask you to return on a set date"
     ],
-    "fee": "Free. There is no charge for the PWD ID.",
+    "fee": "Free for initial issuance. A minimal fee may apply to replace a lost or damaged card.",
     "processing_time": "Varies by local office. Some issue the ID on the same day, while others schedule a release date. Ask your PDAO or social welfare office for their timeline.",
     "source_title": "National Council on Disability Affairs (NCDA) - Unified PWD ID System, Administrative Order No. 001, s. 2026",
     "source_url": "https://ncda.gov.ph",
@@ -468,7 +468,7 @@
       "Pamatuod nga nagpuyo ka sa maong siyudad o lungsod (pananglitan barangay certificate o valid nga ID nga nagpakita sa imong adres)",
       "Para sa dili-makita (non-apparent) nga kapansanan: medical certificate o clinical abstract gikan sa lisensiyadong doktor nga nagpamatuod sa kapansanan"
     ],
-    "requirements_note_ceb": "DILI kinahanglan ang PhilSys (national ID) nga numero aron maka-register. Para sa makita (apparent) nga kapansanan, dili na kinahanglan ang medical certificate - igo na ang pagtan-aw ug pagkumpirma sa opisina. Ang eksaktong mga dokumento mahimong magkalahi gamay matag LGU, busa pangutana sa imong lokal nga opisina.",
+    "requirements_note_ceb": "DILI kinahanglan ang PhilSys (national ID) nga numero aron maka-register. Para sa makita (apparent) nga kapansanan, dili na kinahanglan ang medical certificate - igo na ang pagtan-aw ug pagkumpirma sa opisina. Para sa renewal, dad-a ang imong expired nga PWD ID ug ang napuno nga renewal form; kon nawala ang imong kard, dad-a hinuon ang Affidavit of Loss. Ang eksaktong mga dokumento mahimong magkalahi gamay matag LGU, busa pangutana sa imong lokal nga opisina.",
     "steps_ceb": [
       "Adto sa imong city o municipal Persons with Disability Affairs Office (PDAO) o Social Welfare and Development Office (CSWDO/MSWDO) ug pangayo sa PWD ID registration form",
       "Pun-a ang form ug ilakip ang imong duha ka 1x1 nga litrato ug ang pamatuod sa imong puy-anan",
@@ -477,7 +477,7 @@
       "Hulata nga ma-print ug mahatag ang imong Unified PWD ID sa lokal nga opisina; ang ubang LGU mohatag niini parehas nga adlaw, ang uban mohangyo nga mobalik ka sa gitakdang petsa"
     ],
     "office_ceb": "Ang imong city o municipal Persons with Disability Affairs Office (PDAO), o ang City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) sa imong puy-anan. Ang mga record sentral nga gidumala sa DSWD ug NCDA ubos sa Unified PWD ID System (UPWDIS), apan ang kard gihimo ug gihatag lokal.",
-    "fee_ceb": "Libre. Walay bayad ang PWD ID.",
+    "fee_ceb": "Libre ang unang pagkuha. Mahimong adunay gamay nga bayad para ilisan ang nawala o nadaot nga kard.",
     "processing_time_ceb": "Magkalahi matag lokal nga opisina. Ang uban mohatag sa ID parehas nga adlaw, ang uban magtakda og petsa sa pagkuha. Pangutana sa imong PDAO o social welfare office bahin sa ilang timeline."
   },
   {

@@ -149,6 +149,8 @@ export const t = {
     heroName: "Kauban nimo si Aya!",
     heroSupport: "Sabta. Andama. Lakaw nga sigurado.",
     ayaBubble: "Unsa ang imong ganahan nako buhaton?",
+    ayaIntroTitle: "Ako si Aya!",
+    ayaIntroBody: "Tabangan tika, usa ka lakang matag higayon.",
     mottoReverse: "Aya sibs the day!",
     nameStory: "Aya sib the day!",
     nameGloss: "“Aya saves the day!”",
