@@ -17,7 +17,7 @@ const LEFT: Tab[] = [
 ];
 const RIGHT: Tab[] = [
   { href: "/ask", label: t.tabs.ask, icon: "chat", match: (p) => p.startsWith("/ask") },
-  { href: "/services", label: t.tabs.checklist, icon: "checklist", match: (p) => p.startsWith("/andam") },
+  { href: "/checklist", label: t.tabs.checklist, icon: "checklist", match: (p) => p.startsWith("/checklist") || p.includes("/checklist") },
 ];
 
 export function TabBar() {

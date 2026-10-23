@@ -4,6 +4,7 @@
 import type { ItemState } from "./readiness";
 
 const KEY = "ayasib.readiness.v1"; // versioned key; bump on any state-shape change.
+const LAST_KEY = "ayasib.lastService.v1"; // remembers the most recently opened checklist service (device-only).
 
 type Store = Record<string, Record<string, ItemState>>;
 
@@ -42,6 +43,29 @@ export function loadStates(id: string): Record<string, ItemState> {
     return out;
   } catch {
     return {};
+  }
+}
+
+/** Remembers the last checklist service the user opened, so the Checklist tab can return to it. */
+export function setLastService(id: string): void {
+  const storage = getStorage();
+  if (!storage) return;
+  try {
+    storage.setItem(LAST_KEY, id);
+  } catch {
+    // Best-effort only.
+  }
+}
+
+/** Returns the last opened checklist service id, or null if none/unavailable. */
+export function getLastService(): string | null {
+  const storage = getStorage();
+  if (!storage) return null;
+  try {
+    const v = storage.getItem(LAST_KEY);
+    return v && v.trim() ? v : null;
+  } catch {
+    return null;
   }
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fitWithin, interpretOcr, MAX_IMAGE_BYTES, validateImage } from "./ocr";
+import { fitWithin, imageMimeType, interpretOcr, MAX_IMAGE_BYTES, prepareImage, validateImage } from "./ocr";
 
 describe("validateImage", () => {
   it("accepts JPEG, PNG and WebP", () => {
@@ -13,7 +13,19 @@ describe("validateImage", () => {
     expect(validateImage({ type: "image/gif", size: 1000 })).toEqual({ ok: false, problem: "type" });
   });
 
-  it("rejects photos over 10 MB but accepts exactly 10 MB", () => {
+  it("recognizes desktop files with missing or generic MIME types by extension", () => {
+    expect(imageMimeType({ type: "", name: "document.jpg" })).toBe("image/jpeg");
+    expect(imageMimeType({ type: "application/octet-stream", name: "document.png" })).toBe("image/png");
+    expect(validateImage({ type: "", name: "document.webp", size: 1000 })).toEqual({ ok: true });
+    expect(imageMimeType({ type: "image/heic", name: "document.jpg" })).toBeNull();
+  });
+
+  it("sets the image MIME type from the filename when image conversion is unavailable", async () => {
+    const file = Object.assign(new Blob(["image data"]), { name: "document.png" });
+    expect((await prepareImage(file)).type).toBe("image/png");
+  });
+
+  it("accepts large source photos up to 30 MB for client-side compression", () => {
     expect(validateImage({ type: "image/jpeg", size: MAX_IMAGE_BYTES })).toEqual({ ok: true });
     expect(validateImage({ type: "image/jpeg", size: MAX_IMAGE_BYTES + 1 })).toEqual({ ok: false, problem: "size" });
   });

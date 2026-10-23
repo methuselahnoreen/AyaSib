@@ -1,7 +1,7 @@
 // Helpers for photos of documents: checks, shrinking, and cleaning up the text that comes back.
 // The text itself is read on the server. See docs/OCR-API.md and ocrClient.ts.
 
-export const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // biggest photo we accept from the user
+export const MAX_IMAGE_BYTES = 30 * 1024 * 1024; // source images are compressed before upload
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // biggest file we send (the server refuses more)
 export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 export const MAX_SIDE = 1600;
@@ -11,8 +11,21 @@ const LOW_CONFIDENCE = 60;
 
 export type ImageProblem = "type" | "size";
 
-export function validateImage(file: { type: string; size: number }): { ok: true } | { ok: false; problem: ImageProblem } {
-  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) return { ok: false, problem: "type" };
+export function imageMimeType(file: { type: string; name?: string }): string | null {
+  const type = file.type.toLowerCase().split(";")[0].trim();
+  if (type === "image/jpg" || type === "image/pjpeg") return "image/jpeg";
+  if (ALLOWED_IMAGE_TYPES.includes(type)) return type;
+  if (type && type !== "application/octet-stream") return null;
+
+  const extension = file.name?.toLowerCase().match(/\.([^.]+)$/)?.[1];
+  if (extension === "jpg" || extension === "jpeg") return "image/jpeg";
+  if (extension === "png") return "image/png";
+  if (extension === "webp") return "image/webp";
+  return null;
+}
+
+export function validateImage(file: { type: string; size: number; name?: string }): { ok: true } | { ok: false; problem: ImageProblem } {
+  if (!imageMimeType(file)) return { ok: false, problem: "type" };
   if (file.size > MAX_IMAGE_BYTES) return { ok: false, problem: "size" };
   return { ok: true };
 }
@@ -23,27 +36,70 @@ export function fitWithin(width: number, height: number, max = MAX_SIDE): { widt
   return { width: Math.max(1, Math.round(width * scale)), height: Math.max(1, Math.round(height * scale)) };
 }
 
-/**
- * Shrinks a big phone photo and saves it as JPEG, so the upload stays small on slow networks.
- * Falls back to the original file if the browser cannot do it.
- */
-export async function prepareImage(file: Blob, maxSide = MAX_SIDE): Promise<Blob> {
-  if (typeof createImageBitmap !== "function" || typeof document === "undefined") return file;
+async function loadImage(file: Blob): Promise<{ image: CanvasImageSource; width: number; height: number; cleanup: () => void }> {
+  if (typeof createImageBitmap === "function") {
+    try {
+      const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+      return { image: bitmap, width: bitmap.width, height: bitmap.height, cleanup: () => bitmap.close() };
+    } catch {
+      // Fall back to HTMLImageElement for browsers that cannot decode this image with createImageBitmap.
+    }
+  }
+
+  const url = URL.createObjectURL(file);
   try {
-    const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
-    const { width, height } = fitWithin(bitmap.width, bitmap.height, maxSide);
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return file;
-    ctx.fillStyle = "#ffffff"; // JPEG has no transparency
-    ctx.fillRect(0, 0, width, height);
-    ctx.drawImage(bitmap, 0, 0, width, height);
-    bitmap.close?.();
-    return await new Promise<Blob>((resolve) => canvas.toBlob((b) => resolve(b ?? file), "image/jpeg", JPEG_QUALITY));
+    const image = new Image();
+    image.src = url;
+    await image.decode();
+    return {
+      image,
+      width: image.naturalWidth,
+      height: image.naturalHeight,
+      cleanup: () => URL.revokeObjectURL(url),
+    };
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+function canvasBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Could not encode the image"))), "image/jpeg", quality);
+  });
+}
+
+/** Resizes and compresses large photos before upload, including browsers without createImageBitmap. */
+export async function prepareImage(file: Blob, maxSide = MAX_SIDE): Promise<Blob> {
+  const source = file as Blob & { name?: string };
+  const fallback = () => {
+    const type = imageMimeType(source);
+    return type && file.type !== type ? new Blob([file], { type }) : file;
+  };
+  if (typeof document === "undefined") return fallback();
+  let decoded: Awaited<ReturnType<typeof loadImage>> | undefined;
+  try {
+    decoded = await loadImage(file);
+    let best: Blob | null = null;
+    for (const scale of [1, 0.8, 0.64, 0.5]) {
+      const { width, height } = fitWithin(decoded.width, decoded.height, Math.max(1, Math.floor(maxSide * scale)));
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return best ?? fallback();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(decoded.image, 0, 0, width, height);
+      const blob = await canvasBlob(canvas, JPEG_QUALITY);
+      if (!best || blob.size < best.size) best = blob;
+      if (blob.size <= MAX_UPLOAD_BYTES) return blob;
+    }
+    return best ?? fallback();
   } catch {
-    return file;
+    return fallback();
+  } finally {
+    decoded?.cleanup();
   }
 }
 
