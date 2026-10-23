@@ -29,4 +29,10 @@ export const photoText = {
   hideOriginal: "Itago ang orihinal",
   again: "Lain nga litrato",
   overlayNote: "Awtomatiko nga hubad. Palihog susiha; mahimong dili hingpit.",
+  // Tier 2 overlay mode
+  overlayMode: "Hubad sa litrato",
+  panelMode: "Lista nga hubad",
+  preparing: "Giandam ang scanner...",
+  locating: "Gipangita ang teksto...",
+  overlayEmpty: "Wala makit-i og klarong teksto para sa overlay. Gamita ang lista nga hubad.",
 } as const;

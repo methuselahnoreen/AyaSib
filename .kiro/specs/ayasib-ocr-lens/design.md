@@ -2,7 +2,7 @@
 
 ## Overview
 
-A Google-Lens-style flow for the OCR tab (`/basaha`): the user captures a photo with the
+A live scan-and-translate flow for the OCR tab (`/basaha`): the user captures a photo with the
 camera or picks one from the gallery; the app shows a **scanning animation**, reads the text
 (existing `/api/ocr`), **translates it to Cebuano** (existing `/api/translate`), and shows the
 result as a **Bisaya overlay panel over a blurred version of the image**.
@@ -62,6 +62,18 @@ stays in the tree, unused, as a reference/fallback.
 - Manual: capture + gallery on a phone over the live HTTPS URL; empty/too-large/busy paths;
   reduced-motion; translation shows Bisaya.
 
-## Tier 2 (deferred, documented only)
-Add `tesseract.js` (in-browser OCR, returns word bounding boxes, MIT, no new secret). Use boxes
-to position translated phrases over the blurred original. Prototype after Tier 1 ships.
+## Tier 2 (IMPLEMENTED)
+Added `tesseract.js` v5 (in-browser OCR, returns per-line bounding boxes, MIT, no new secret).
+- `lib/tesseractClient.ts` — lazy `import("tesseract.js")` (heavy core/model load only on first scan;
+  fetched from CDN at runtime, nothing extra to host). The only file importing tesseract.js.
+- `lib/lensOverlay.ts` (pure, tested) — normalizes line boxes to 0..1 fractions; drops empty/
+  short/low-confidence/invalid lines; joins lines for one translate call; realigns the translated
+  block back to per-line strings.
+- `PhotoLens` tries the **overlay path first** (Tesseract -> per-line translate -> positioned
+  boxes over the blurred image). If it finds no usable lines (or errors), it **falls back
+  automatically to the Tier 1 cloud panel**, so the user never gets a worse result than Tier 1.
+- A view toggle (Hubad sa litrato / Lista nga hubad) appears only when overlays exist.
+
+Known limits (inherent to free in-browser OCR): English-trained model, weaker on handwriting/
+low light/skew; alignment is approximate. Non-invention holds: a box is shown only where
+Tesseract actually read text.

@@ -584,6 +584,15 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .lens-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .lens-actions .btn { flex: 1 1 auto; justify-content: center; display: inline-flex; align-items: center; gap: 8px; }
 
+/* Tier 2: translated lines positioned over the blurred original */
+.lens-box {
+  position: absolute; display: flex; align-items: center;
+  padding: 2px 6px; border-radius: 6px;
+  background: rgba(255, 253, 240, 0.97); color: var(--charcoal);
+  font-weight: 600; line-height: 1.1; font-size: clamp(0.6rem, 2.6vw, 0.95rem);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lens-scan { animation: none; top: 50%; opacity: 0.8; }
 }
