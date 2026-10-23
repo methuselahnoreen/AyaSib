@@ -3,7 +3,7 @@
 // Feature: ayasib-ocr-lens (Tier 1 + Tier 2)
 // Capture/upload -> scan -> translate to Bisaya. Two views:
 //  - Overlay (Tier 2): Tesseract.js reads per-line boxes in the browser; each line is translated
-//    and positioned over a blurred image (Google-Lens style).
+//    and positioned over a blurred image (live scan-and-overlay).
 //  - List/panel (Tier 1): cloud OCR (/api/ocr) + one translation, shown as a panel. Reliable
 //    fallback used automatically if the overlay finds no usable text.
 // Non-invention: every shown phrase is a translation of text actually read from the image.

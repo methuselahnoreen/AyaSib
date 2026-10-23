@@ -2,7 +2,7 @@
 
 ## Overview
 
-A Google-Lens-style flow for the OCR tab (`/basaha`): the user captures a photo with the
+A live scan-and-translate flow for the OCR tab (`/basaha`): the user captures a photo with the
 camera or picks one from the gallery; the app shows a **scanning animation**, reads the text
 (existing `/api/ocr`), **translates it to Cebuano** (existing `/api/translate`), and shows the
 result as a **Bisaya overlay panel over a blurred version of the image**.
