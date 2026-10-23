@@ -55,6 +55,11 @@
     "note": "First-time SS Number application online via the SSS website."
   },
   {
+    "question": "Unsaon pagkuha ug PWD ID card?",
+    "expected": "person-with-disability-identification-card-issuance",
+    "note": "PWD identification card issuance (NCDA policy, issued by local social welfare office)."
+  },
+  {
     "question": "Unsaon pag-enroll sa PhilHealth para sa OFW?",
     "expected": "philhealth-enrolment-ofw",
     "note": "PhilHealth enrolment for an OFW, names the agency."
