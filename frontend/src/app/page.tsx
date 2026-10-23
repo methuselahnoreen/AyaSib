@@ -1,21 +1,12 @@
 "use client";
 
-// Feature: ayasib-frontend-redesign (v4) — full-height layout, bigger type, KB-grounded suggestions.
+// Feature: ayasib-frontend-redesign (v5) — "Kauban nimo si Aya!" hero with step flow.
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Shell } from "@/components/Shell";
 import { Icon } from "@/components/Icon";
 import { FooterNote } from "@/components/FooterNote";
-import { kb } from "@/lib/kb";
 import { t } from "@/lib/strings";
-
-// Real facts from existing data (never invented): service count + most recent verified date.
-const SERVICE_COUNT = kb.length;
-const LATEST_VERIFIED = kb
-  .map((e) => e.last_verified)
-  .filter((d): d is string => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
-  .sort()
-  .pop();
 
 export default function Home() {
   const router = useRouter();
@@ -29,39 +20,40 @@ export default function Home() {
   return (
     <Shell title={t.appName}>
       <main className="home">
-        {/* Hero takes the spare height; its content is vertically centered */}
+        {/* Hero panel: heading, Aya + bubble, motto, and the 3-step flow */}
         <section className="hero-card hero">
-          <span className="hero-kicker">{t.homePage.kicker}</span>
-          <h1 className="display">{t.homePage.heroHeading}</h1>
-          <p className="hero-sub">{t.homePage.heroSupport}</p>
+          <h1 className="display">{t.homePage.heroName}</h1>
 
-          {/* Aya on the left, speech bubble on the right */}
           <div className="hero-aya">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
             <p className="aya-speech">{t.homePage.ayaBubble}</p>
           </div>
+          <span className="hero-motto">{t.homePage.mottoReverse}</span>
 
-          {/* Name story */}
-          <div className="name-story">
-            <strong>{t.homePage.nameStory}</strong>
-            <span>{t.homePage.nameGloss}</span>
-          </div>
-
-          {/* Real-data facts (service count + latest verified date) */}
-          <div className="hero-stats">
-            <span className="stat">
-              <Icon name="grid" size={16} /> {t.homePage.statsServices.replace("{n}", String(SERVICE_COUNT))}
-            </span>
-            {LATEST_VERIFIED && (
-              <span className="stat">
-                <Icon name="shield" size={16} /> {t.homePage.statsVerified.replace("{date}", LATEST_VERIFIED)}
-              </span>
-            )}
+          {/* Tulo ra ka lakang */}
+          <div className="flow-card">
+            <strong className="flow-title">{t.homePage.flowHeading}</strong>
+            <div className="flow">
+              <div className="flow-step">
+                <span className="flow-ring"><Icon name="question" size={22} /></span>
+                <span>{t.homePage.flow1}</span>
+              </div>
+              <Icon name="chevron" size={16} className="flow-arrow" />
+              <div className="flow-step">
+                <span className="flow-ring"><Icon name="bulb" size={22} /></span>
+                <span>{t.homePage.flow2}</span>
+              </div>
+              <Icon name="chevron" size={16} className="flow-arrow" />
+              <div className="flow-step">
+                <span className="flow-ring"><Icon name="check" size={22} /></span>
+                <span>{t.homePage.flow3}</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Actions sit near the bottom nav, within thumb reach */}
+        {/* Actions near the bottom nav */}
         <div className="home-actions">
           <form
             className="searchpill"
@@ -77,7 +69,6 @@ export default function Home() {
             </button>
           </form>
 
-          {/* KB-answerable example questions (stacked) */}
           <h2 className="sec-title">{t.homePage.suggestionsTitle}</h2>
           <div className="suggest-list">
             {t.homePage.suggestions.map((question) => (
