@@ -118,10 +118,11 @@ export const t = {
   },
   tabs: {
     label: "Nabigasyon",
-    home: "Home",
-    services: "Services",
-    ask: "Ask",
-    checklist: "Checklist",
+    home: "Sugdanan",
+    services: "Serbisyo",
+    ask: "Pangutana",
+    checklist: "Pangandam",
+    ocr: "Basaha",
     langPill: "Bisaya",
   },
   aya: {

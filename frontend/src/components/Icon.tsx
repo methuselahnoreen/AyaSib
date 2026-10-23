@@ -28,7 +28,8 @@ export type IconName =
   | "heart"
   | "store"
   | "refresh"
-  | "box";
+  | "box"
+  | "scan";
 
 const PATHS: Record<IconName, ReactNode> = {
   home: <path d="M4 11l8-7 8 7M6 10v9h12v-9" />,
@@ -152,6 +153,13 @@ const PATHS: Record<IconName, ReactNode> = {
     <>
       <path d="M4 8l8-4 8 4v8l-8 4-8-4z" />
       <path d="M4 8l8 4 8-4M12 12v8" />
+    </>
+  ),
+  // Scan / OCR frame: four corner brackets with a lens circle (matches the camera-scan icon).
+  scan: (
+    <>
+      <path d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2" />
+      <circle cx="12" cy="12" r="3.5" />
     </>
   ),
 };
