@@ -72,7 +72,11 @@ function ExplainPageInner() {
 
         <div aria-live="polite" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {error && <Notice kind="error" text={error} action={{ label: t.errors.retry, onClick: () => run() }} />}
-          {result && (
+          {result && !result.document_type && result.what_is_asked.length === 0 && result.next_steps.length === 0 ? (
+            // Not a government document: guide the user kindly instead of a blunt "no info" card.
+            <Notice text={t.explain.noDocument} />
+          ) : (
+            result && (
             <article className="card">
               <div className="card-head">{result.document_type ?? t.explain.whatItIs}</div>
               <div className="card-body">
@@ -105,6 +109,7 @@ function ExplainPageInner() {
                 </p>
               </div>
             </article>
+            )
           )}
         </div>
       </main>

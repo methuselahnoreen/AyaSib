@@ -364,21 +364,27 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .tab-ocr span:last-child { color: var(--forest); }
 
 /* ---- Hero card (home) ---- */
+/* Full-height home: hero grows to fill spare space; actions sit near the bottom nav. */
+.home { min-height: calc(100dvh - 88px - env(safe-area-inset-top, 0px)); display: flex; flex-direction: column; gap: 18px; }
+.home .hero { flex: 1 1 auto; justify-content: center; }
+.home-actions { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+.home .footer-note { margin-top: 8px; }
+
 .hero-card {
-  background: var(--sage); border-radius: 22px; padding: 20px;
-  display: flex; flex-direction: column; gap: 6px;
+  background: var(--sage); border-radius: 22px; padding: 22px;
+  display: flex; flex-direction: column; gap: 8px;
 }
-.hero-kicker { font-size: 0.72rem; letter-spacing: 0.12em; font-weight: 800; color: var(--forest); text-transform: uppercase; }
-.hero-card .display { font-size: clamp(2.6rem, 11vw, 3.4rem); line-height: 1; color: var(--deep-green); margin: 2px 0; }
-.hero-card .hero-sub { color: var(--charcoal); margin: 0 0 6px; }
+.hero-kicker { font-size: 0.78rem; letter-spacing: 0.12em; font-weight: 800; color: var(--forest); text-transform: uppercase; }
+.hero-card .display { font-size: clamp(2.8rem, 13vw, 4rem); line-height: 1; color: var(--deep-green); margin: 2px 0; }
+.hero-card .hero-sub { color: var(--charcoal); margin: 0 0 6px; font-size: 1.15rem; }
 .hero-aya {
   display: flex; align-items: center; gap: 14px; margin-top: 10px;
 }
-.hero-aya .aya-img { width: 92px; height: 92px; flex: none; }
+.hero-aya .aya-img { width: clamp(88px, 28vw, 132px); height: auto; flex: none; }
 .aya-speech {
   position: relative; flex: 1; margin: 0;
-  background: var(--white); border-radius: 18px; padding: 14px 16px;
-  color: var(--deep-green); font-weight: 700; font-size: 1.05rem; line-height: 1.3;
+  background: var(--white); border-radius: 18px; padding: 16px 18px;
+  color: var(--deep-green); font-weight: 700; font-size: 1.2rem; line-height: 1.3;
   box-shadow: var(--shadow);
 }
 /* Tail pointing left, toward Aya. */
@@ -404,8 +410,8 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 }
 .searchpill .search-icon { color: var(--gray); flex: none; }
 .searchpill input {
-  flex: 1; border: none; background: transparent; min-height: 52px; padding: 0 6px;
-  font: inherit; color: var(--charcoal); outline: none;
+  flex: 1; border: none; background: transparent; min-height: 56px; padding: 0 6px;
+  font: inherit; font-size: 1.1rem; color: var(--charcoal); outline: none;
 }
 .searchpill .go {
   flex: none; border: none; background: var(--forest); color: #fff; width: 48px; height: 48px;
@@ -436,13 +442,19 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .flow .arrow { color: var(--gray); flex: none; }
 
 /* ---- Suggested question card (amber) ---- */
+/* Real-data facts row under the hero */
+.hero-stats { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; }
+.hero-stats .stat { display: inline-flex; align-items: center; gap: 6px; color: var(--deep-green); font-weight: 700; font-size: 0.95rem; }
+
+/* Stacked example-question cards */
+.suggest-list { display: flex; flex-direction: column; gap: 10px; }
 .suggest {
   display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
   background: var(--amber); border: none; border-radius: 18px; padding: 16px; cursor: pointer;
-  color: var(--deep-green); font: inherit;
+  color: var(--deep-green); font: inherit; min-height: 56px;
 }
 .suggest .s-kicker { font-size: 0.68rem; letter-spacing: 0.1em; font-weight: 800; text-transform: uppercase; color: var(--forest); }
-.suggest .s-body { font-weight: 700; }
+.suggest .s-body { font-weight: 700; font-size: 1.05rem; flex: 1; }
 .suggest .s-icon { color: var(--forest); flex: none; }
 .suggest .s-go { margin-left: auto; color: var(--forest); flex: none; }
 

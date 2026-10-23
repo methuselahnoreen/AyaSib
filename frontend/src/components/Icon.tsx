@@ -29,7 +29,8 @@ export type IconName =
   | "store"
   | "refresh"
   | "box"
-  | "scan";
+  | "scan"
+  | "chevron";
 
 const PATHS: Record<IconName, ReactNode> = {
   home: <path d="M4 11l8-7 8 7M6 10v9h12v-9" />,
@@ -162,6 +163,8 @@ const PATHS: Record<IconName, ReactNode> = {
       <circle cx="12" cy="12" r="3.5" />
     </>
   ),
+  // Forward chevron (in-app navigation; not an external link).
+  chevron: <path d="M9 6l6 6-6 6" />,
 };
 
 export function Icon({ name, size = 24, title, className }: { name: IconName; size?: number; title?: string; className?: string }) {
