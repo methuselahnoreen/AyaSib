@@ -8,7 +8,6 @@
 
 ## 1. Project at a glance
 
-**Working name:** AyaSib ("help" in Cebuano) - change if the team prefers another.
 
 **One-liner:** Ask about government services in Bisaya, get a step-by-step answer in Bisaya, backed by cited sources.
 
