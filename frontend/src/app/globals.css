@@ -400,14 +400,16 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
   display: flex; flex-direction: column; gap: 12px;
 }
 .flow-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--deep-green); }
-.flow { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
-.flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.flow { display: flex; align-items: center; justify-content: space-between; gap: 4px; width: 100%; overflow: hidden; }
+.flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
 .flow-ring {
   width: 48px; height: 48px; border-radius: 50%; background: var(--sage);
   display: grid; place-items: center; color: var(--forest);
 }
 .flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.85rem; }
-.flow-arrow { color: var(--gray); flex: none; }
+/* Pin the connector chevron small so it can't stretch and push the 3rd step off-screen. */
+.flow-arrow { color: var(--gray); flex: 0 0 auto; width: 16px; height: 16px; }
+.flow-arrow svg, svg.flow-arrow { width: 16px; height: 16px; }
 
 /* Name story / etymology highlight (kept for reuse elsewhere) */
 .name-story {
