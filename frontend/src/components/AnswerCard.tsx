@@ -6,22 +6,21 @@
 import Link from "next/link";
 import { kb } from "@/lib/kb";
 import { t } from "@/lib/strings";
-import type { AskResponse } from "@/lib/types";
+import type { AskResponse, KbEntry } from "@/lib/types";
+import { AnswerProvenance } from "@/components/AnswerProvenance";
 
-/** Resolve the answered service id from the KB by matching source url/title (read-only; null if unmatched). */
-function resolveServiceId(result: AskResponse): string | null {
+/** Resolve the answered KB record by matching source url (read-only; null if unmatched). Never invents. */
+function resolveEntry(result: AskResponse): KbEntry | null {
   const src = result.sources[0];
   if (!src) return null;
-  const byUrl = kb.find((e) => e.source_url && e.source_url === src.url);
-  if (byUrl) return byUrl.id;
-  // Fall back to a name match only if unambiguous; never invent an id.
-  return null;
+  return kb.find((e) => e.source_url && e.source_url === src.url) ?? null;
 }
 
 export function AnswerCard({ result }: { result: AskResponse }) {
   const a = result.answer;
   if (!a) return null;
-  const serviceId = resolveServiceId(result);
+  const entry = resolveEntry(result);
+  const serviceId = entry?.id ?? null;
 
   const facts = (
     [
@@ -76,19 +75,7 @@ export function AnswerCard({ result }: { result: AskResponse }) {
           </section>
         )}
 
-        {result.sources.map((s) => (
-          <div className="source" key={s.url}>
-            <div>
-              {t.card.source}:{" "}
-              <a href={s.url} target="_blank" rel="noopener noreferrer">
-                {s.title}
-              </a>
-            </div>
-            <div className="muted">
-              {t.card.verified}: {s.last_verified}
-            </div>
-          </div>
-        ))}
+        <AnswerProvenance entry={entry} source={result.sources[0]} />
 
         <div className="answer-actions">
           {serviceId && (
