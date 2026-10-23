@@ -1,0 +1,43 @@
+id: national-police-clearance
+name_en: "National Police Clearance"
+name_ceb: null   # needs native reviewer
+locality: "National"
+office: "Philippine National Police (apply on the National Police Clearance System at https://pnpclearance.ph, then visit the police station you choose when booking)"
+who_may_avail: "Filipinos and residents"
+requirements:
+  - "An online account on the National Police Clearance System (name, email and password, verified through the link sent to your email, check spam too) with a completed profile (address, birthdate, etc.)"
+  - "Valid ID (for example Passport, UMID)"
+  - "Proof of payment (save the payment receipt)"
+  - "Appointment slip"
+requirements_note: "Your photo and fingerprints are taken at the police station. Walk-in applications are no longer accepted in most locations."
+steps:
+  - "Visit the PNP clearance website at https://pnpclearance.ph"
+  - "Sign up: click 'Register', fill in your name, email and password, then check your email (and spam) for the verification link"
+  - "Log in with your email and password and complete your profile details (address, birthdate, etc.)"
+  - "Book an appointment: choose a police station near you and pick a date and time"
+  - "Pay online (PHP 180 total) through GCash, 7-Eleven CLiQQ or Landbank, and save the payment receipt"
+  - "Visit the police station on your appointment date with your valid ID, proof of payment and appointment slip; your photo and fingerprints will be taken"
+  - "Get your clearance: same day if there is no criminal record; if issues are found, wait 1 week or more"
+fee: "PHP 180 total, paid online (options: GCash, 7-Eleven CLiQQ, Landbank)"
+processing_time: "Same day if there is no criminal record. If issues are found, wait 1 week or more. Photo and fingerprint capture at the station typically takes 10 to 15 minutes."
+source_title: "Philippine National Police - National Police Clearance System"
+source_url: "https://pnpclearance.ph"
+last_verified: 2026-10-23
+summary_ceb: "Ang National Police Clearance mao ang opisyal nga dokumento gikan sa Philippine National Police nga nagpamatuod nga wala kay criminal record. Mag-apply una online, bayad, ug mag-book og appointment, unya adto sa police station para sa litrato ug fingerprints."
+requirements_ceb:
+  - "Online account sa National Police Clearance System (ngalan, email, ug password, kumpirmahon pinaagi sa link nga gipadala sa imong email, tan-awa usab ang spam) nga naay kompleto nga profile (adres, adlaw sa pagkatawo, ug uban pa)"
+  - "Valid nga ID (pananglitan: Passport, UMID)"
+  - "Pamatuod sa pagbayad (i-save ang resibo sa pagbayad)"
+  - "Appointment slip"
+requirements_note_ceb: "Ang imong litrato ug fingerprints kuhaon sa police station. Dili na modawat og walk-in nga aplikasyon sa kadaghanang lugar."
+steps_ceb:
+  - "Adto sa website sa PNP clearance sa https://pnpclearance.ph."
+  - "Mag-sign up: i-klik ang 'Register', ibutang ang imong ngalan, email, ug password, unya tan-awa ang imong email (ug spam) para sa verification link."
+  - "Mag-log in gamit ang imong email ug password ug pun-a ang imong profile (adres, adlaw sa pagkatawo, ug uban pa)."
+  - "Mag-book og appointment: pili og police station nga duol kanimo ug pili og petsa ug oras."
+  - "Bayri online (PHP 180 total) pinaagi sa GCash, 7-Eleven CLiQQ, o Landbank, ug i-save ang resibo sa pagbayad."
+  - "Adto sa police station sa petsa sa imong appointment dala ang imong valid nga ID, pamatuod sa pagbayad, ug appointment slip; kuhaon ang imong litrato ug fingerprints."
+  - "Kuhaa ang imong clearance: parehas nga adlaw kon walay criminal record; kon naay makita nga isyu, maghulat og 1 ka semana o mas dugay pa."
+office_ceb: "Philippine National Police (mag-apply sa National Police Clearance System sa https://pnpclearance.ph, unya adto sa police station nga imong gipili sa pag-book)"
+fee_ceb: "PHP 180 total, bayran online (mga kapilian: GCash, 7-Eleven CLiQQ, Landbank)"
+processing_time_ceb: "Parehas nga adlaw kon walay criminal record. Kon naay makita nga isyu, maghulat og 1 ka semana o mas dugay pa. Ang pagkuha sa litrato ug fingerprints sa station kasagaran molungtad og 10 ngadto sa 15 minutos."

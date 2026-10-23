@@ -60,6 +60,11 @@
     "note": "PWD identification card issuance (NCDA policy, issued by local social welfare office)."
   },
   {
+    "question": "Unsaon pagkuha ug national police clearance?",
+    "expected": "national-police-clearance",
+    "note": "PNP national police clearance (online + station), distinct from NBI clearance."
+  },
+  {
     "question": "Unsaon pag-enroll sa PhilHealth para sa OFW?",
     "expected": "philhealth-enrolment-ofw",
     "note": "PhilHealth enrolment for an OFW, names the agency."
