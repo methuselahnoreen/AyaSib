@@ -1,7 +1,5 @@
 ﻿# AyaSib - Cebuano-first Government Services Assistant
 
-> *AyaSib* means "help" in Cebuano (Bisaya).
-
 Ask about a Cebu City government service in Bisaya, Filipino, or English, and get a short checklist back **in Bisaya**: a summary, what to bring, where to go, the fee, and how long it takes, each answer shown with its official source and the date it was last verified. If the knowledge base does not cover your question, AyaSib says it is not sure and tells you to confirm with the office. It never guesses.
 
 **Live demo:** <https://ayasib.vercel.app>
