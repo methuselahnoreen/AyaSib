@@ -21,7 +21,6 @@ import { Icon, type IconName } from "@/components/Icon";
 const TOGGLES: { value: ItemState; cls: string; icon: IconName; label: string }[] = [
   { value: "HAS", cls: "has", icon: "check", label: t.readinessUi.hasIt },
   { value: "STILL_NEEDS", cls: "need", icon: "box", label: t.readinessUi.stillNeed },
-  { value: "NEEDS_TO_CONFIRM", cls: "confirm", icon: "question", label: t.readinessUi.needConfirm },
 ];
 
 const STATE_TEXT: Record<ItemState, { cls: string; label: string }> = {
