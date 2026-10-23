@@ -14,6 +14,9 @@ export default function ChecklistLandingPage() {
       <main>
         <span className="muted-kicker">{t.checklistLanding.kicker}</span>
         <h1 className="page-title">{t.checklistLanding.title}</h1>
+        <p className="muted" style={{ margin: "0 0 4px" }}>
+          {t.checklistLanding.subtitle}
+        </p>
         <ChecklistPicker />
         <FooterNote />
       </main>
