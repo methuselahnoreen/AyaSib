@@ -6,7 +6,8 @@
   "scripts": {
     "kb:validate": "node scripts/validate-kb.mjs",
     "kb:build": "node scripts/validate-kb.mjs --write",
-    "eval": "node --env-file=../.env.local scripts/eval.mjs"
+    "eval": "node --env-file=../.env.local scripts/eval.mjs",
+    "photo:ocr": "node --env-file=../.env.local scripts/photo-ocr.mjs"
   },
   "keywords": [],
   "author": "",
