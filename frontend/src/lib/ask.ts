@@ -54,6 +54,20 @@ export function parseServiceId(raw: string, kb: KbEntry[]): string | null {
   return id && kb.some((e) => e.id === id) ? id : null;
 }
 
+/** Resolves an unambiguous service name directly, without depending on the model provider. */
+export function findExplicitServiceId(question: string, kb: KbEntry[]): string | null {
+  const normalize = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().replace(/\s+/g, " ");
+  const normalizedQuestion = ` ${normalize(question)} `;
+  const matches = kb.filter((entry) => {
+    const names = [entry.name_en.split("(")[0], entry.id.replace(/-/g, " ")];
+    return names.some((name) => {
+      const normalizedName = normalize(name);
+      return normalizedName.split(" ").length > 1 && normalizedQuestion.includes(` ${normalizedName} `);
+    });
+  });
+  return matches.length === 1 ? matches[0].id : null;
+}
+
 export function notConfident(): AskResponse {
   return { confident: false, answer: null, message: serverText.notSure, sources: [] };
 }

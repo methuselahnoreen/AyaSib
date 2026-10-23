@@ -144,9 +144,25 @@ node --env-file=../.env.local scripts/ask-cli.mjs "Unsaon pagkuha ug death certi
 
 Pass your own questions as arguments, or run with no arguments to use a built-in set. Set `DEBUG_ROUTER=1` in the terminal to print the raw model reply.
 
+### Extract text from a photo
+
+From `backend/`, run the OCR script with a JPEG or PNG image. It uses Cloudflare Workers AI, so the same account ID and token used by Ask are required. The image is sent to Cloudflare for OCR; use only images you are permitted to upload.
+
+```powershell
+npm run photo:ocr -- "..\path\to\photo.jpg"
+```
+
+To also ask the backend knowledge base about the extracted text:
+
+```powershell
+npm run photo:ocr -- "..\path\to\photo.jpg" --ask "Which service is shown, and what should I do next?"
+```
+
+The OCR model defaults to `@cf/microsoft/trocr-large-printed`; set `OCR_MODEL` to override it. This model is intended for printed text, not handwriting.
+
 ### Run the web app
 
-The Next.js app is in `frontend/`. See `frontend/` for its own README and scripts (`npm run dev`, `npm run build`). The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
+The Next.js app is in `frontend/` (`npm run dev`, `npm run build`). When run locally, it loads server-side settings from the repository-root `.env.local`. The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
 
 ## Environment variables
 
@@ -157,6 +173,7 @@ Copy `.env.example` to `.env.local` (git-ignored) and fill in:
 | `CLOUDFLARE_ACCOUNT_ID` | Server only | Your Cloudflare account ID |
 | `CLOUDFLARE_API_TOKEN` | Server only | Token with the Workers AI permission. **Never** prefix with `NEXT_PUBLIC_` |
 | `LLM_MODEL` | Server only | Optional. Overrides the default model id |
+| `OCR_MODEL` | Server only | Optional. Overrides the default photo OCR model id |
 | `NEXT_PUBLIC_GITHUB_REPO` | Client (public) | Optional. `owner/name` of the public repo the "report outdated info" control files issues against. Defaults to `methuselahnoreen/AyaSib`. This is a public repo path, not a secret. |
 | `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` | Client (public) | Optional. Whole number of days before a `last_verified` date is treated as stale. Defaults to 180. |
 
@@ -172,8 +189,9 @@ Only `NEXT_PUBLIC_GITHUB_REPO` and `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` are expose
 │   ├── scripts/
 │   │   ├── validate-kb.mjs     # kb:validate and kb:build
 │   │   ├── ask-cli.mjs         # command-line Ask tester
+│   │   ├── photo-ocr.mjs       # extracts printed text from a photo; can query the KB
 │   │   └── eval.mjs            # runs eval/questions.json, prints a pass rate
-│   └── package.json            # kb:validate, kb:build, eval scripts
+│   └── package.json            # backend tooling and CLI scripts
 ├── frontend/                   # Next.js app and its API routes (frontend team)
 ├── kb/                         # one YAML file per service (source of truth)
 ├── eval/

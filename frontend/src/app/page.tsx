@@ -2,7 +2,6 @@
 
 // Feature: ayasib-frontend-redesign (v3)
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Shell } from "@/components/Shell";
 import { Icon } from "@/components/Icon";
@@ -55,25 +54,6 @@ export default function Home() {
             <Icon name="chat" size={20} />
           </button>
         </form>
-
-        {/* Three tiles */}
-        <nav className="tiles" aria-label={t.tabs.label}>
-          <Link href="/ask" className="tile">
-            <Icon name="chat" size={28} className="tile-icon" />
-            <strong>{t.homePage.tileAsk}</strong>
-            <span>{t.homePage.tileAskSub}</span>
-          </Link>
-          <Link href="/services" className="tile">
-            <Icon name="doc" size={28} className="tile-icon" />
-            <strong>{t.homePage.tileServices}</strong>
-            <span>{t.homePage.tileServicesSub}</span>
-          </Link>
-          <Link href="/services" className="tile">
-            <Icon name="checklist" size={28} className="tile-icon" />
-            <strong>{t.homePage.tileChecklist}</strong>
-            <span>{t.homePage.tileChecklistSub}</span>
-          </Link>
-        </nav>
 
         {/* Suggested question */}
         <button type="button" className="suggest" onClick={() => ask(t.homePage.suggestQ)}>

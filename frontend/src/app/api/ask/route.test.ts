@@ -74,6 +74,15 @@ describe("POST /api/ask", () => {
     expect(data.confident).toBe(false);
   });
 
+  it("answers an explicitly named service without depending on the model", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (await call({ question: "Unsaon pagkuha og NBI clearance?" }, "3.3.3.8")).json();
+    expect(data.confident).toBe(true);
+    expect(data.answer.summary).toBe(entry.summary_ceb);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it("never calls the model when the knowledge base is empty", async () => {
     kbMock.kb = [];
     const fetchMock = vi.fn();
