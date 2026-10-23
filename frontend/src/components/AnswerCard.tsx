@@ -22,6 +22,17 @@ export function AnswerCard({ result }: { result: AskResponse }) {
   const entry = resolveEntry(result);
   const serviceId = entry?.id ?? null;
 
+  // Text handed to the Explain tool when the user taps "Ipasabot": the answer's own content,
+  // so Explain actually has something to explain instead of opening an empty box.
+  const explainText = [
+    result.sources[0]?.title,
+    a.summary,
+    a.requirements.length ? `${t.card.requirements}:\n- ${a.requirements.join("\n- ")}` : "",
+    a.steps.length ? `${t.card.steps}:\n- ${a.steps.join("\n- ")}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
   const facts = (
     [
       [t.card.office, a.office],
@@ -83,7 +94,7 @@ export function AnswerCard({ result }: { result: AskResponse }) {
               {t.answer.openChecklist}
             </Link>
           )}
-          <Link className="btn secondary" href="/explain">
+          <Link className="btn secondary" href={`/explain?text=${encodeURIComponent(explainText)}`}>
             {t.answer.explain}
           </Link>
           <Link className="btn secondary" href="/translate">
