@@ -38,17 +38,17 @@ export default function Home() {
             <strong className="flow-title">{t.homePage.flowHeading}</strong>
             <div className="flow">
               <div className="flow-step">
-                <span className="flow-ring"><Icon name="question" size={22} /></span>
+                <span className="flow-ring"><Icon name="question" size={28} /></span>
                 <span>{t.homePage.flow1}</span>
               </div>
-              <Icon name="chevron" size={28} className="flow-arrow" />
+              <Icon name="chevron" size={32} className="flow-arrow" />
               <div className="flow-step">
-                <span className="flow-ring"><Icon name="bulb" size={22} /></span>
+                <span className="flow-ring"><Icon name="bulb" size={28} /></span>
                 <span>{t.homePage.flow2}</span>
               </div>
-              <Icon name="chevron" size={28} className="flow-arrow" />
+              <Icon name="chevron" size={32} className="flow-arrow" />
               <div className="flow-step">
-                <span className="flow-ring"><Icon name="check" size={22} /></span>
+                <span className="flow-ring"><Icon name="check" size={28} /></span>
                 <span>{t.homePage.flow3}</span>
               </div>
             </div>
