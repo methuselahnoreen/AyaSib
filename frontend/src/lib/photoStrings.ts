@@ -19,4 +19,14 @@ export const photoText = {
   errorTimeout: "Taas ra kaayo ang paghulat. Sulayi pag-usab.",
   errorGeneric: "Napakyas ang pagbasa sa litrato. Sulayi pag-usab o i-type ang teksto.",
   previewAlt: "Gipili nga litrato sa dokumento",
+  // Lens flow (Tier 1). First-draft Cebuano, flagged for native review.
+  lensTitle: "Basaha ug hubara",
+  lensIntro: "Kuhaa o pili og litrato nga naay teksto. Basahon ug hubaron sa Bisaya.",
+  scanning: "Gi-scan ang litrato...",
+  translating: "Gihubad sa Bisaya...",
+  resultTitle: "Hubad sa Bisaya",
+  showOriginal: "Ipakita ang orihinal nga teksto",
+  hideOriginal: "Itago ang orihinal",
+  again: "Lain nga litrato",
+  overlayNote: "Awtomatiko nga hubad. Palihog susiha; mahimong dili hingpit.",
 } as const;
