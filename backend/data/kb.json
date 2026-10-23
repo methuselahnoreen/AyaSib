@@ -93,6 +93,50 @@
     "processing_time_ceb": "45 ka minuto sa tanan"
   },
   {
+    "id": "national-id-philsys",
+    "name_en": "National ID (PhilSys / PhilID)",
+    "name_ceb": null,
+    "locality": "National",
+    "office": "Philippine Statistics Authority (PhilSys). Register in person at any PhilSys Registration Center - a PSA Regional or Provincial Office, a participating city or municipal LGU center, or a participating mall. Find the nearest center through the PhilSys Registration Center directory at https://philsys.gov.ph.",
+    "who_may_avail": "Filipino citizens and resident aliens",
+    "requirements": [
+      "One original, valid supporting document for identity: preferably a PSA-issued birth certificate, or a Philippine passport, driver's license, UMID, or other accepted government-issued ID (see the accepted-documents list on the PhilSys site)",
+      "Yourself, in person, so your biometrics (fingerprints, iris scan, and photo) can be captured at the registration center"
+    ],
+    "requirements_note": "Registration is free. As of 2026 it is walk-in - there is no online pre-registration form to fill out first. Bring the ORIGINAL copy of your supporting document, not a photocopy. A PhilSys number is not required to be part of any other program.",
+    "steps": [
+      "Find a PhilSys Registration Center near you (a PSA office, a participating LGU center, or a participating mall) using the directory at https://philsys.gov.ph",
+      "Go to the center in person and present your original supporting document for identity verification",
+      "Have your biometrics captured on-site: fingerprints, iris scan, and a front-facing photo",
+      "Receive your Transaction Reference Number (TRN) slip - keep it safe, you need it to track your ID and check your ePhilID",
+      "Get your digital National ID: download the eGovPH app (Google Play or Apple App Store), sign in, and view your Digital National ID once your PhilSys record is approved",
+      "Receive your physical PhilID card: the PSA issues it automatically and the Philippine Postal Office (PHLPost) delivers it to your registered address for free - there is no separate application for the card"
+    ],
+    "fee": "Free. There is no charge to register or to receive the PhilID.",
+    "processing_time": "Biometric capture at the center is usually done in one visit. The Digital National ID can appear in the eGovPH app once your record is approved; the physical card is delivered by PHLPost afterward and timing varies.",
+    "source_title": "Philippine Statistics Authority - Philippine Identification System (PhilSys)",
+    "source_url": "https://philsys.gov.ph",
+    "last_verified": "2026-10-23",
+    "review_status": "needs_review",
+    "summary_ceb": "Ang National ID (PhilID) mao ang opisyal nga usa ka pamatuod sa pagkatawo nga gihatag sa Philippine Statistics Authority (PSA) ubos sa Philippine Identification System (PhilSys). Libre ang pagpa-rehistro. Sukad 2026, walk-in kini - adto lang sa usa ka PhilSys Registration Center dala ang imong orihinal nga dokumento, kuhaon ang imong biometrics, unya makuha ang imong Digital National ID sa eGovPH app ug ang physical card ipadala sa balay pinaagi sa PHLPost.",
+    "requirements_ceb": [
+      "Usa ka orihinal, valid nga dokumento para sa pagpamatuod sa pagkatawo: mas maayo kon PSA nga birth certificate, o Philippine passport, driver's license, UMID, o uban pang dinawat nga government-issued nga ID (tan-awa ang listahan sa dinawat nga dokumento sa PhilSys website)",
+      "Ikaw mismo, personal, aron makuha ang imong biometrics (fingerprints, iris scan, ug litrato) sa registration center"
+    ],
+    "requirements_note_ceb": "Libre ang pagpa-rehistro. Sukad 2026, walk-in na kini - wala nay online pre-registration form nga pun-on una. Dad-a ang ORIHINAL nga kopya sa imong dokumento, dili photocopy.",
+    "steps_ceb": [
+      "Pangita og PhilSys Registration Center nga duol kanimo (PSA office, partisipanteng LGU center, o partisipanteng mall) gamit ang directory sa https://philsys.gov.ph",
+      "Adto sa center personal ug ipakita ang imong orihinal nga dokumento para sa pag-verify sa pagkatawo",
+      "Ipakuha ang imong biometrics didto: fingerprints, iris scan, ug front-facing nga litrato",
+      "Kuhaa ang imong Transaction Reference Number (TRN) slip - ampingi kini, gikinahanglan aron ma-track ang imong ID ug ma-check ang imong ePhilID",
+      "Kuhaa ang imong digital National ID: i-download ang eGovPH app (Google Play o Apple App Store), mag-sign in, ug tan-awa ang imong Digital National ID kon aprubado na ang imong PhilSys record",
+      "Dawata ang imong physical nga PhilID card: ang PSA mag-isyu niini awtomatiko ug ang Philippine Postal Office (PHLPost) maghatod niini sa imong narehistro nga adres nga libre - walay separado nga aplikasyon para sa card"
+    ],
+    "office_ceb": "Philippine Statistics Authority (PhilSys). Mag-rehistro personal sa bisan unsang PhilSys Registration Center - usa ka PSA Regional o Provincial Office, usa ka partisipanteng city o municipal LGU center, o usa ka partisipanteng mall. Pangitaa ang pinakaduol nga center pinaagi sa PhilSys Registration Center directory sa https://philsys.gov.ph.",
+    "fee_ceb": "Libre. Walay bayad sa pagpa-rehistro o sa pagkuha sa PhilID.",
+    "processing_time_ceb": "Ang pagkuha sa biometrics sa center kasagaran mahuman sa usa ka pagbisita. Ang Digital National ID makita na sa eGovPH app kon aprubado na ang imong record; ang physical card ihatod sa PHLPost human niana ug magkalahi ang gidugayon."
+  },
+  {
     "id": "national-police-clearance",
     "name_en": "National Police Clearance",
     "name_ceb": null,
@@ -358,6 +402,52 @@
     "office_ceb": "PSAHelpline.ph (online, gi-authorize sa PSA) o bisan unsang PSA CRS Outlet (walk-in, pinaagi sa online appointment)",
     "fee_ceb": "Online (PSAHelpline.ph): PHP 365.00 matag kopya. Walk-in: PHP 155.00 matag kopya (basic fee). Libre ang appointment.",
     "processing_time_ceb": "Online delivery: sunod nga adlaw sa pagtrabaho human ma-release sa PSA ang dokumento para sa Metro Manila; 3 ngadto sa 8 ka adlaw sa pagtrabaho para sa probinsya. Walk-in: posible ang same-day release kon kompleto ang requirements ug walay problema sa rekord. Para sa bag-ong narehistro nga kasal, available ang PSA copy 2 ngadto sa 4 ka bulan human sa transmittal date alang sa kasal sa Metro Manila, ug labing menos 6 ka bulan alang sa kasal sa probinsya."
+  },
+  {
+    "id": "pwd-id",
+    "name_en": "Persons with Disabilities (PWD) Identification Card",
+    "name_ceb": null,
+    "locality": "National (issued locally by your city or municipality)",
+    "office": "Your city or municipal Persons with Disability Affairs Office (PDAO), or the City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) where you live. Records are centrally managed by the DSWD and NCDA under the Unified PWD ID System (UPWDIS), but the card is produced and released locally.",
+    "who_may_avail": "Filipinos with a disability (apparent or non-apparent) as defined under the Magna Carta for Persons with Disability",
+    "requirements": [
+      "Accomplished PWD ID / UPWDIS registration form (ask for it at your PDAO or city/municipal social welfare office)",
+      "Two recent 1x1 ID photos",
+      "Proof of residence in the city or municipality (for example a barangay certificate or a valid ID showing your address)",
+      "For a non-apparent disability: a medical certificate or clinical abstract from a licensed physician confirming the disability"
+    ],
+    "requirements_note": "A PhilSys (national ID) number is NOT required to register. For an apparent disability (one that can be seen), a medical certificate is no longer required - visual confirmation by the issuing office is enough. The exact supporting documents can vary slightly by LGU, so confirm with your local office.",
+    "steps": [
+      "Go to your city or municipal Persons with Disability Affairs Office (PDAO) or Social Welfare and Development Office (CSWDO/MSWDO) and ask for the PWD ID registration form",
+      "Fill out the form and attach your two 1x1 photos and proof of residence",
+      "If your disability is non-apparent, attach the medical certificate or clinical abstract confirming it",
+      "Submit everything to the office for verification and approval",
+      "Wait for your Unified PWD ID to be printed and released by the local office; some LGUs release it the same day while others ask you to return on a set date"
+    ],
+    "fee": "Free. There is no charge for the PWD ID.",
+    "processing_time": "Varies by local office. Some issue the ID on the same day, while others schedule a release date. Ask your PDAO or social welfare office for their timeline.",
+    "source_title": "National Council on Disability Affairs (NCDA) - Unified PWD ID System, Administrative Order No. 001, s. 2026",
+    "source_url": "https://ncda.gov.ph",
+    "last_verified": "2026-10-23",
+    "review_status": "needs_review",
+    "summary_ceb": "Ang PWD ID mao ang opisyal nga kard para sa mga tawong may kapansanan (PWD), nga magamit aron makakuha og 20% discount ug ubang benepisyo ubos sa balaod. Mag-apply ka sa PDAO o sa City/Municipal Social Welfare Office sa imong dapit. Libre kini. Alang sa permanente nga kapansanan, ang bag-ong Unified PWD ID balido sa tibuok kinabuhi; alang sa dili-makita (non-apparent) nga kapansanan, kinahanglan i-revalidate kada 5 ka tuig.",
+    "requirements_ceb": [
+      "Napuno nga PWD ID / UPWDIS registration form (pangayoa sa imong PDAO o sa city/municipal social welfare office)",
+      "Duha ka bag-ong 1x1 nga ID nga litrato",
+      "Pamatuod nga nagpuyo ka sa maong siyudad o lungsod (pananglitan barangay certificate o valid nga ID nga nagpakita sa imong adres)",
+      "Para sa dili-makita (non-apparent) nga kapansanan: medical certificate o clinical abstract gikan sa lisensiyadong doktor nga nagpamatuod sa kapansanan"
+    ],
+    "requirements_note_ceb": "DILI kinahanglan ang PhilSys (national ID) nga numero aron maka-register. Para sa makita (apparent) nga kapansanan, dili na kinahanglan ang medical certificate - igo na ang pagtan-aw ug pagkumpirma sa opisina. Ang eksaktong mga dokumento mahimong magkalahi gamay matag LGU, busa pangutana sa imong lokal nga opisina.",
+    "steps_ceb": [
+      "Adto sa imong city o municipal Persons with Disability Affairs Office (PDAO) o Social Welfare and Development Office (CSWDO/MSWDO) ug pangayo sa PWD ID registration form",
+      "Pun-a ang form ug ilakip ang imong duha ka 1x1 nga litrato ug ang pamatuod sa imong puy-anan",
+      "Kon dili-makita (non-apparent) ang imong kapansanan, ilakip ang medical certificate o clinical abstract nga nagpamatuod niini",
+      "Isumite ang tanan sa opisina para sa pag-verify ug pag-aprubar",
+      "Hulata nga ma-print ug mahatag ang imong Unified PWD ID sa lokal nga opisina; ang ubang LGU mohatag niini parehas nga adlaw, ang uban mohangyo nga mobalik ka sa gitakdang petsa"
+    ],
+    "office_ceb": "Ang imong city o municipal Persons with Disability Affairs Office (PDAO), o ang City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) sa imong puy-anan. Ang mga record sentral nga gidumala sa DSWD ug NCDA ubos sa Unified PWD ID System (UPWDIS), apan ang kard gihimo ug gihatag lokal.",
+    "fee_ceb": "Libre. Walay bayad ang PWD ID.",
+    "processing_time_ceb": "Magkalahi matag lokal nga opisina. Ang uban mohatag sa ID parehas nga adlaw, ang uban magtakda og petsa sa pagkuha. Pangutana sa imong PDAO o social welfare office bahin sa ilang timeline."
   },
   {
     "id": "sss-online-ss-number-issuance",
