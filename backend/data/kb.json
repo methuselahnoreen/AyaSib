@@ -142,7 +142,7 @@
   },
   {
     "id": "philhealth-enrolment-ofw",
-    "name_en": "Enrolment Procedures (Walk-in and through E-mail)",
+    "name_en": "PhilHealth Membership Registration for OFWs and Filipinos Abroad (Walk-in or E-mail)",
     "name_ceb": null,
     "locality": "National",
     "office": "Member Management Group - Special Programs Department (submit to the assigned staff for walk-in, or e-mail ofp@philhealth.gov.ph)",
@@ -246,5 +246,64 @@
     "office_ceb": "PSAHelpline.ph (online, gi-authorize sa PSA) o bisan unsang PSA CRS Outlet (walk-in, pinaagi sa online appointment)",
     "fee_ceb": "Online (PSAHelpline.ph): PHP 365.00 matag kopya. Walk-in: PHP 155.00 matag kopya (basic fee). Libre ang appointment.",
     "processing_time_ceb": "Online delivery: sunod nga adlaw sa pagtrabaho human ma-release sa PSA ang dokumento para sa Metro Manila; 3 ngadto sa 8 ka adlaw sa pagtrabaho para sa probinsya. Walk-in: posible ang same-day release kon kompleto ang requirements ug walay problema sa rekord. Para sa bag-ong narehistro nga kasal, available ang PSA copy 2 ngadto sa 4 ka bulan human sa transmittal date alang sa kasal sa Metro Manila, ug labing menos 6 ka bulan alang sa kasal sa probinsya."
+  },
+  {
+    "id": "sss-online-ss-number-issuance",
+    "name_en": "Online SS Number Application (SSS)",
+    "name_ceb": null,
+    "locality": "National",
+    "office": "SSS (online, through the SSS website https://www.sss.gov.ph). For inquiries: SSS Hotline 1455",
+    "who_may_avail": "Anyone applying for an SS Number for the first time, such as prospective employees, self-employed persons, non-working spouses and overseas Filipino workers",
+    "requirements": [
+      "An active email address (the link to continue the application is sent there; check the spam or junk folder if it does not arrive)",
+      "Personal details: basic and contact information, home address, social status and place of birth",
+      "Beneficiary details (father, spouse, children and others), if applicable",
+      "Your preferred My.SSS User ID, and your height (cm) and weight (kg)",
+      "Optional: one supporting document, as a readable colored image in JPEG or PDF, maximum file size 3MB"
+    ],
+    "requirements_note": "Uploading a supporting document is optional; you may proceed without one. Once the SS Number is generated, wrong information can only be corrected at an SSS branch.",
+    "steps": [
+      "Go to 'Apply for an SS Number online' on the SSS website, read the procedures, then click 'Start'",
+      "Fill in all required fields in the Registrant Record Verification, tick 'I'm not a robot' and 'I certify that above information are true and correct', then click 'Submit' (read the SSS Data Privacy Notice first)",
+      "Check your email for the link to continue the application; the link is valid for 5 calendar days only, and if it expires you must submit a new application",
+      "Fill in Basic and Contact Information, Home Address and Purpose of Registration, then click Save, OK, Next",
+      "Fill in Social Status and Place of Birth, then click Save, OK, Next",
+      "Fill in beneficiary details, if applicable, then click Save, OK, Next",
+      "Choose your preferred My.SSS User ID and enter your height (cm) and weight (kg), then click Save, OK, Next",
+      "Review and correct your entries, click 'Generate SS Number', then 'Yes' to confirm that all information is true and correct",
+      "Optional: choose a supporting document and upload a readable colored JPEG or PDF image (maximum 3MB), then click 'Submit'",
+      "Check your email for the SS Number Online Application Confirmation, with the SS Number Slip, Transaction Number Slip and E-1/E-6 Form",
+      "Click the SSS Web Registration activation link in your email to set your My.SSS password; the link is valid for 30 calendar days, and if it expires, register in My.SSS using the Transaction Number on your E-1"
+    ],
+    "fee": null,
+    "processing_time": null,
+    "source_title": "SSS website, Membership & Coverage: Be an SSS Member (How to apply for SS Number online)",
+    "source_url": "https://www.sss.gov.ph/become-an-sss-member/",
+    "last_verified": "2026-10-23",
+    "summary_ceb": "Makakuha ka og SS Number online pinaagi sa SSS website. Pun-a ang online form, i-review ang imong impormasyon, ug i-klik ang 'Generate SS Number'. Unya himoa ang imong My.SSS account pinaagi sa link nga gipadala sa imong email.",
+    "requirements_ceb": [
+      "Aktibong email address (didto ipadala ang link aron mapadayon ang aplikasyon; susiha ang spam o junk folder kon wala moabot)",
+      "Personal nga detalye: basic ug contact information, address sa balay, social status ug lugar nga natawhan",
+      "Detalye sa mga beneficiary (amahan, bana o asawa, anak ug uban pa), kon naa",
+      "Imong gipili nga My.SSS User ID, ug imong gitas-on (cm) ug gibug-aton (kg)",
+      "Opsyonal: usa ka supporting document, usa ka klaro nga colored image sa JPEG o PDF, dili molapas sa 3MB"
+    ],
+    "requirements_note_ceb": "Opsyonal ang pag-upload og supporting document; makapadayon ka bisan wala ka niini. Kon nakuha na ang SS Number, sa SSS branch na lang matul-id ang sayop nga impormasyon.",
+    "steps_ceb": [
+      "Adto sa 'Apply for an SS Number online' sa SSS website, basaha ang mga lakang, ug i-klik ang 'Start'.",
+      "Pun-a ang tanang gikinahanglan nga fields sa Registrant Record Verification, i-tick ang 'I'm not a robot' ug 'I certify that above information are true and correct', unya i-klik ang 'Submit'. Basaha una ang SSS Data Privacy Notice.",
+      "Susiha ang imong email para sa link aron mapadayon ang aplikasyon. 5 ka calendar days lang kini molungtad; kon mo-expire, kinahanglan nimo mag-submit og bag-ong aplikasyon.",
+      "Ihatag ang Basic ug Contact Information, Home Address ug Purpose of Registration, unya i-klik ang Save, OK, Next.",
+      "Ihatag ang Social Status ug Place of Birth, unya i-klik ang Save, OK, Next.",
+      "Ihatag ang detalye sa mga beneficiary, kon naa, unya i-klik ang Save, OK, Next.",
+      "Pilia ang imong My.SSS User ID ug i-encode ang imong gitas-on (cm) ug gibug-aton (kg), unya i-klik ang Save, OK, Next.",
+      "Susiha ug ayoha ang imong mga entry, i-klik ang 'Generate SS Number', unya 'Yes' aron kumpirmahon nga tinuod ug husto ang tanang impormasyon.",
+      "Opsyonal: pili og supporting document ug i-upload ang klaro nga colored image niini sa JPEG o PDF (dili molapas sa 3MB), unya i-klik ang 'Submit'.",
+      "Susiha ang imong email para sa SS Number Online Application Confirmation, uban ang SS Number Slip, Transaction Number Slip ug E-1/E-6 Form.",
+      "I-klik ang SSS Web Registration activation link sa imong email aron himoon ang password sa imong My.SSS account. 30 ka calendar days kini molungtad; kon mo-expire, magparehistro sa My.SSS gamit ang Transaction Number sa imong E-1."
+    ],
+    "office_ceb": "SSS (online, pinaagi sa SSS website https://www.sss.gov.ph). Para sa pangutana: SSS Hotline 1455",
+    "fee_ceb": null,
+    "processing_time_ceb": null
   }
 ]
