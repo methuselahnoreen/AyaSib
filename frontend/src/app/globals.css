@@ -382,10 +382,10 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .hero-aya { display: flex; align-items: center; gap: 12px; }
 .hero-aya .aya-img { width: clamp(96px, 30vw, 140px); height: auto; flex: none; }
 .aya-speech {
-  position: relative; flex: 1; margin: 0;
+  position: relative; flex: 1 1 0; min-width: 0; margin: 0;
   background: var(--white); border-radius: 18px; padding: 16px 18px;
   color: var(--deep-green); font-weight: 800; font-size: 1.1rem; line-height: 1.3; text-align: center;
-  box-shadow: var(--shadow);
+  overflow-wrap: anywhere; box-shadow: var(--shadow);
 }
 .aya-speech::before {
   content: ""; position: absolute; left: -9px; top: 50%; transform: translateY(-50%);
@@ -400,14 +400,14 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
   display: flex; flex-direction: column; gap: 12px;
 }
 .flow-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--deep-green); }
-.flow { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
-.flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.flow { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
 .flow-ring {
   width: 48px; height: 48px; border-radius: 50%; background: var(--sage);
-  display: grid; place-items: center; color: var(--forest);
+  display: grid; place-items: center; color: var(--forest); flex: none;
 }
-.flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.85rem; }
-.flow-arrow { color: var(--gray); flex: none; }
+.flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.85rem; text-align: center; overflow-wrap: anywhere; }
+.flow-arrow { color: var(--gray); flex: none; align-self: center; }
 
 /* Name story / etymology highlight (kept for reuse elsewhere) */
 .name-story {
@@ -445,16 +445,6 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .tile .tile-icon { color: var(--forest); }
 .tile strong { font-size: 1rem; }
 .tile span { color: var(--gray); font-size: 0.82rem; }
-
-/* ---- Step flow (circles) ---- */
-.flow { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
-.flow .node { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
-.flow .ring {
-  width: 56px; height: 56px; border-radius: 50%; background: var(--sage);
-  display: grid; place-items: center; color: var(--forest);
-}
-.flow .node span { font-weight: 700; color: var(--deep-green); font-size: 0.88rem; }
-.flow .arrow { color: var(--gray); flex: none; }
 
 /* ---- Suggested question card (amber) ---- */
 /* Real-data facts row under the hero */
