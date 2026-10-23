@@ -621,7 +621,7 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 
 /* Aya asking the question */
 .aya-ask { display: flex; align-items: center; gap: 12px; }
-.aya-ask-img { flex: none; width: 72px; height: 72px; }
+.aya-ask-img { flex: none; width: 120px; height: 120px; }
 .aya-ask-bubble {
   position: relative; flex: 1; margin: 0;
   background: var(--sage); border-radius: 16px; padding: 14px 16px;
