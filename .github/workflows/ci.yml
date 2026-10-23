@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# These checks need no secrets. The live eval (npm run eval) is intentionally
+# excluded because it calls a real model and requires Cloudflare credentials.
+jobs:
+  knowledge-base:
+    name: Validate knowledge base
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install backend tooling
+        working-directory: backend
+        run: npm install --no-audit --no-fund
+      - name: Validate every kb/*.yaml
+        working-directory: backend
+        run: npm run kb:validate
+
+  frontend:
+    name: Frontend checks (typecheck, lint, test, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck
+        working-directory: frontend
+        run: npm run typecheck
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+      - name: Unit and property tests
+        working-directory: frontend
+        run: npm test
+      - name: Production build
+        working-directory: frontend
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096

@@ -4,8 +4,13 @@
 
 Ask about a Cebu City government service in Bisaya, Filipino, or English, and get a short checklist back **in Bisaya**: a summary, what to bring, where to go, the fee, and how long it takes, each answer shown with its official source and the date it was last verified. If the knowledge base does not cover your question, AyaSib says it is not sure and tells you to confirm with the office. It never guesses.
 
-**Live demo:** _to be added once deployed (see [Deployment](#deployment))._
+**Live demo:** <https://ayasib.vercel.app>
 **Built for:** Hacktoberfest Cebu 2026 open-source competition.
+
+[![CI](https://github.com/methuselahnoreen/AyaSib/actions/workflows/ci.yml/badge.svg)](https://github.com/methuselahnoreen/AyaSib/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Project history is recorded in [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
