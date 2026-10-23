@@ -378,8 +378,9 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .hero-card .display { font-size: clamp(2.6rem, 11vw, 3.6rem); line-height: 1.02; color: var(--deep-green); margin: 2px 0 10px; }
 .hero-card .hero-sub { color: var(--charcoal); margin: 0 0 6px; font-size: 1.15rem; }
 
-/* Aya + bubble: Aya at left, bubble at right with the tail pointing down-left toward her. */
+/* Aya + bubble: Aya (with caption under her) at left, bubble at right with the tail pointing left toward her. */
 .hero-aya { display: flex; align-items: center; gap: 12px; }
+.hero-aya-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: none; }
 .hero-aya .aya-img { width: clamp(96px, 30vw, 140px); height: auto; flex: none; }
 .aya-speech {
   position: relative; flex: 1 1 0; min-width: 0; margin: 0;
@@ -392,7 +393,7 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
   border-top: 9px solid transparent; border-bottom: 9px solid transparent;
   border-right: 10px solid var(--white);
 }
-.hero-motto { font-weight: 700; color: var(--deep-green); font-size: 0.95rem; margin-top: 2px; }
+.hero-motto { font-weight: 700; color: var(--deep-green); font-size: 0.8rem; text-align: center; }
 
 /* "Tulo ra ka lakang" flow card */
 .flow-card {
@@ -406,8 +407,8 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
   width: 48px; height: 48px; border-radius: 50%; background: var(--sage);
   display: grid; place-items: center; color: var(--forest); flex: none;
 }
-.flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.85rem; text-align: center; overflow-wrap: anywhere; }
-.flow-arrow { color: var(--gray); flex: none; align-self: center; }
+.flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.8rem; text-align: center; overflow-wrap: anywhere; }
+.flow-arrow { color: var(--forest); flex: none; align-self: center; stroke-width: 2.4; }
 
 /* Name story / etymology highlight (kept for reuse elsewhere) */
 .name-story {

@@ -25,11 +25,13 @@ export default function Home() {
           <h1 className="display">{t.homePage.heroName}</h1>
 
           <div className="hero-aya">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
+            <div className="hero-aya-col">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="aya-img" src="/aya.svg" alt="" aria-hidden="true" />
+              <span className="hero-motto">{t.homePage.mottoReverse}</span>
+            </div>
             <p className="aya-speech">{t.homePage.ayaBubble}</p>
           </div>
-          <span className="hero-motto">{t.homePage.mottoReverse}</span>
 
           {/* Tulo ra ka lakang */}
           <div className="flow-card">
@@ -39,12 +41,12 @@ export default function Home() {
                 <span className="flow-ring"><Icon name="question" size={22} /></span>
                 <span>{t.homePage.flow1}</span>
               </div>
-              <Icon name="chevron" size={16} className="flow-arrow" />
+              <Icon name="chevron" size={28} className="flow-arrow" />
               <div className="flow-step">
                 <span className="flow-ring"><Icon name="bulb" size={22} /></span>
                 <span>{t.homePage.flow2}</span>
               </div>
-              <Icon name="chevron" size={16} className="flow-arrow" />
+              <Icon name="chevron" size={28} className="flow-arrow" />
               <div className="flow-step">
                 <span className="flow-ring"><Icon name="check" size={22} /></span>
                 <span>{t.homePage.flow3}</span>
