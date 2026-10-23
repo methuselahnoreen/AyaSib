@@ -67,6 +67,25 @@ export function linesToText(lines: OverlayLine[]): string {
 }
 
 /**
+ * Pairs each original line with its Bisaya from a single marker-tagged translation.
+ * The translated text is expected to contain markers like "#1# ..." (one per line); we read the
+ * number and attach that segment to the matching original line. Any line whose marker is missing
+ * gets an empty Bisaya (the UI then shows the original alone), so a partial result still aligns.
+ */
+export function pairByMarker(origLines: string[], translated: string): { orig: string; ceb: string }[] {
+  const byIndex = new Map<number, string>();
+  // Split on markers, keeping the number. Example chunk: "3 Ngalan han kadto".
+  const regex = /#\s*(\d+)\s*#\s*([\s\S]*?)(?=#\s*\d+\s*#|$)/g;
+  let m: RegExpExecArray | null;
+  while ((m = regex.exec(translated)) !== null) {
+    const idx = Number(m[1]) - 1;
+    const text = m[2].replace(/\s+/g, " ").trim();
+    if (idx >= 0 && text) byIndex.set(idx, text);
+  }
+  return origLines.map((orig, i) => ({ orig, ceb: byIndex.get(i) ?? "" }));
+}
+
+/**
  * Splits a translated block back into per-line strings aligned to the original lines.
  * The translator is asked to preserve line count; if it doesn't, we fall back gracefully:
  * extra translated lines are dropped and missing ones reuse the original text.
