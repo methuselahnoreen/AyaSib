@@ -333,21 +333,33 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 .appbar .logo-pill { background: transparent; box-shadow: none; padding: 0; }
 .appbar .logo-img { height: 132px; }
 
-/* ---- Bottom tab bar ---- */
+/* ---- Bottom tab bar (5 slots, center OCR button protrudes) ---- */
 .tabbar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
   max-width: 640px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: grid; grid-template-columns: repeat(5, 1fr); align-items: end;
   background: var(--white); border-top: 1px solid var(--sage);
   padding: 8px 4px calc(8px + env(safe-area-inset-bottom, 0px));
 }
 .tab {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
-  min-height: 56px; justify-content: center; text-decoration: none;
+  min-height: 56px; justify-content: flex-end; text-decoration: none;
   color: var(--gray); font-size: 0.72rem; font-weight: 700;
 }
 .tab.active { color: var(--forest); }
 .tab.active span { color: var(--forest); }
+
+/* Center OCR (Basaha) — a green camera-scan button that protrudes above the bar. */
+.tab-ocr { position: relative; color: var(--forest); }
+.tab-ocr .ocr-fab {
+  display: grid; place-items: center;
+  width: 60px; height: 60px; margin-top: -18px; margin-bottom: 2px;
+  border-radius: 50%; background: var(--forest); color: #fff;
+  border: 4px solid var(--cream); box-shadow: var(--shadow);
+}
+.tab-ocr:hover .ocr-fab { background: var(--deep-green); }
+.tab-ocr.active .ocr-fab { background: var(--deep-green); }
+.tab-ocr span:last-child { color: var(--forest); }
 
 /* ---- Hero card (home) ---- */
 .hero-card {
