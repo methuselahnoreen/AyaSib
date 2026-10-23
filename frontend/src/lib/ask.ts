@@ -1,7 +1,37 @@
 import { extractJson } from "./json";
-import { serverText } from "./strings";
-import type { AskResponse, KbEntry } from "./types";
+import { serverText, PHRASES } from "./strings";
+import type { AskResponse, AskIntent, KbEntry } from "./types";
 import type { LlmMessage } from "./llm";
+
+export const ASK_TOPICS: AskIntent[] = ["fee", "requirements", "steps", "office", "processing_time"];
+
+// Keyword hints used to detect a focused topic from the user's own words, so a follow-up
+// like "pila ang bayad?" shows only the fee. Detection is local; the model picks the service.
+// NOTE: "unsaon"/"how"/"paano" are deliberately NOT step keywords. "Unsaon pagkuha ug X?"
+// is a general "how do I get this" question and should return the full overview card, not a
+// steps-only answer. Only explicit step words ("lakang", "proseso", "steps") mean the steps topic.
+const TOPIC_KEYWORDS: Record<AskIntent, string[]> = {
+  fee: ["pila", "bayad", "presyo", "magkano", "how much", "fee", "cost"],
+  requirements: ["kinahanglan", "dad-on", "papeles", "requirement", "requirements"],
+  steps: ["lakang", "proseso", "step", "steps", "process"],
+  office: ["asa", "saan", "where", "office", "opisina"],
+  processing_time: ["unsa ka dugay", "kadugay", "kanus-a", "pila ka adlaw", "how long", "processing"],
+};
+
+/**
+ * Detects which focused topic the message is asking for, or "overview" if none/ambiguous.
+ * A message that also asks "how to get" (unsaon/paano/how) is treated as overview even if it
+ * mentions a narrow word, because the user wants the whole picture, not one field.
+ */
+export function detectIntent(question: string): AskIntent | "overview" {
+  const q = ` ${question.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim()} `;
+  const asksHowToGet = [" unsaon ", " paano ", " how do ", " how to ", " how can ", " pag apply ", " pagkuha ", " mag apply "].some((p) => q.includes(p));
+  if (asksHowToGet) return "overview";
+  for (const topic of ASK_TOPICS) {
+    if (TOPIC_KEYWORDS[topic].some((kw) => (kw.includes(" ") ? q.includes(kw) : q.includes(` ${kw} `)))) return topic;
+  }
+  return "overview";
+}
 
 // This mirrors backend/lib/ask.mjs. The model's only job is to choose which service a
 // question is about (or null). It NEVER writes the Cebuano shown to users: every Cebuano
@@ -105,17 +135,92 @@ export function notConfident(message: string = serverText.notSure): AskResponse 
 }
 
 const nonEmpty = (s: string): string | null => (s && s.trim() ? s : null);
+const fillTemplate = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (_, k) => (k in values ? values[k] : `{${k}}`));
+
+const emptyAnswer = () => ({
+  summary: "",
+  requirements: [] as string[],
+  requirements_note: null as string | null,
+  steps: [] as string[],
+  office: null as string | null,
+  fee: null as string | null,
+  processing_time: null as string | null,
+});
+
+/** The curated value backing a topic for a service, or null/[] when absent. */
+function topicValue(entry: KbEntry, topic: AskIntent): string | string[] | null {
+  switch (topic) {
+    case "fee":
+      return nonEmpty(entry.fee_ceb) ?? nonEmpty(entry.fee);
+    case "requirements":
+      return entry.requirements_ceb.length ? entry.requirements_ceb : entry.requirements.length ? entry.requirements : null;
+    case "steps":
+      return entry.steps_ceb.length ? entry.steps_ceb : entry.steps.length ? entry.steps : null;
+    case "office":
+      return nonEmpty(entry.office_ceb) ?? nonEmpty(entry.office);
+    case "processing_time":
+      return nonEmpty(entry.processing_time_ceb) ?? nonEmpty(entry.processing_time);
+    default:
+      return null;
+  }
+}
+
+const hasTopic = (entry: KbEntry, topic: AskIntent): boolean => {
+  const v = topicValue(entry, topic);
+  return Array.isArray(v) ? v.length > 0 : v != null && v !== "";
+};
+
+function buildSuggestions(entry: KbEntry, current: AskIntent | "overview") {
+  const out: { label: string; intent: AskIntent }[] = [];
+  for (const topic of ASK_TOPICS) {
+    if (topic === current) continue;
+    if (!hasTopic(entry, topic)) continue;
+    out.push({ label: PHRASES.suggestion[topic], intent: topic });
+    if (out.length === 3) break;
+  }
+  return out;
+}
 
 /**
- * Builds the final answer entirely from the chosen KB entry's curated Cebuano fields.
- * Falls back to the English field only for office/fee/processing_time when no Cebuano exists,
- * matching backend/lib/ask.mjs. The model contributes nothing to the text here.
+ * Builds the final answer from the chosen KB entry's curated Cebuano fields.
+ * - "overview" returns the full card (summary + all available fields).
+ * - a focused topic returns a short lead phrase + ONLY that field, plus suggestions.
+ * The model contributes nothing to the text here.
  */
-export function assembleAnswer(kb: KbEntry[], serviceId: string | null): AskResponse {
+export function assembleAnswer(kb: KbEntry[], serviceId: string | null, intent: AskIntent | "overview" = "overview"): AskResponse {
   if (!serviceId) return notConfident();
   const entry = kb.find((e) => e.id === serviceId);
   if (!entry || !entry.source_url || !entry.last_verified || !entry.summary_ceb) return notConfident();
 
+  const sources = [
+    {
+      title: entry.source_title || (entry.locality ? `${entry.name_en} (${entry.locality})` : entry.name_en),
+      url: entry.source_url,
+      last_verified: entry.last_verified,
+    },
+  ];
+
+  // Focused topic answer: lead phrase + only the matching field.
+  if (intent !== "overview") {
+    const answer = emptyAnswer();
+    if (!hasTopic(entry, intent)) {
+      answer.summary = fillTemplate(PHRASES.missing, { name: entry.name_en });
+      return { confident: true, answer, sources, intent, suggestions: buildSuggestions(entry, intent) };
+    }
+    answer.summary = fillTemplate(PHRASES.lead[intent], { name: entry.name_en });
+    const value = topicValue(entry, intent);
+    if (intent === "fee") answer.fee = value as string;
+    else if (intent === "requirements") {
+      answer.requirements = value as string[];
+      answer.requirements_note = nonEmpty(entry.requirements_note_ceb);
+    } else if (intent === "steps") answer.steps = value as string[];
+    else if (intent === "office") answer.office = value as string;
+    else if (intent === "processing_time") answer.processing_time = value as string;
+    return { confident: true, answer, sources, intent, suggestions: buildSuggestions(entry, intent) };
+  }
+
+  // Overview: the full card.
   return {
     confident: true,
     answer: {
@@ -127,12 +232,8 @@ export function assembleAnswer(kb: KbEntry[], serviceId: string | null): AskResp
       fee: nonEmpty(entry.fee_ceb) ?? nonEmpty(entry.fee),
       processing_time: nonEmpty(entry.processing_time_ceb) ?? nonEmpty(entry.processing_time),
     },
-    sources: [
-      {
-        title: entry.source_title || (entry.locality ? `${entry.name_en} (${entry.locality})` : entry.name_en),
-        url: entry.source_url,
-        last_verified: entry.last_verified,
-      },
-    ],
+    sources,
+    intent: "overview",
+    suggestions: buildSuggestions(entry, "overview"),
   };
 }

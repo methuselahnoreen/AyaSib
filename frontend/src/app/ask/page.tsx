@@ -76,7 +76,11 @@ function AskPageInner() {
           {msgs.length === 0 && (
             <>
               <HeroArt className="empty-art" />
-              <div className="bubble bot">{t.ask.welcome}</div>
+              <div className="bubble bot">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/aya.svg" alt="Aya" width={28} height={28} style={{ verticalAlign: "middle", marginRight: 8 }} />
+                {t.ask.welcome}
+              </div>
               <div className="chips">
                 {t.ask.examples.map((ex) => (
                   <button key={ex} className="chip" onClick={() => send(ex)}>
@@ -93,10 +97,26 @@ function AskPageInner() {
               </div>
             ) : (
               <div key={m.id} className="assistant">
+                <div className="aya-head">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/aya.svg" alt="Aya" width={28} height={28} />
+                  <span>Aya</span>
+                </div>
                 {m.error ? (
                   <Notice kind="error" text={m.error} action={m.question ? { label: t.errors.retry, onClick: () => send(m.question!, false) } : undefined} />
                 ) : m.result?.confident ? (
-                  <AnswerCard result={m.result} />
+                  <>
+                    <AnswerCard result={m.result} />
+                    {m.result.suggestions && m.result.suggestions.length > 0 && (
+                      <div className="chips" style={{ marginTop: 8 }}>
+                        {m.result.suggestions.map((s) => (
+                          <button key={s.intent} className="chip" onClick={() => send(s.label)}>
+                            {s.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <Notice text={m.result?.message ?? t.notSure} />
                 )}

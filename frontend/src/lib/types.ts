@@ -60,11 +60,21 @@ export interface AskAnswer {
   processing_time: string | null;
 }
 
+export type AskIntent = "fee" | "requirements" | "steps" | "office" | "processing_time";
+
+export interface AskSuggestion {
+  label: string;
+  intent: AskIntent;
+}
+
 export interface AskResponse {
   confident: boolean;
   answer: AskAnswer | null;
   message?: string;
   sources: Source[];
+  // Optional: present on confident answers. "overview" = full card; a topic = focused answer.
+  intent?: AskIntent | "overview";
+  suggestions?: AskSuggestion[];
 }
 
 export interface ExplainResponse {

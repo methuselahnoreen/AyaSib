@@ -197,5 +197,70 @@
     "office_ceb": "Member Management Group - Special Programs Department (ipasa sa assigned staff para sa walk-in, o i-email sa ofp@philhealth.gov.ph)",
     "fee_ceb": "Walay service fee sa pagrehistro. Ang premium contributions base sa premium schedule ug bayran sa bisan unsang PhilHealth office o accredited collecting agent.",
     "processing_time_ceb": "10 minutos matag PMRF (walk-in); 3 ka adlaw (pinaagi sa email, apan nagdepende gihapon sa gidaghanon sa mga email nga madawat)"
+  },
+  {
+    "id": "psa-marriage-certificate",
+    "name_en": "PSA Marriage Certificate",
+    "name_ceb": "",
+    "locality": "National",
+    "who_may_avail": "Either spouse, a duly authorized representative, parents or direct descendants of the spouses (online: parents of either spouse, or children of the couple aged 18 or above), or a court",
+    "scope_note": "",
+    "requirements": [
+      "Full names (first, middle, last) of both spouses; the wife's maiden name exactly as written on the marriage certificate",
+      "Exact date of marriage",
+      "Exact place of marriage (city or municipality and province)",
+      "One valid government-issued ID, with names matching the application (online: presented to the courier on delivery; walk-in: presented at the PSA CRS Outlet)",
+      "Purpose of the request",
+      "Online only: delivery address, mobile number, email address and a payment method",
+      "Walk-in only: CRS Appointment Slip (printed or digital), plus an authorization letter or Special Power of Attorney if requesting for someone else"
+    ],
+    "requirements_note": "Names and birthday on the application must match your ID. Minors (below 18) cannot request someone else's marriage certificate online or book a walk-in appointment. Walk-in requests without a PSA online appointment are no longer allowed. An authorized representative cannot delegate their authority and may request for only 2 unrelated individuals.",
+    "steps": [
+      "Online: On PSAHelpline.ph, click Order Now, choose Hard Copy or Digital, select Marriage Certificate, and accept the terms and conditions",
+      "Online: Choose who the certificate is for, then enter the date and place of marriage and the husband's and wife's details",
+      "Online: Fill in your personal details as the requester, including the type of valid ID you will present on delivery, then choose your purpose",
+      "Online: Enter your delivery address, choose to receive it yourself or assign an authorized representative, and select the number of copies",
+      "Online: Review your application and pay right away to start processing; track your order under Check Status using your 10-digit reference number",
+      "Walk-in: Get a free appointment from the PSA Online Appointment System, choosing the date, time and PSA CRS Outlet",
+      "Walk-in: Arrive at least 30 minutes before your appointment and present the CRS Appointment Slip to the Information Marshal",
+      "Walk-in: Get the application form and a Queue Ticket Number (QTN)",
+      "Walk-in: Submit the accomplished form, QTN, valid IDs, authorization letter or SPA (if any) and the fees at the transacting window",
+      "Walk-in: Check the Official Receipt and count the change, if any",
+      "Walk-in: On the release date and time, go to the Releasing Area, submit the Official Receipt, IDs and documents, and check that the document you receive is correct and complete"
+    ],
+    "fee": "Online (PSAHelpline.ph): PHP 365.00 per copy. Walk-in: PHP 155.00 per copy (basic fee). The appointment is free of charge.",
+    "office": "PSAHelpline.ph (online, authorized by the PSA) or any PSA CRS Outlet (walk-in, by online appointment)",
+    "processing_time": "Online delivery: the next working day after PSA releases the document for Metro Manila; 3 to 8 working days for provincial addresses. Walk-in: same-day release is possible if requirements are in order and there are no issues with the record. For a newly registered marriage, the PSA copy is available 2 to 4 months after the transmittal date for Metro Manila weddings, and at least 6 months for provincial weddings.",
+    "source_title": "PSAHelpline.ph: PSA Marriage Certificate - A Guide to PSA Online and Walk-in Application",
+    "source_url": "https://psahelpline.ph/psa-marriage-certificate",
+    "last_verified": "2026-10-23",
+    "notes": "",
+    "summary_ceb": "Ang PSA marriage certificate mao ang opisyal nga dokumento gikan sa Philippine Statistics Authority nga nagpamatuod sa kasal. Pwede ka mag-order online pinaagi sa PSAHelpline.ph aron ipadala sa imong adres, o mo-walk-in sa PSA CRS Outlet human makakuha og appointment.",
+    "requirements_ceb": [
+      "Tibuok nga ngalan (first, middle, last) sa duha ka bana ug asawa; ang apelyido sa asawa sa dalaga pa siya sama gyud sa pagkasulat sa marriage certificate",
+      "Eksaktong petsa sa kasal",
+      "Eksaktong lugar sa kasal (lungsod o munisipyo ug probinsya)",
+      "Usa ka valid nga government-issued ID nga parehas ang mga ngalan sa aplikasyon (online: ipakita sa courier inig deliver; walk-in: ipakita sa PSA CRS Outlet)",
+      "Katuyoan sa paghangyo",
+      "Online lang: adres alang sa delivery, mobile number, email address, ug paagi sa pagbayad",
+      "Walk-in lang: CRS Appointment Slip (naka-print o digital), ug authorization letter o Special Power of Attorney kon para sa lain ang gihangyo"
+    ],
+    "requirements_note_ceb": "Siguroha nga parehas ang imong ngalan ug adlaw sa pagkatawo sa aplikasyon ug sa imong ID. Ang mga menor de edad (ubos sa 18) dili makahangyo sa marriage certificate sa lain online ug dili makabook og walk-in appointment. Dili na tugotan ang walk-in nga walay PSA online appointment. Ang authorized representative dili pwede mo-delegate sa iyang katungod ug 2 ra ka dili-magkaparyente ang pwede niyang hangyoon.",
+    "steps_ceb": [
+      "Online: Sa PSAHelpline.ph, i-klik ang Order Now, pilia ang Hard Copy o Digital, pilia ang Marriage Certificate, ug dawata ang terms and conditions.",
+      "Online: Pilia kung kinsa ang para sa certificate, unya ibutang ang petsa ug lugar sa kasal ug ang detalye sa bana ug asawa.",
+      "Online: Pun-a ang imong personal nga detalye isip nag-request, lakip ang klase sa valid ID nga imong ipakita inig deliver, unya pilia ang katuyoan.",
+      "Online: Ibutang ang imong adres para sa delivery, pilia kung ikaw mismo ang modawat o mo-assign og authorized representative, ug pilia ang gidaghanon sa kopya.",
+      "Online: I-review ang imong aplikasyon ug bayri dayon aron magsugod ang proseso; subaya ang imong order sa Check Status gamit ang imong 10-digit nga reference number.",
+      "Walk-in: Kuha og libre nga appointment sa PSA Online Appointment System, ug pilia ang petsa, oras, ug PSA CRS Outlet.",
+      "Walk-in: Moabot labing menos 30 minutos una sa imong appointment ug ipakita ang CRS Appointment Slip sa Information Marshal.",
+      "Walk-in: Kuhaa ang application form ug Queue Ticket Number (QTN).",
+      "Walk-in: Ipasa ang napunan nga form, QTN, valid nga mga ID, authorization letter o SPA (kon naa), ug ang bayranan sa transacting window.",
+      "Walk-in: Susiha ang Official Receipt ug ihap ang sukli, kon naa.",
+      "Walk-in: Sa petsa ug oras sa release, adto sa Releasing Area, ipasa ang Official Receipt, mga ID, ug mga dokumento, ug susiha kon husto ug kompleto ang dokumento nga imong nadawat."
+    ],
+    "office_ceb": "PSAHelpline.ph (online, gi-authorize sa PSA) o bisan unsang PSA CRS Outlet (walk-in, pinaagi sa online appointment)",
+    "fee_ceb": "Online (PSAHelpline.ph): PHP 365.00 matag kopya. Walk-in: PHP 155.00 matag kopya (basic fee). Libre ang appointment.",
+    "processing_time_ceb": "Online delivery: sunod nga adlaw sa pagtrabaho human ma-release sa PSA ang dokumento para sa Metro Manila; 3 ngadto sa 8 ka adlaw sa pagtrabaho para sa probinsya. Walk-in: posible ang same-day release kon kompleto ang requirements ug walay problema sa rekord. Para sa bag-ong narehistro nga kasal, available ang PSA copy 2 ngadto sa 4 ka bulan human sa transmittal date alang sa kasal sa Metro Manila, ug labing menos 6 ka bulan alang sa kasal sa probinsya."
   }
 ]

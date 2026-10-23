@@ -238,3 +238,22 @@ export const serverText = {
   outOfScope: "Makatabang ko sa mga opisyal nga dokumento ug serbisyo nga anaa sa akong lista. Isulti lang kung unsang dokumento o serbisyo ang imong pangutan-an.",
   explainDisclaimer: t.explain.disclaimer,
 };
+
+// Focused-answer phrases. Cebuano mirrors backend/lib/phrases.mjs exactly (hand-reviewed; do not edit here).
+export const PHRASES = {
+  missing: "Wala pa nako kini nga impormasyon alang sa {name}. Palihug pangutan-a ang opisina.",
+  lead: {
+    fee: "Ang bayad sa {name}:",
+    requirements: "Kini ang kinahanglan para sa {name}:",
+    steps: "Kini ang mga lakang para sa {name}:",
+    office: "Kini ang lugar nga adtoan para sa {name}:",
+    processing_time: "Kini ang kadugayon sa proseso sa {name}:",
+  },
+  suggestion: {
+    fee: "Pila ang bayad?",
+    requirements: "Unsa ang kinahanglan?",
+    steps: "Unsa ang mga lakang?",
+    office: "Asa ko moadto?",
+    processing_time: "Unsa ka dugay ang proseso?",
+  },
+} as const;

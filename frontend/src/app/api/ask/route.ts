@@ -1,4 +1,4 @@
-import { assembleAnswer, buildAskMessages, findExplicitServiceId, isClearlyOutOfScope, notConfident, parseServiceId, socialResponse } from "@/lib/ask";
+import { assembleAnswer, buildAskMessages, detectIntent, findExplicitServiceId, isClearlyOutOfScope, notConfident, parseServiceId, socialResponse } from "@/lib/ask";
 import { TtlCache } from "@/lib/cache";
 import { apiError, clientIp, failure, LIMITS, rateLimit, readJson, readText } from "@/lib/http";
 import { kb } from "@/lib/kb";
@@ -32,8 +32,11 @@ export async function POST(req: Request) {
   // Nothing in the knowledge base means nothing to ground an answer on, so never call the model.
   if (kb.length === 0) return Response.json(notConfident());
 
+  // What focused topic (fee, requirements, ...) is the user asking for, if any.
+  const intent = detectIntent(q.text);
+
   const explicitServiceId = findExplicitServiceId(q.text, kb);
-  if (explicitServiceId) return Response.json(assembleAnswer(kb, explicitServiceId));
+  if (explicitServiceId) return Response.json(assembleAnswer(kb, explicitServiceId, intent));
 
   const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
   const cacheKey = context ? `${norm(context)} >> ${norm(q.text)}` : norm(q.text);
@@ -43,7 +46,7 @@ export async function POST(req: Request) {
   try {
     const raw = await callLLM({ messages: buildAskMessages(kb, q.text, context), maxTokens: 800 });
     const serviceId = parseServiceId(raw, kb);
-    const answer = serviceId ? assembleAnswer(kb, serviceId) : notConfident();
+    const answer = serviceId ? assembleAnswer(kb, serviceId, intent) : notConfident();
     cache.set(cacheKey, answer);
     return Response.json(answer);
   } catch (e) {
