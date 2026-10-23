@@ -98,6 +98,19 @@ export const t = {
     statusNeedsReview: "Kinahanglan susihon",
     statusUnconfirmed: "Wala pa ma-kumpirma",
   },
+  // "Why trust this answer?" provenance block (uses only existing KB fields + freshness logic).
+  provenance: {
+    title: "Nganong kasaligan kini?",
+    basis: "Kini nga tubag gikan sa among gi-curate nga impormasyon sa serbisyo, dili hinimo-himo lang sa AI.",
+    service: "Serbisyo",
+    source: "Opisyal nga tinubdan",
+    openSource: "Ablihi ang tinubdan",
+    status: "Kahimtang sa impormasyon",
+    verifiedOn: "Kataposang gi-verify",
+    noDate: "Walay klaro nga petsa sa pag-verify. Palihug kumpirmaha sa opisina.",
+    notGuarantee: "Ang petsa dili garantiya nga sakto gihapon karon. Ang AI nagpasabot lang; dili siya mo-verify nga live.",
+    aiNote: "Ang mga pulong sa pagpasabot gihimo sa AI gikan sa impormasyon sa ibabaw.",
+  },
   report: {
     button: "I-report nga luma na ang impormasyon",
     intro: "Mag-abli kini og GitHub issue para susihon sa maintainer. Walay datos nga itipig sa AyaSib.",
