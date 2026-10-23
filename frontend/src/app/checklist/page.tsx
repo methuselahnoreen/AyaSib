@@ -9,7 +9,7 @@ import { t } from "@/lib/strings";
 import { Shell } from "@/components/Shell";
 import { Icon } from "@/components/Icon";
 import { ReadinessChecklist } from "@/components/ReadinessChecklist";
-import { ServiceSearch } from "@/components/ServiceSearch";
+import { ChecklistPicker } from "@/components/ChecklistPicker";
 import { FooterNote } from "@/components/FooterNote";
 import { getLastService } from "@/lib/readinessStore";
 import type { KbEntry } from "@/lib/types";
@@ -37,13 +37,13 @@ export default function ChecklistLandingPage() {
           </>
         ) : (
           <>
-            <span className="muted-kicker">{t.readinessUi.kicker}</span>
+            <span className="muted-kicker">{t.checklistLanding.kicker}</span>
             <h1 className="page-title">{t.checklistLanding.title}</h1>
             <p className="muted" style={{ margin: "0 0 4px" }}>
-              {t.checklistLanding.empty}
+              {t.checklistLanding.lead}
             </p>
-            {/* Search + cards that open each service's CHECKLIST directly. */}
-            <ServiceSearch destination="checklist" />
+            {/* Distinct checklist picker (not the Serbisyo card grid). */}
+            <ChecklistPicker />
           </>
         )}
         <FooterNote />
