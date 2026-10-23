@@ -162,7 +162,7 @@ The OCR model defaults to `@cf/microsoft/trocr-large-printed`; set `OCR_MODEL` t
 
 ### Run the web app
 
-The Next.js app is in `frontend/`. See `frontend/` for its own README and scripts (`npm run dev`, `npm run build`). The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
+The Next.js app is in `frontend/` (`npm run dev`, `npm run build`). When run locally, it loads server-side settings from the repository-root `.env.local`. The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
 
 ## Environment variables
 

@@ -1,4 +1,4 @@
-import { assembleAnswer, buildAskMessages, notConfident, parseServiceId } from "@/lib/ask";
+import { assembleAnswer, buildAskMessages, findExplicitServiceId, notConfident, parseServiceId } from "@/lib/ask";
 import { TtlCache } from "@/lib/cache";
 import { apiError, clientIp, failure, LIMITS, rateLimit, readJson, readText } from "@/lib/http";
 import { kb } from "@/lib/kb";
@@ -25,6 +25,9 @@ export async function POST(req: Request) {
 
   // Nothing in the knowledge base means nothing to ground an answer on, so never call the model.
   if (kb.length === 0) return Response.json(notConfident());
+
+  const explicitServiceId = findExplicitServiceId(q.text, kb);
+  if (explicitServiceId) return Response.json(assembleAnswer(kb, explicitServiceId));
 
   const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
   const cacheKey = context ? `${norm(context)} >> ${norm(q.text)}` : norm(q.text);
