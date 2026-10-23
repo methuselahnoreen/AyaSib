@@ -149,21 +149,13 @@ node --env-file=../.env.local scripts/ask-cli.mjs "Unsaon pagkuha ug death certi
 
 Pass your own questions as arguments, or run with no arguments to use a built-in set. Set `DEBUG_ROUTER=1` in the terminal to print the raw model reply.
 
-### Extract text from a photo
+### Extract text from a photo ("Basaha")
 
-From `backend/`, run the OCR script with a JPEG or PNG image. It uses Cloudflare Workers AI, so the same account ID and token used by Ask are required. The image is sent to Cloudflare for OCR; use only images you are permitted to upload.
+The photo reader lives in the web app, not the backend CLI. Open the **Basaha** tab, then take or upload a photo of a printed notice or form. The image is sent to the `POST /api/ocr` route (`frontend/src/app/api/ocr`), which uses Cloudflare Workers AI, so the same `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` used by Ask are required. The extracted text is shown with a plain-Cebuano explanation, aligned line by line. Use only images you are permitted to upload.
 
-```powershell
-npm run photo:ocr -- "..\path\to\photo.jpg"
-```
+The OCR model is configurable with `OCR_MODEL`; it targets printed text, not handwriting. The browser also runs a client-side Tesseract.js pass to draw per-line boxes over the photo.
 
-To also ask the backend knowledge base about the extracted text:
-
-```powershell
-npm run photo:ocr -- "..\path\to\photo.jpg" --ask "Which service is shown, and what should I do next?"
-```
-
-The OCR model defaults to `@cf/microsoft/trocr-large-printed`; set `OCR_MODEL` to override it. This model is intended for printed text, not handwriting.
+> **Camera note:** live camera capture needs HTTPS. Use the deployed URL (Vercel provides HTTPS) or `localhost`; it will not work over a plain LAN IP.
 
 ### Run the web app
 
@@ -194,7 +186,6 @@ Only `NEXT_PUBLIC_GITHUB_REPO` and `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` are expose
 │   ├── scripts/
 │   │   ├── validate-kb.mjs     # kb:validate and kb:build
 │   │   ├── ask-cli.mjs         # command-line Ask tester
-│   │   ├── photo-ocr.mjs       # extracts printed text from a photo; can query the KB
 │   │   └── eval.mjs            # runs eval/questions.json, prints a pass rate
 │   └── package.json            # backend tooling and CLI scripts
 ├── frontend/                   # Next.js app and its API routes (frontend team)
@@ -202,10 +193,14 @@ Only `NEXT_PUBLIC_GITHUB_REPO` and `NEXT_PUBLIC_STALE_THRESHOLD_DAYS` are expose
 ├── eval/
 │   └── questions.json          # Bisaya eval questions with expected service ids
 ├── docs/
-│   ├── APIContract.md
+│   ├── APIContract.md          # the /api/ask contract (approved)
+│   ├── DEPLOYMENT.md           # step-by-step Vercel deploy guide
+│   ├── AndamNaDecisions.md     # design decisions for the readiness feature
 │   ├── TASKS.md
 │   └── TeamKickoff.md
+├── .github/                    # CI workflow, PR and issue templates
 ├── .env.example
+├── CHANGELOG.md
 ├── CONTRIBUTING.md
 └── LICENSE
 ```
@@ -326,6 +321,8 @@ The TypeScript unit and property tests (frontend Vitest, `npm test` in `frontend
 
 ## Deployment
 
+**Step-by-step guide:** [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md). Summary below.
+
 - **Hosting:** Vercel, with the project's **Root Directory set to `frontend`**.
 - **Environment variables:** set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` in the Vercel project settings, never in the repo.
 - **Knowledge base:** `kb.json` is produced from `kb/*.yaml`. The frontend's build step syncs the KB data, so redeploy after changing a KB file.
@@ -336,7 +333,7 @@ The TypeScript unit and property tests (frontend Vitest, `npm test` in `frontend
 Please read these before relying on AyaSib.
 
 - **Not official.** AyaSib is an independent student/hackathon project and is not affiliated with any government office.
-- **Small coverage.** Only the services in `kb/` are answered. Everything else returns "not sure". The current KB is a few Cebu City services (NBI clearance, two civil registry records, a death certificate).
+- **Limited coverage.** Only the services in `kb/` are answered; everything else returns "not sure". The KB currently holds 13 services (e.g. PSA civil registry documents, NBI and police clearance, SSS, PhilHealth, Pag-IBIG, National ID, PWD ID, senior citizen ID). Several newer entries are flagged `review_status: needs_review` pending a native-speaker Cebuano pass.
 - **Information can go out of date.** Always check the `last_verified` date and confirm with the office for anything important. Fees and steps change.
 - **Cebuano is curated, not generated.** This makes answers trustworthy but means a question only gets a full answer if its service already has reviewed Cebuano in the KB.
 - **Routing is probabilistic.** The model occasionally mismatches a borderline question; the design prefers to refuse rather than guess.
