@@ -1,8 +1,39 @@
+const GREETING = "Kumusta! Makatabang ko bahin sa mga opisyal nga dokumento ug serbisyo. Unsa imong gustong mahibal-an?";
+const FAREWELL = "Sige, amping! Mobalik lang kung naa kay pangutana bahin sa mga dokumento o serbisyo.";
+const OUT_OF_SCOPE = "Makatabang ko sa mga opisyal nga dokumento ug serbisyo nga anaa sa akong lista. Isulti lang kung unsang dokumento o serbisyo ang imong pangutan-an.";
 const NOT_SURE = "Dili ko sigurado niini. Palihug kumpirmaha sa opisina.";
 const MAX_QUESTION = 2000;
 const DEFAULT_MODEL = "@cf/qwen/qwen3-30b-a3b-fp8";
+const GREETINGS = new Set(["hi", "hello", "hey", "hi aya", "hello aya", "kumusta", "maayong adlaw", "maayong buntag", "maayong hapon", "maayong gabii"]);
+const FAREWELLS = new Set(["bye", "goodbye", "good bye", "see you", "good night", "amping", "sige", "salamat"]);
+const SERVICE_TERMS = new Set([
+  "apply", "application", "appointment", "barangay", "birth", "certificate", "chd", "civil", "clearance",
+  "document", "documents", "enroll", "enrollment", "enrolment", "fee", "fees", "government", "gobyerno",
+  "id", "kasal", "kuha", "lisensya", "mangayo", "marriage", "nbi", "office", "opisina", "papeles",
+  "passport", "pay", "permit", "pagkuha", "pag apply", "pangayo", "psa", "record", "register", "registration",
+  "requirements", "renew", "serbisyo", "sertipiko", "service", "services", "death", "death certificate",
+  "city hall", "city health", "civil registry", "cenomar", "dokumento", "dokumento", "kinahanglan", "bayad",
+  "pila", "asa", "unsaon", "opisyal", "gobyerno", "government service",
+]);
 
 const fail = (status, code, message) => ({ status, body: { error: { code, message } } });
+const notConfident = (message = NOT_SURE) => ({ status: 200, body: { confident: false, answer: null, message, sources: [] } });
+const normalizeInput = (text) => text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").trim().replace(/\s+/g, " ");
+
+function socialResponse(question) {
+  const normalized = normalizeInput(question);
+  if (GREETINGS.has(normalized)) return notConfident(GREETING);
+  if (FAREWELLS.has(normalized)) return notConfident(FAREWELL);
+  return null;
+}
+
+function isClearlyOutOfScope(question) {
+  const normalized = ` ${normalizeInput(question)} `;
+  return ![...SERVICE_TERMS].some((term) => {
+    const normalizedTerm = normalizeInput(term);
+    return normalizedTerm.includes(" ") ? normalized.includes(` ${normalizedTerm} `) : normalized.split(" ").includes(normalizedTerm);
+  });
+}
 
 function routerPrompt(services) {
   const list = services
@@ -65,6 +96,9 @@ export async function answerQuestion({ question, services, accountId, token, mod
   if (question.length > MAX_QUESTION) {
     return fail(413, "payload_too_large", `question is over ${MAX_QUESTION} characters`);
   }
+  const social = socialResponse(question.trim());
+  if (social) return social;
+  if (isClearlyOutOfScope(question)) return notConfident(OUT_OF_SCOPE);
   if (!accountId || !token) {
     return fail(500, "internal_error", "model credentials are not configured");
   }
@@ -89,7 +123,7 @@ export async function answerQuestion({ question, services, accountId, token, mod
 
   const s = services.find((x) => x.id === serviceId);
   if (!s) {
-    return { status: 200, body: { confident: false, answer: null, message: NOT_SURE, sources: [] } };
+    return notConfident();
   }
 
   return {

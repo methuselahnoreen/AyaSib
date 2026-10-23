@@ -11,9 +11,9 @@
 These come from the project's hard rules and are not negotiable:
 
 1. **Open-source model only.** The router runs on Cloudflare Workers AI using an open-weights model (default `@cf/qwen/qwen3-30b-a3b-fp8`, Apache-2.0). No closed models (e.g. Gemini, Claude).
-2. **The model never writes the Cebuano shown to users.** For `/api/ask`, the model only picks which service the question is about (or `null`). Every Cebuano string in the response is a hand-reviewed field from the knowledge base.
+2. **The model never writes government facts or answer text.** For `/api/ask`, the model only picks which service the question is about (or `null`). Service details come from the KB; greeting, farewell, and redirect messages are fixed strings reviewed in code.
 3. **Never invent government facts.** Fees, offices, requirements, source URL and `last_verified` all come from the KB file, never from the model. A missing fact is returned as `null` or omitted, never guessed.
-4. **Refuse when unsure.** If no KB service clearly matches, the API returns `200` with `confident: false`, not an error.
+4. **Handle non-service messages conversationally.** Common greetings and farewells receive a friendly response without a model call. Unmatched or unrelated questions receive a `200` redirect to supported topics, not an error.
 
 ---
 
@@ -109,13 +109,13 @@ Answer a question about a Cebu City government service, using only knowledge-bas
 }
 ```
 
-### Response 200, not confident (refusal fallback)
+### Response 200, greeting, farewell, or unmatched question
 
 ```json
 {
   "confident": false,
   "answer": null,
-  "message": "Dili ko sigurado niini. Palihug kumpirmaha sa opisina.",
+  "message": "Makatabang ko sa mga opisyal nga dokumento ug serbisyo nga anaa sa akong lista. Isulti lang kung unsang dokumento o serbisyo ang imong pangutan-an.",
   "sources": []
 }
 ```
@@ -124,7 +124,7 @@ Answer a question about a Cebu City government service, using only knowledge-bas
 
 | Field | Rule |
 |-------|------|
-| `confident` | `true` only when the model picked a service id that exists in the KB |
+| `confident` | `true` only when an unambiguous service id from the KB is identified |
 | `answer` | Object when `confident` is `true`; `null` otherwise |
 | `answer.summary` | Curated Cebuano (`summary_ceb`). Written/reviewed by a native speaker, not the model |
 | `answer.requirements` | Curated Cebuano list (`requirements_ceb`), same order and length as the English requirements |
@@ -136,7 +136,7 @@ Answer a question about a Cebu City government service, using only knowledge-bas
 | `sources` | Exactly one entry when `confident` is `true`; empty when `false` |
 | `message` | Present (in Cebuano) only when `confident` is `false` |
 
-**Frontend obligations:** render the "not sure" state when `confident` is `false`; always show the source and its `last_verified` date; if a field is `null` or an empty list, hide it rather than showing "null" or an empty section.
+**Frontend obligations:** render the `message` when `confident` is `false`; always show the source and its `last_verified` date; if a field is `null` or an empty list, hide it rather than showing "null" or an empty section.
 
 ---
 

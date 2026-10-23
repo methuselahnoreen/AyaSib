@@ -68,8 +68,40 @@ export function findExplicitServiceId(question: string, kb: KbEntry[]): string |
   return matches.length === 1 ? matches[0].id : null;
 }
 
-export function notConfident(): AskResponse {
-  return { confident: false, answer: null, message: serverText.notSure, sources: [] };
+function normalizeSocialInput(text: string): string {
+  return text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").trim().replace(/\s+/g, " ");
+}
+
+const GREETINGS = new Set(["hi", "hello", "hey", "hi aya", "hello aya", "kumusta", "maayong adlaw", "maayong buntag", "maayong hapon", "maayong gabii"]);
+const FAREWELLS = new Set(["bye", "goodbye", "good bye", "see you", "good night", "amping", "sige", "salamat"]);
+const SERVICE_TERMS = new Set([
+  "apply", "application", "appointment", "barangay", "birth", "certificate", "chd", "civil", "clearance",
+  "document", "documents", "enroll", "enrollment", "enrolment", "fee", "fees", "government", "gobyerno",
+  "id", "kasal", "kuha", "lisensya", "mangayo", "marriage", "nbi", "office", "opisina", "papeles",
+  "passport", "pay", "permit", "pagkuha", "pag apply", "pangayo", "psa", "record", "register", "registration",
+  "requirements", "renew", "serbisyo", "sertipiko", "service", "services", "school", "death", "death certificate",
+  "city hall", "city health", "civil registry", "cenomar", "dokumento", "dokumento", "kinahanglan", "bayad",
+  "pila", "asa", "unsaon", "opisyal", "gobyerno", "government service",
+]);
+
+/** Handles simple social messages locally so they don't need a model call. */
+export function socialResponse(question: string): AskResponse | null {
+  const normalized = normalizeSocialInput(question);
+  const message = GREETINGS.has(normalized) ? serverText.greeting : FAREWELLS.has(normalized) ? serverText.farewell : null;
+  return message ? notConfident(message) : null;
+}
+
+/** Treat messages with no government-service cues as out of scope without relying on the model. */
+export function isClearlyOutOfScope(question: string, context = ""): boolean {
+  const words = new Set(normalizeSocialInput(`${context} ${question}`).split(" "));
+  return ![...SERVICE_TERMS].some((term) => {
+    const normalizedTerm = normalizeSocialInput(term);
+    return normalizedTerm.includes(" ") ? ` ${normalizeSocialInput(`${context} ${question}`)} `.includes(` ${normalizedTerm} `) : words.has(normalizedTerm);
+  });
+}
+
+export function notConfident(message: string = serverText.notSure): AskResponse {
+  return { confident: false, answer: null, message, sources: [] };
 }
 
 const nonEmpty = (s: string): string | null => (s && s.trim() ? s : null);
