@@ -213,6 +213,17 @@ export const t = {
     ayaStrong: "Kaya ra nimo!",
     ayaLine: "Okay ra mangutana. Uban ta hangtod maandam.",
   },
+  // Checklist landing (Pangandam tab): Aya prompt + type-ahead service picker.
+  checklistLanding: {
+    kicker: "Imong checklist",
+    title: "Andam Na?",
+    ayaPrompt: "Unsa ang imong ilukat nga dokumento?",
+    searchPlaceholder: "Isulat ang ngalan sa dokumento...",
+    hint: "Isulat ang unang letra; mogawas ang mga serbisyo.",
+    startFor: "Sugdi ang checklist",
+    noResults: "Walay nakit-an. Sulayi ang laing pulong.",
+    changeService: "Usba ang serbisyo",
+  },
   footer: {
     note: "Independent project · Dili opisyal sa gobyerno",
     source: "Gigikanan sa code",

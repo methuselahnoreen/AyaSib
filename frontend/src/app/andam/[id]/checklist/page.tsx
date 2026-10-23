@@ -2,6 +2,7 @@
 
 // Feature: ayasib-frontend-redesign (v2, mockup-matched)
 // Checklist screen (mockup 3) for one service.
+import { useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { kb } from "@/lib/kb";
@@ -12,11 +13,17 @@ import { Notice } from "@/components/Notice";
 import { ReadinessChecklist } from "@/components/ReadinessChecklist";
 import { FooterNote } from "@/components/FooterNote";
 import { serviceTitle } from "@/lib/servicesDirectory";
+import { setLastService } from "@/lib/readinessStore";
 
 export default function ChecklistPage() {
   const params = useParams<{ id: string }>();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const entry = kb.find((e) => e.id === id);
+
+  // Remember this as the last-opened checklist so the Pangandam tab can return here.
+  useEffect(() => {
+    if (entry) setLastService(entry.id);
+  }, [entry]);
 
   if (!entry) {
     return (
