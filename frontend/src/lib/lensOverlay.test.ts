@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { linesToText, splitTranslation, toOverlayLines, type RawLine } from "./lensOverlay";
+import { linesToText, pairByMarker, splitTranslation, toOverlayLines, type RawLine } from "./lensOverlay";
 
 describe("lensOverlay.toOverlayLines", () => {
   const img = { w: 1000, h: 500 };
@@ -61,5 +61,41 @@ describe("lensOverlay translation alignment", () => {
     expect(splitTranslation("Usa\nDuha\nTulo", 2)).toEqual(["Usa", "Duha"]);
     // blank lines ignored
     expect(splitTranslation("Usa\n\n\nDuha", 2)).toEqual(["Usa", "Duha"]);
+  });
+});
+
+describe("lensOverlay.pairByMarker", () => {
+  const orig = ["LAST NAME", "FIRST NAME", "MIDDLE NAME"];
+
+  it("pairs each original line with its marked translation", () => {
+    const translated = "#1# Apelyido\n#2# Pangalan\n#3# Tunga nga ngalan";
+    expect(pairByMarker(orig, translated)).toEqual([
+      { orig: "LAST NAME", ceb: "Apelyido" },
+      { orig: "FIRST NAME", ceb: "Pangalan" },
+      { orig: "MIDDLE NAME", ceb: "Tunga nga ngalan" },
+    ]);
+  });
+
+  it("tolerates whitespace inside and around markers and reflowed lines", () => {
+    const translated = "# 1 # Apelyido # 2 #  Pangalan\n#3#\nTunga nga ngalan";
+    expect(pairByMarker(orig, translated)).toEqual([
+      { orig: "LAST NAME", ceb: "Apelyido" },
+      { orig: "FIRST NAME", ceb: "Pangalan" },
+      { orig: "MIDDLE NAME", ceb: "Tunga nga ngalan" },
+    ]);
+  });
+
+  it("leaves a line's Bisaya empty when its marker is missing (partial result still aligns)", () => {
+    const translated = "#1# Apelyido\n#3# Tunga nga ngalan";
+    expect(pairByMarker(orig, translated)).toEqual([
+      { orig: "LAST NAME", ceb: "Apelyido" },
+      { orig: "FIRST NAME", ceb: "" },
+      { orig: "MIDDLE NAME", ceb: "Tunga nga ngalan" },
+    ]);
+  });
+
+  it("handles markers returned out of order", () => {
+    const translated = "#2# Pangalan\n#1# Apelyido\n#3# Tunga nga ngalan";
+    expect(pairByMarker(orig, translated).map((p) => p.ceb)).toEqual(["Apelyido", "Pangalan", "Tunga nga ngalan"]);
   });
 });
