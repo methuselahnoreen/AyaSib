@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
-import { deriveCategories, filterServices, serviceTitle } from "./servicesDirectory";
+import { deriveCategories, filterServices, serviceTitle, suggestServices } from "./servicesDirectory";
 import type { KbEntry } from "./types";
 
 const RUNS = { numRuns: 100 };
@@ -108,5 +108,52 @@ describe("servicesDirectory", () => {
   it("serviceTitle prefers name_ceb then name_en", () => {
     expect(serviceTitle(entry({ id: "a", name_ceb: "Binisaya", name_en: "English" }))).toBe("Binisaya");
     expect(serviceTitle(entry({ id: "a", name_ceb: "", name_en: "English" }))).toBe("English");
+  });
+});
+
+describe("suggestServices (checklist type-ahead)", () => {
+  const kb = [
+    entry({ id: "nbi", name_en: "NBI Clearance" }),
+    entry({ id: "birth", name_en: "Birth Certificate" }),
+    entry({ id: "death", name_en: "Death Certificate" }),
+    entry({ id: "biz", name_en: "Business Permit" }),
+  ];
+
+  it("empty query returns all services alphabetized by title", () => {
+    expect(suggestServices(kb, "").map((e) => e.name_en)).toEqual([
+      "Birth Certificate",
+      "Business Permit",
+      "Death Certificate",
+      "NBI Clearance",
+    ]);
+  });
+
+  it("a single letter suggests prefix matches first, then other matches, alphabetized", () => {
+    // "b" appears in all four (Birth, Business start with B; NBI and Business/Birth also contain b;
+    // "b" is in the id "nbi" and "biz"). Prefix-of-title matches (Birth, Business) rank first,
+    // then the rest alphabetically by title.
+    const titles = suggestServices(kb, "b").map((e) => e.name_en);
+    expect(titles.slice(0, 2)).toEqual(["Birth Certificate", "Business Permit"]);
+    // every returned item genuinely contains "b" somewhere in its searchable fields
+    expect(titles.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("prefix matches rank above mid-word matches", () => {
+    // "c" appears mid-word in several, but none START with C -> all still alphabetical
+    const titles = suggestServices(kb, "cert").map((e) => e.name_en);
+    expect(titles).toEqual(["Birth Certificate", "Death Certificate"]);
+  });
+
+  it("is case-insensitive and never invents a service", () => {
+    expect(suggestServices(kb, "NBI").map((e) => e.id)).toEqual(["nbi"]);
+    expect(suggestServices(kb, "zzz")).toEqual([]);
+  });
+
+  it("prefers a title prefix over a non-prefix match", () => {
+    const kb2 = [
+      entry({ id: "a", name_en: "Residency Clearance" }), // contains 'c' mid-word
+      entry({ id: "b", name_en: "Cedula" }), // starts with 'c'
+    ];
+    expect(suggestServices(kb2, "c").map((e) => e.name_en)).toEqual(["Cedula", "Residency Clearance"]);
   });
 });

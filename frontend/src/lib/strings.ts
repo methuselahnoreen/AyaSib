@@ -213,16 +213,15 @@ export const t = {
     ayaStrong: "Kaya ra nimo!",
     ayaLine: "Okay ra mangutana. Uban ta hangtod maandam.",
   },
-  // Checklist landing (Pangandam tab) when no service is chosen yet.
+  // Checklist landing (Pangandam tab): Aya prompt + type-ahead service picker.
   checklistLanding: {
     kicker: "Imong checklist",
     title: "Andam Na?",
-    lead: "Pili og serbisyo aron magsugod sa imong checklist sa pagpangandam.",
-    empty: "Wala pa kay napiling serbisyo. Pili og serbisyo aron magsugod sa imong checklist.",
-    searchPlaceholder: "Pangitaa ang serbisyo",
+    ayaPrompt: "Unsa ang imong ilukat nga dokumento?",
+    searchPlaceholder: "Isulat ang ngalan sa dokumento...",
+    hint: "Isulat ang unang letra; mogawas ang mga serbisyo.",
     startFor: "Sugdi ang checklist",
     noResults: "Walay nakit-an. Sulayi ang laing pulong.",
-    pick: "Pili og serbisyo",
     changeService: "Usba ang serbisyo",
   },
   footer: {
