@@ -46,6 +46,7 @@ export const t = {
     whatItIs: "Unsa kini",
     whatAsked: "Unsay gipangayo",
     nextSteps: "Unsay buhaton",
+    noDocument: "Daw dili kini usa ka opisyal nga dokumento, sulat, o porma. I-paste dinhi ang teksto gikan sa usa ka dokumento aron ipasabot nako.",
     disclaimer:
       "Kini nga pagpasabot tabang lang ug dili legal nga tambag. Palihug pangutana sa opisina o abogado kung dili ka sigurado.",
   },
@@ -159,6 +160,16 @@ export const t = {
     tileChecklistSub: "Andama",
     suggestKicker: "Sulayi",
     suggestQ: "Unsaon pagkuha og barangay clearance?",
+    suggestionsTitle: "Sulayi og pangutana",
+    // Only questions the KB can answer today. Update this list when services are added/removed.
+    suggestions: [
+      "Unsaon pag-apply ug NBI clearance?",
+      "Unsaon pagkuha og PSA birth certificate?",
+      "Unsaon pagkuha og PSA marriage certificate?",
+      "Unsaon pagkuha og SS number sa SSS?",
+    ],
+    statsServices: "{n} ka serbisyo",
+    statsVerified: "Kataposang gi-verify: {date}",
   },
   services: {
     kicker: "Mga serbisyo",
