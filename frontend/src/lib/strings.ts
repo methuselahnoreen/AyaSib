@@ -213,6 +213,13 @@ export const t = {
     ayaStrong: "Kaya ra nimo!",
     ayaLine: "Okay ra mangutana. Uban ta hangtod maandam.",
   },
+  // Checklist landing (Pangandam tab) when no service is chosen yet.
+  checklistLanding: {
+    title: "Andam Na?",
+    empty: "Wala pa kay napiling serbisyo. Pili og serbisyo aron magsugod sa imong checklist.",
+    pick: "Pili og serbisyo",
+    changeService: "Usba ang serbisyo",
+  },
   footer: {
     note: "Independent project · Dili opisyal sa gobyerno",
     source: "Gigikanan sa code",
