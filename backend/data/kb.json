@@ -234,6 +234,52 @@
     "processing_time_ceb": "Kon walay HIT, makuha ang clearance sulod sa pipila ka minuto sa branch. Kon naay HIT, balik human sa 5 ngadto sa 10 ka adlaw nga pagtrabaho (kasagaran), walay dugang bayad."
   },
   {
+    "id": "pagibig-membership",
+    "name_en": "Pag-IBIG Fund Membership Registration",
+    "name_ceb": null,
+    "locality": "National",
+    "office": "Pag-IBIG Fund (Home Development Mutual Fund, HDMF). Register online through Virtual Pag-IBIG on the official website (https://www.pagibigfund.gov.ph), or in person at any Pag-IBIG Fund branch.",
+    "who_may_avail": "Filipino workers covered by Pag-IBIG: employees in the private and government sectors, self-employed individuals, and Overseas Filipino Workers (OFWs). Membership is mandatory for these groups.",
+    "requirements": [
+      "A valid email address (used to receive your registration details)",
+      "Your personal information: full name, date of birth, address, and contact number",
+      "One valid government-issued ID for identity verification"
+    ],
+    "requirements_note": "Registering gives you a permanent Pag-IBIG Membership ID (MID) Number. If employed, your employer normally registers you and remits your contributions. Virtual Pag-IBIG is the online transactional portal (reached from the official pagibigfund.gov.ph site); the main website mainly carries announcements, forms, and general information.",
+    "steps": [
+      "Go to the official Pag-IBIG Fund website at https://www.pagibigfund.gov.ph and open Virtual Pag-IBIG",
+      "Choose to register as a member (for example, select 'Be A Member' then 'Register')",
+      "Fill out the online membership registration form with your accurate personal details",
+      "Submit the form; the system generates your membership record and your permanent Pag-IBIG Membership ID (MID) Number",
+      "Activate your Virtual Pag-IBIG account using the details sent to your email so you can view contributions and access services online",
+      "If you prefer in person, visit any Pag-IBIG Fund branch with your valid ID to register and get your MID Number"
+    ],
+    "fee": "No registration fee. As a member you make monthly savings (contributions) based on the Pag-IBIG contribution schedule.",
+    "processing_time": "Online registration is immediate - your membership record and MID Number are generated once you submit the form. In-person registration is usually completed on the same visit.",
+    "source_title": "Pag-IBIG Fund (HDMF) - Virtual Pag-IBIG membership registration",
+    "source_url": "https://www.pagibigfund.gov.ph",
+    "last_verified": "2026-10-23",
+    "review_status": "needs_review",
+    "summary_ceb": "Ang Pag-IBIG Fund (HDMF) usa ka savings program sa gobyerno. Ang pagka-miyembro mandatory para sa mga empleyado, self-employed, ug OFW. Makapa-rehistro ka online pinaagi sa Virtual Pag-IBIG sa opisyal nga website (https://www.pagibigfund.gov.ph) o personal sa bisan unsang Pag-IBIG branch. Walay registration fee, ug makakuha ka og permanente nga Pag-IBIG Membership ID (MID) Number.",
+    "requirements_ceb": [
+      "Usa ka valid nga email address (gamiton aron madawat ang imong registration details)",
+      "Ang imong personal nga impormasyon: tibuok ngalan, petsa sa pagkatawo, adres, ug numero sa kontak",
+      "Usa ka valid nga government-issued nga ID para sa pag-verify sa pagkatawo"
+    ],
+    "requirements_note_ceb": "Ang pagparehistro mohatag kanimo og permanente nga Pag-IBIG Membership ID (MID) Number. Kon empleyado ka, kasagaran ang imong employer na ang magparehistro ug magbayad sa imong contributions. Ang Virtual Pag-IBIG mao ang online nga portal (ma-access gikan sa opisyal nga pagibigfund.gov.ph nga site); ang main website kasagaran para sa mga anunsyo, forms, ug kinatibuk-ang impormasyon.",
+    "steps_ceb": [
+      "Adto sa opisyal nga Pag-IBIG Fund website sa https://www.pagibigfund.gov.ph ug ablihi ang Virtual Pag-IBIG",
+      "Pilia nga magparehistro isip miyembro (pananglitan, pilia ang 'Be A Member' unya 'Register')",
+      "Pun-a ang online nga membership registration form sa tukma nimong personal nga detalye",
+      "Isumite ang form; ang sistema maghimo sa imong membership record ug sa imong permanente nga Pag-IBIG Membership ID (MID) Number",
+      "I-activate ang imong Virtual Pag-IBIG account gamit ang mga detalye nga gipadala sa imong email aron makita ang imong contributions ug maka-access sa mga serbisyo online",
+      "Kon gusto nimo personal, adto sa bisan unsang Pag-IBIG Fund branch dala ang imong valid nga ID aron magparehistro ug makakuha sa imong MID Number"
+    ],
+    "office_ceb": "Pag-IBIG Fund (Home Development Mutual Fund, HDMF). Magparehistro online pinaagi sa Virtual Pag-IBIG sa opisyal nga website (https://www.pagibigfund.gov.ph), o personal sa bisan unsang Pag-IBIG Fund branch.",
+    "fee_ceb": "Walay registration fee. Isip miyembro, mag-savings ka matag bulan (contributions) base sa Pag-IBIG contribution schedule.",
+    "processing_time_ceb": "Ang online nga rehistro diha-diha - ang imong membership record ug MID Number mahimo kon imo nang gisumite ang form. Ang personal nga rehistro kasagaran mahuman sa samang pagbisita."
+  },
+  {
     "id": "philhealth-enrolment-ofw",
     "name_en": "PhilHealth Membership Registration for OFWs and Filipinos Abroad (Walk-in or E-mail)",
     "name_ceb": null,
@@ -276,6 +322,54 @@
     "office_ceb": "Member Management Group - Special Programs Department (ipasa sa assigned staff para sa walk-in, o i-email sa ofp@philhealth.gov.ph)",
     "fee_ceb": "Walay service fee sa pagrehistro. Ang premium contributions base sa premium schedule ug bayran sa bisan unsang PhilHealth office o accredited collecting agent.",
     "processing_time_ceb": "10 minutos matag PMRF (walk-in); 3 ka adlaw (pinaagi sa email, apan nagdepende gihapon sa gidaghanon sa mga email nga madawat)"
+  },
+  {
+    "id": "philhealth-membership-local",
+    "name_en": "PhilHealth Membership Registration (Filipinos in the Philippines)",
+    "name_ceb": null,
+    "locality": "National",
+    "scope_note": "For Filipinos registering in the country as a direct contributor (self-employed, voluntary, or an employee getting their first PIN). OFWs and Filipinos abroad should use the separate OFW/abroad enrolment service.",
+    "office": "PhilHealth. Register online through the member services on the official PhilHealth website (https://www.philhealth.gov.ph), or in person at any Local Health Insurance Office (LHIO) or PhilHealth Express outlet.",
+    "who_may_avail": "All Filipino citizens. Under the Universal Health Care (UHC) Law, every Filipino is automatically a member; this registration gives you your PhilHealth Identification Number (PIN) and record.",
+    "requirements": [
+      "Accomplished PhilHealth Member Registration Form (PMRF) - available at any PhilHealth office or downloadable from the PhilHealth website",
+      "One valid government-issued ID",
+      "PSA-issued birth certificate (or other proof of identity and birth details as required)"
+    ],
+    "requirements_note": "Your PhilHealth Identification Number (PIN) is unique and permanent - if you were ever a member before, do not register again; reuse your existing PIN. Providing a PhilSys (national ID) number on the form is optional. If employed, your employer normally handles your registration and contributions.",
+    "steps": [
+      "Fill out the PhilHealth Member Registration Form (PMRF) with accurate personal details",
+      "Online: go to the member registration service on the official PhilHealth website, submit the PMRF, and upload clear copies of your valid ID and PSA birth certificate",
+      "In person: visit the nearest Local Health Insurance Office (LHIO) or PhilHealth Express outlet and submit your PMRF with supporting documents to the officer-in-charge",
+      "Receive your PhilHealth Identification Number (PIN) and Member Data Record (MDR) - online applicants are notified by email once the registration is processed",
+      "Pay your premium contributions if you are a self-employed or voluntary (direct) contributor, keeping your receipts; employed members have contributions handled by their employer"
+    ],
+    "fee": "No service fee to register. Direct contributors (self-employed/voluntary) pay premium contributions based on the PhilHealth contribution schedule.",
+    "processing_time": "Online registration is typically confirmed within a few working days by email. In-person registration is usually processed on the same visit.",
+    "source_title": "PhilHealth - National Health Insurance Program membership and PhilHealth Member Registration Form (PMRF)",
+    "source_url": "https://www.philhealth.gov.ph",
+    "last_verified": "2026-10-23",
+    "review_status": "needs_review",
+    "related": [
+      "philhealth-enrolment-ofw"
+    ],
+    "summary_ceb": "Kini nga serbisyo para sa mga Pilipino nga magparehistro dinhi sa nasud isip direct contributor (self-employed, voluntary, o empleyado nga mukuha sa unang PIN). Ubos sa Universal Health Care Law, awtomatiko nang miyembro ang matag Pilipino; kini nga rehistro mohatag kanimo sa imong PhilHealth Identification Number (PIN) ug record. Mahimo online sa opisyal nga PhilHealth website o personal sa usa ka Local Health Insurance Office (LHIO) o PhilHealth Express outlet. Walay service fee sa pagparehistro.",
+    "requirements_ceb": [
+      "Napuno nga PhilHealth Member Registration Form (PMRF) - makuha sa bisan unsang PhilHealth office o ma-download sa PhilHealth website",
+      "Usa ka valid nga government-issued nga ID",
+      "PSA nga birth certificate (o lain nga pamatuod sa pagkatawo nga gikinahanglan)"
+    ],
+    "requirements_note_ceb": "Ang imong PhilHealth Identification Number (PIN) talagsaon ug permanente - kon miyembro ka na kaniadto, ayaw na pagparehistro pag-usab; gamita ang imong naa nang PIN. Ang paghatag og PhilSys (national ID) nga numero sa form opsyonal ra. Kon empleyado ka, kasagaran ang imong employer na ang maghimo sa imong rehistro ug contributions.",
+    "steps_ceb": [
+      "Pun-a ang PhilHealth Member Registration Form (PMRF) sa tukma nga personal nga detalye",
+      "Online: adto sa member registration service sa opisyal nga PhilHealth website, isumite ang PMRF, ug i-upload ang klaro nga kopya sa imong valid nga ID ug PSA birth certificate",
+      "Personal: adto sa pinakaduol nga Local Health Insurance Office (LHIO) o PhilHealth Express outlet ug isumite ang imong PMRF uban ang mga supporting nga dokumento sa officer-in-charge",
+      "Dawata ang imong PhilHealth Identification Number (PIN) ug Member Data Record (MDR) - ang mga mi-apply online pahibaloon pinaagi sa email kon naproseso na ang rehistro",
+      "Bayri ang imong premium contributions kon ikaw self-employed o voluntary (direct) nga contributor, ug tipigi ang imong mga resibo; ang mga empleyado, ang ilang employer na ang maghimo sa contributions"
+    ],
+    "office_ceb": "PhilHealth. Magparehistro online pinaagi sa member services sa opisyal nga PhilHealth website (https://www.philhealth.gov.ph), o personal sa bisan unsang Local Health Insurance Office (LHIO) o PhilHealth Express outlet.",
+    "fee_ceb": "Walay service fee sa pagparehistro. Ang mga direct contributor (self-employed/voluntary) mobayad og premium contributions base sa PhilHealth contribution schedule.",
+    "processing_time_ceb": "Ang online nga rehistro kasagaran makumpirma sulod sa pipila ka adlaw nga trabaho pinaagi sa email. Ang personal nga rehistro kasagaran maproseso sa samang pagbisita."
   },
   {
     "id": "psa-marriage-certificate",

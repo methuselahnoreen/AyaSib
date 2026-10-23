@@ -1,0 +1,40 @@
+id: pagibig-membership
+name_en: "Pag-IBIG Fund Membership Registration"
+name_ceb: null   # needs native reviewer
+locality: "National"
+office: "Pag-IBIG Fund (Home Development Mutual Fund, HDMF). Register online through Virtual Pag-IBIG on the official website (https://www.pagibigfund.gov.ph), or in person at any Pag-IBIG Fund branch."
+who_may_avail: "Filipino workers covered by Pag-IBIG: employees in the private and government sectors, self-employed individuals, and Overseas Filipino Workers (OFWs). Membership is mandatory for these groups."
+requirements:
+  - "A valid email address (used to receive your registration details)"
+  - "Your personal information: full name, date of birth, address, and contact number"
+  - "One valid government-issued ID for identity verification"
+requirements_note: "Registering gives you a permanent Pag-IBIG Membership ID (MID) Number. If employed, your employer normally registers you and remits your contributions. Virtual Pag-IBIG is the online transactional portal (reached from the official pagibigfund.gov.ph site); the main website mainly carries announcements, forms, and general information."
+steps:
+  - "Go to the official Pag-IBIG Fund website at https://www.pagibigfund.gov.ph and open Virtual Pag-IBIG"
+  - "Choose to register as a member (for example, select 'Be A Member' then 'Register')"
+  - "Fill out the online membership registration form with your accurate personal details"
+  - "Submit the form; the system generates your membership record and your permanent Pag-IBIG Membership ID (MID) Number"
+  - "Activate your Virtual Pag-IBIG account using the details sent to your email so you can view contributions and access services online"
+  - "If you prefer in person, visit any Pag-IBIG Fund branch with your valid ID to register and get your MID Number"
+fee: "No registration fee. As a member you make monthly savings (contributions) based on the Pag-IBIG contribution schedule."
+processing_time: "Online registration is immediate - your membership record and MID Number are generated once you submit the form. In-person registration is usually completed on the same visit."
+source_title: "Pag-IBIG Fund (HDMF) - Virtual Pag-IBIG membership registration"
+source_url: "https://www.pagibigfund.gov.ph"
+last_verified: 2026-10-23
+review_status: needs_review
+summary_ceb: "Ang Pag-IBIG Fund (HDMF) usa ka savings program sa gobyerno. Ang pagka-miyembro mandatory para sa mga empleyado, self-employed, ug OFW. Makapa-rehistro ka online pinaagi sa Virtual Pag-IBIG sa opisyal nga website (https://www.pagibigfund.gov.ph) o personal sa bisan unsang Pag-IBIG branch. Walay registration fee, ug makakuha ka og permanente nga Pag-IBIG Membership ID (MID) Number."
+requirements_ceb:
+  - "Usa ka valid nga email address (gamiton aron madawat ang imong registration details)"
+  - "Ang imong personal nga impormasyon: tibuok ngalan, petsa sa pagkatawo, adres, ug numero sa kontak"
+  - "Usa ka valid nga government-issued nga ID para sa pag-verify sa pagkatawo"
+requirements_note_ceb: "Ang pagparehistro mohatag kanimo og permanente nga Pag-IBIG Membership ID (MID) Number. Kon empleyado ka, kasagaran ang imong employer na ang magparehistro ug magbayad sa imong contributions. Ang Virtual Pag-IBIG mao ang online nga portal (ma-access gikan sa opisyal nga pagibigfund.gov.ph nga site); ang main website kasagaran para sa mga anunsyo, forms, ug kinatibuk-ang impormasyon."
+steps_ceb:
+  - "Adto sa opisyal nga Pag-IBIG Fund website sa https://www.pagibigfund.gov.ph ug ablihi ang Virtual Pag-IBIG"
+  - "Pilia nga magparehistro isip miyembro (pananglitan, pilia ang 'Be A Member' unya 'Register')"
+  - "Pun-a ang online nga membership registration form sa tukma nimong personal nga detalye"
+  - "Isumite ang form; ang sistema maghimo sa imong membership record ug sa imong permanente nga Pag-IBIG Membership ID (MID) Number"
+  - "I-activate ang imong Virtual Pag-IBIG account gamit ang mga detalye nga gipadala sa imong email aron makita ang imong contributions ug maka-access sa mga serbisyo online"
+  - "Kon gusto nimo personal, adto sa bisan unsang Pag-IBIG Fund branch dala ang imong valid nga ID aron magparehistro ug makakuha sa imong MID Number"
+office_ceb: "Pag-IBIG Fund (Home Development Mutual Fund, HDMF). Magparehistro online pinaagi sa Virtual Pag-IBIG sa opisyal nga website (https://www.pagibigfund.gov.ph), o personal sa bisan unsang Pag-IBIG Fund branch."
+fee_ceb: "Walay registration fee. Isip miyembro, mag-savings ka matag bulan (contributions) base sa Pag-IBIG contribution schedule."
+processing_time_ceb: "Ang online nga rehistro diha-diha - ang imong membership record ug MID Number mahimo kon imo nang gisumite ang form. Ang personal nga rehistro kasagaran mahuman sa samang pagbisita."
