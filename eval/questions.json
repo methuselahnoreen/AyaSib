@@ -55,6 +55,11 @@
     "note": "First-time SS Number application online via the SSS website."
   },
   {
+    "question": "Unsaon pagkuha ug national police clearance?",
+    "expected": "national-police-clearance",
+    "note": "PNP national police clearance (online + station), distinct from NBI clearance."
+  },
+  {
     "question": "Unsaon pag-enroll sa PhilHealth para sa OFW?",
     "expected": "philhealth-enrolment-ofw",
     "note": "PhilHealth enrolment for an OFW, names the agency."
