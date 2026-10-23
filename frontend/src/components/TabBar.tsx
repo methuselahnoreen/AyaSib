@@ -1,8 +1,8 @@
 "use client";
 
 // Feature: ayasib-frontend-redesign
-// Bottom tab navigation. Five slots: Sugdanan / Mga Serbisyo / [OCR center FAB] / Pangutana / Pangandam.
-// The center OCR button (Basaha) protrudes above the bar with a green camera-scan element.
+// Bottom tab navigation. Five slots: Basaha / Mga Serbisyo / [Sugdanan center FAB] / Pangutana / Pangandam.
+// The center button (Sugdanan/Home) protrudes above the bar.
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "@/components/Icon";
@@ -12,7 +12,7 @@ type Tab = { href: string; label: string; icon: IconName; match: (p: string) => 
 
 // Side tabs: two on the left of the center button, two on the right.
 const LEFT: Tab[] = [
-  { href: "/", label: t.tabs.home, icon: "home", match: (p) => p === "/" },
+  { href: "/basaha", label: t.tabs.ocr, icon: "scan", match: (p) => p.startsWith("/basaha") },
   { href: "/services", label: t.tabs.services, icon: "grid", match: (p) => p.startsWith("/services") },
 ];
 const RIGHT: Tab[] = [
@@ -22,7 +22,7 @@ const RIGHT: Tab[] = [
 
 export function TabBar() {
   const pathname = usePathname();
-  const ocrActive = pathname.startsWith("/basaha");
+  const homeActive = pathname === "/";
 
   const renderTab = (tab: Tab) => {
     const active = tab.match(pathname);
@@ -38,12 +38,12 @@ export function TabBar() {
     <nav className="tabbar" aria-label={t.tabs.label}>
       {LEFT.map(renderTab)}
 
-      {/* Center OCR button — protrudes above the bar */}
-      <Link href="/basaha" className={`tab tab-ocr ${ocrActive ? "active" : ""}`} aria-current={ocrActive ? "page" : undefined}>
+      {/* Center Home button — protrudes above the bar */}
+      <Link href="/" className={`tab tab-ocr ${homeActive ? "active" : ""}`} aria-current={homeActive ? "page" : undefined}>
         <span className="ocr-fab">
-          <Icon name="scan" size={28} />
+          <Icon name="home" size={28} />
         </span>
-        <span>{t.tabs.ocr}</span>
+        <span>{t.tabs.home}</span>
       </Link>
 
       {RIGHT.map(renderTab)}
