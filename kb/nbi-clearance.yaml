@@ -1,7 +1,7 @@
 id: nbi-clearance
 name_en: NBI Clearance
 name_ceb: null   # needs native reviewer
-locality: "National (apply online, then visit the NBI branch you choose)"
+locality: "National"
 office: "Any NBI branch, chosen during the online application at https://clearance.nbi.gov.ph"
 requirements:
   - "An online account at the NBI Clearance portal (active mobile number and email, verified with a one-time password)"
