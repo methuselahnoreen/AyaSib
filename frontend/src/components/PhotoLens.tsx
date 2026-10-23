@@ -7,7 +7,7 @@
 //  - List/panel (Tier 1): cloud OCR (/api/ocr) + one translation, shown as a panel. Reliable
 //    fallback used automatically if the overlay finds no usable text.
 // Non-invention: every shown phrase is a translation of text actually read from the image.
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { interpretOcr, MAX_UPLOAD_BYTES, prepareImage, validateImage } from "@/lib/ocr";
 import { OcrCancelled, OcrError, readPhoto, type OcrErrorCode } from "@/lib/ocrClient";
 import { translateText } from "@/lib/client";
@@ -44,13 +44,38 @@ export function PhotoLens() {
   const [error, setError] = useState<string | null>(null);
   const [canRetry, setCanRetry] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
+  const [cameraOpen, setCameraOpen] = useState(false);
 
   const abortRef = useRef<AbortController | null>(null);
   const lastImage = useRef<Blob | null>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const galleryRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
-  useEffect(() => () => abortRef.current?.abort(), []);
+  const closeCamera = useCallback(() => {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    setCameraOpen(false);
+  }, []);
+
+  useEffect(
+    () => () => {
+      abortRef.current?.abort();
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+    },
+    [],
+  );
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!cameraOpen || !video || !streamRef.current) return;
+    video.srcObject = streamRef.current;
+    void video.play().catch(() => {
+      setError(p.cameraUnavailable);
+      setPhase("error");
+      closeCamera();
+    });
+  }, [cameraOpen, closeCamera]);
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview);
@@ -169,8 +194,55 @@ export function PhotoLens() {
     }
   }
 
+  async function openCamera() {
+    const isDesktop = window.matchMedia("(pointer: fine)").matches;
+    if (!isDesktop || !navigator.mediaDevices?.getUserMedia) {
+      pick(cameraRef);
+      return;
+    }
+    try {
+      streamRef.current = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+      setError(null);
+      setCameraOpen(true);
+    } catch {
+      setError(p.cameraUnavailable);
+      setPhase("error");
+    }
+  }
+
+  async function captureCamera() {
+    const video = videoRef.current;
+    if (!video || !video.videoWidth || !video.videoHeight) {
+      setError(p.cameraUnavailable);
+      setPhase("error");
+      closeCamera();
+      return;
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext("2d");
+    if (!context) {
+      setError(p.cameraUnavailable);
+      setPhase("error");
+      closeCamera();
+      return;
+    }
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(async (blob) => {
+      closeCamera();
+      if (!blob) {
+        setError(p.cameraUnavailable);
+        setPhase("error");
+        return;
+      }
+      await handleFile(new File([blob], "webcam-photo.jpg", { type: "image/jpeg" }));
+    }, "image/jpeg", 0.9);
+  }
+
   function reset() {
     abortRef.current?.abort();
+    closeCamera();
     if (preview) URL.revokeObjectURL(preview);
     setPreview(null);
     setOverlays([]);
@@ -191,6 +263,18 @@ export function PhotoLens() {
       <p className="muted small" style={{ margin: 0 }}>
         {p.lensIntro}
       </p>
+
+      {cameraOpen && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <video ref={videoRef} autoPlay muted playsInline style={{ width: "100%", borderRadius: 16 }} aria-label={p.cameraPreviewAlt} />
+          <button type="button" className="btn" onClick={captureCamera}>
+            {p.capture}
+          </button>
+          <button type="button" className="btn secondary" onClick={closeCamera}>
+            {p.cancel}
+          </button>
+        </div>
+      )}
 
       {preview && (
         <div className="lens-stage">
@@ -229,9 +313,9 @@ export function PhotoLens() {
         </div>
       )}
 
-      {phase !== "result" && (
+      {phase !== "result" && !cameraOpen && (
         <div className="lens-actions">
-          <button type="button" className="btn" onClick={() => pick(cameraRef)} disabled={busy}>
+          <button type="button" className="btn" onClick={openCamera} disabled={busy}>
             <Icon name="scan" size={20} /> {p.camera}
           </button>
           <button type="button" className="btn secondary" onClick={() => pick(galleryRef)} disabled={busy}>

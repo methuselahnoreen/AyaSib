@@ -43,9 +43,23 @@ describe("callLLM (Cloudflare Workers AI, open-source model)", () => {
     await callLLM({ user: "u", fetchImpl: f }).catch((e: Error) => expect(e.message).not.toContain("secret-token-xyz"));
   });
 
-  it("treats an empty reply as an error", async () => {
-    const f = vi.fn().mockResolvedValue(cfOk("   "));
+  it("treats a persistently empty reply as an error, after retrying once", async () => {
+    // A fresh Response per call (a Response body can only be read once).
+    const f = vi.fn().mockImplementation(async () => cfOk("   "));
     await expect(callLLM({ user: "u", fetchImpl: f })).rejects.toThrow("empty reply");
+    expect(f).toHaveBeenCalledTimes(2); // one retry on the transient empty reply
+  });
+
+  it("recovers on the retry when the first reply is empty", async () => {
+    const f = vi.fn().mockImplementationOnce(async () => cfOk("   ")).mockImplementationOnce(async () => cfOk("recovered"));
+    expect(await callLLM({ user: "u", fetchImpl: f })).toBe("recovered");
+    expect(f).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not retry a 4xx (client) error", async () => {
+    const f = vi.fn().mockImplementation(async () => json({ success: false }, 400));
+    await expect(callLLM({ user: "u", fetchImpl: f })).rejects.toBeInstanceOf(LlmError);
+    expect(f).toHaveBeenCalledTimes(1);
   });
 
   it("builds messages from the system/user convenience pair", async () => {

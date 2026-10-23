@@ -97,9 +97,6 @@ export function AnswerCard({ result }: { result: AskResponse }) {
           <Link className="btn secondary" href={`/explain?text=${encodeURIComponent(explainText)}`}>
             {t.answer.explain}
           </Link>
-          <Link className="btn secondary" href="/translate">
-            {t.answer.translate}
-          </Link>
         </div>
       </div>
     </article>

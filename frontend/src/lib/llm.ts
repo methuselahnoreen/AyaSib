@@ -42,19 +42,17 @@ function toMessages(req: LlmRequest): LlmMessage[] {
   return messages;
 }
 
-/**
- * Sends the routing messages to Cloudflare Workers AI and returns the raw text reply.
- * Cloudflare sometimes returns result.response as an already-parsed object rather than a
- * string, so we stringify non-string replies before handing them back to the caller.
- */
-export async function callLLM(req: LlmRequest): Promise<string> {
-  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-  const token = process.env.CLOUDFLARE_API_TOKEN;
-  if (!accountId || !token) throw new LlmError("Cloudflare credentials are not configured");
+// A transient failure is worth one retry: an empty reply, a timeout, or a 5xx from the model.
+// A 4xx or missing-credentials error will not fix itself, so we do not retry those.
+function isTransient(e: unknown): boolean {
+  if (!(e instanceof LlmError)) return false;
+  if (e.status !== undefined) return e.status >= 500;
+  return e.message.includes("empty reply") || e.message.includes("timed out") || e.message === "model request failed";
+}
 
-  const model = process.env.LLM_MODEL || DEFAULT_MODEL;
+/** One attempt at the Cloudflare Workers AI call. Returns the raw text reply or throws LlmError. */
+async function callOnce(req: LlmRequest, accountId: string, token: string, model: string): Promise<string> {
   const fetchImpl = req.fetchImpl ?? fetch;
-
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
@@ -86,5 +84,27 @@ export async function callLLM(req: LlmRequest): Promise<string> {
     throw new LlmError("model request failed");
   } finally {
     clearTimeout(timer);
+  }
+}
+
+/**
+ * Sends the routing messages to Cloudflare Workers AI and returns the raw text reply.
+ * Cloudflare sometimes returns result.response as an already-parsed object rather than a
+ * string, so we stringify non-string replies before handing them back to the caller.
+ * Retries once on a transient failure (empty reply, timeout, or 5xx) so a flaky model
+ * response does not turn a normal follow-up into a user-facing error.
+ */
+export async function callLLM(req: LlmRequest): Promise<string> {
+  const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+  const token = process.env.CLOUDFLARE_API_TOKEN;
+  if (!accountId || !token) throw new LlmError("Cloudflare credentials are not configured");
+
+  const model = process.env.LLM_MODEL || DEFAULT_MODEL;
+
+  try {
+    return await callOnce(req, accountId, token, model);
+  } catch (e) {
+    if (!isTransient(e)) throw e;
+    return await callOnce(req, accountId, token, model);
   }
 }

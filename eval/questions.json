@@ -45,6 +45,16 @@
     "note": "PSA-authenticated certificate request."
   },
   {
+    "question": "Unsaon pag-order ug PSA marriage certificate online sa PSAHelpline?",
+    "expected": "psa-marriage-certificate",
+    "note": "PSA marriage certificate via PSAHelpline (national online/walk-in), distinct from the Cebu City charter record."
+  },
+  {
+    "question": "Unsaon pagkuha ug SSS number online?",
+    "expected": "sss-online-ss-number-issuance",
+    "note": "First-time SS Number application online via the SSS website."
+  },
+  {
     "question": "Unsaon pag-enroll sa PhilHealth para sa OFW?",
     "expected": "philhealth-enrolment-ofw",
     "note": "PhilHealth enrolment for an OFW, names the agency."

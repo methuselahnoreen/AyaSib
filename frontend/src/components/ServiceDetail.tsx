@@ -34,7 +34,12 @@ export function ServiceDetail({ entry }: { entry: KbEntry }) {
 
   const reqList = (entry.requirements_ceb?.length ? entry.requirements_ceb : entry.requirements) ?? [];
   const reqBody = reqList.length ? reqList.join(" · ") : t.answer.confirmNotice;
-  const summary = (entry.next_step_ceb ?? entry.next_step ?? "").trim() || entry.name_ceb || entry.name_en;
+  // The summary row shows the curated Cebuano summary; fall back to the name only if absent.
+  const summary = (entry.summary_ceb ?? "").trim() || entry.name_ceb || entry.name_en;
+  // Prefer curated Cebuano for the fact rows, falling back to the English KB fields.
+  const office = (entry.office_ceb ?? "").trim() || entry.office;
+  const fee = (entry.fee_ceb ?? "").trim() || entry.fee;
+  const processingTime = (entry.processing_time_ceb ?? "").trim() || entry.processing_time;
 
   return (
     <>
@@ -53,9 +58,9 @@ export function ServiceDetail({ entry }: { entry: KbEntry }) {
       <div className="ans-card">
         <Row icon="doc" title={t.answer.summary} body={summary} />
         <Row icon="pin" title={t.answer.requirements} body={reqBody} />
-        <Row icon="building" title={t.answer.office} body={entry.office || t.answer.confirmNotice} />
-        <Row icon="money" title={t.answer.fee} body={entry.fee || t.answer.unavailableValue} />
-        <Row icon="clock" title={t.answer.time} body={entry.processing_time || t.answer.unavailableTime} />
+        <Row icon="building" title={t.answer.office} body={office || t.answer.confirmNotice} />
+        <Row icon="money" title={t.answer.fee} body={fee || t.answer.unavailableValue} />
+        <Row icon="clock" title={t.answer.time} body={processingTime || t.answer.unavailableTime} />
       </div>
 
       <div className="ans-card">
