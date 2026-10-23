@@ -360,6 +360,51 @@
     "processing_time_ceb": "Online delivery: sunod nga adlaw sa pagtrabaho human ma-release sa PSA ang dokumento para sa Metro Manila; 3 ngadto sa 8 ka adlaw sa pagtrabaho para sa probinsya. Walk-in: posible ang same-day release kon kompleto ang requirements ug walay problema sa rekord. Para sa bag-ong narehistro nga kasal, available ang PSA copy 2 ngadto sa 4 ka bulan human sa transmittal date alang sa kasal sa Metro Manila, ug labing menos 6 ka bulan alang sa kasal sa probinsya."
   },
   {
+    "id": "senior-citizen-id-issuance",
+    "name_en": "Senior Citizen ID Issuance",
+    "name_ceb": null,
+    "locality": "National",
+    "office": "Office for Senior Citizens Affairs (OSCA), City Hall or Municipal Hall, Local Social Welfare and Development Office, or Selected LGU online portals",
+    "who_may_avail": "Filipino citizen aged 60 years old or older and a resident of a city or municipality in the Philippines",
+    "requirements": [
+      "Proof of age",
+      "Proof of residency",
+      "Valid IDs",
+      "Accomplished Senior Citizen ID application form"
+    ],
+    "steps": [
+      "Gather all required documents including proof of age, residency, and valid IDs",
+      "Proceed to the OSCA office of your city or municipality",
+      "Request and complete the Senior Citizen ID application form if not downloaded beforehand",
+      "Submit the accomplished form and documentary requirements for verification",
+      "Wait for the OSCA staff to verify your eligibility and residency",
+      "Once approved, claim your Senior Citizen ID and booklet from the OSCA office"
+    ],
+    "fee": "Free of charge",
+    "processing_time": "Same-day issuance (selected LGUs) or standard processing: 1-7 business days",
+    "source_title": "NCSC FAQ: Senior Citizen ID",
+    "source_url": "https://www.ncsc.gov.ph/faq",
+    "last_verified": "2026-10-23",
+    "summary_ceb": "Ang Senior Citizen ID giisyu sa Office for Senior Citizens Affairs (OSCA) alang sa mga kwalipikadong Pilipino nga nag-edad og 60 anyos pataas. Nagserbisyo kini isip proba sa pagkakwalipikado alang sa mga benepisyo, diskwento, ug mga privilege ubos sa Expanded Senior Citizens Act.",
+    "requirements_ceb": [
+      "Proof of age",
+      "Proof of residency",
+      "Valid IDs",
+      "Naasikaso nga Senior Citizen ID application form"
+    ],
+    "steps_ceb": [
+      "Kolektaha ang tanang gikinahanglan nga dokumento lakip ang proof of age, proof of residency, ug valid IDs",
+      "Adto sa OSCA office sa imong dakbayan o munisipyo",
+      "Pangayo ug kumpletoha ang Senior Citizen ID application form kun wala pa kini na-download daan",
+      "Isumite ang naasikaso nga form ug mga gikinahanglan nga dokumento alang sa beripikasyon",
+      "Hulat sa OSCA staff sa pagberipika sa imong pagkakwalipikado ug residency",
+      "Pag-aprobar, dawaa ang imong Senior Citizen ID ug booklet gikan sa OSCA office"
+    ],
+    "office_ceb": "Office for Senior Citizens Affairs (OSCA), City Hall o Municipal Hall, Local Social Welfare and Development Office, o napiling LGU online portals",
+    "fee_ceb": "Free of charge",
+    "processing_time_ceb": "Same-day issuance (napiling LGUs) o standard processing: 1-7 business days"
+  },
+  {
     "id": "sss-online-ss-number-issuance",
     "name_en": "Online SS Number Application (SSS)",
     "name_ceb": null,
