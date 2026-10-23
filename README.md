@@ -120,34 +120,79 @@ There is no vector database in the current design. With only a handful of servic
 
 ## Getting started
 
-The knowledge-base tooling and the Ask logic live in `backend/`. The web app lives in `frontend/`. The commands below set up the backend tooling and run the command-line Ask tester.
+The quickest way to see AyaSib is the **live demo**: <https://ayasib.vercel.app>. To run it
+locally, follow the steps below. The web app lives in `frontend/`; the knowledge-base tooling
+and a command-line Ask tester live in `backend/`.
 
 ### Prerequisites
 
-- Node.js 20 or newer (the scripts use `--env-file`, available from Node 20)
-- A Cloudflare account with Workers AI enabled, and an API token with the Workers AI permission
+- **Node.js 20 or newer** (`node --version` to check; the scripts use `--env-file`, Node 20+)
+- **A Cloudflare account** with Workers AI enabled, and an API token with the **Workers AI** permission.
+  Needed for the Ask and OCR features. (The UI, services directory, and checklist run without it.)
 
-### Setup (backend tooling)
+### 1. Clone and add your credentials
+
+```powershell
+git clone https://github.com/methuselahnoreen/AyaSib.git
+cd AyaSib
+
+# Create your local secrets file from the example, then fill it in:
+cp .env.example .env.local
+# Open .env.local and set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN.
+# (Account ID: Cloudflare dashboard > Workers & AI. Token: My Profile > API Tokens.)
+```
+
+> `.env.local` is git-ignored. Never commit real keys.
+
+### 2. Run the web app (this is the demo)
+
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000>. The dev server automatically rebuilds the KB data from `kb/*.yaml`
+before it starts. When run locally, the app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`
+from the repository-root `.env.local`.
+
+To build and run the production bundle instead:
+
+```powershell
+# still inside frontend/
+npm run build
+npm start
+```
+
+If the build runs out of memory on your machine, set `NODE_OPTIONS=--max-old-space-size=4096`
+before `npm run build`.
+
+### 3. (Optional) Run the checks
+
+```powershell
+# inside frontend/
+npm run typecheck     # TypeScript, no emit
+npm run lint          # ESLint
+npm test              # unit and property tests (no credentials needed)
+```
+
+### (Optional) Backend knowledge-base tooling and CLI
+
+The KB tooling is only needed if you are adding or validating services.
 
 ```powershell
 # From the repository root:
-cp .env.example .env.local
-# then open .env.local and fill in CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN
-
 cd backend
 npm install
 npm run kb:validate     # check every kb/*.yaml file
 npm run kb:build        # write backend/data/kb.json from the files that pass
-```
 
-### Try the Ask logic from the command line
-
-```powershell
-# still inside backend/
+# Try the Ask routing from the command line (needs the Cloudflare credentials):
 node --env-file=../.env.local scripts/ask-cli.mjs "Unsaon pagkuha ug death certificate sa City Health?"
 ```
 
-Pass your own questions as arguments, or run with no arguments to use a built-in set. Set `DEBUG_ROUTER=1` in the terminal to print the raw model reply.
+Pass your own questions as arguments, or run with no arguments to use a built-in set.
+Set `DEBUG_ROUTER=1` to print the raw model reply.
 
 ### Extract text from a photo ("Basaha")
 
@@ -156,10 +201,6 @@ The photo reader lives in the web app, not the backend CLI. Open the **Basaha** 
 The OCR model is configurable with `OCR_MODEL`; it targets printed text, not handwriting. The browser also runs a client-side Tesseract.js pass to draw per-line boxes over the photo.
 
 > **Camera note:** live camera capture needs HTTPS. Use the deployed URL (Vercel provides HTTPS) or `localhost`; it will not work over a plain LAN IP.
-
-### Run the web app
-
-The Next.js app is in `frontend/` (`npm run dev`, `npm run build`). When run locally, it loads server-side settings from the repository-root `.env.local`. The deployed app reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the host's environment settings.
 
 ## Environment variables
 
