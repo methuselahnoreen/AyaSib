@@ -1,0 +1,41 @@
+id: philhealth-membership-local
+name_en: "PhilHealth Membership Registration (Filipinos in the Philippines)"
+name_ceb: null   # needs native reviewer
+locality: "National"
+scope_note: "For Filipinos registering in the country as a direct contributor (self-employed, voluntary, or an employee getting their first PIN). OFWs and Filipinos abroad should use the separate OFW/abroad enrolment service."
+office: "PhilHealth. Register online through the member services on the official PhilHealth website (https://www.philhealth.gov.ph), or in person at any Local Health Insurance Office (LHIO) or PhilHealth Express outlet."
+who_may_avail: "All Filipino citizens. Under the Universal Health Care (UHC) Law, every Filipino is automatically a member; this registration gives you your PhilHealth Identification Number (PIN) and record."
+requirements:
+  - "Accomplished PhilHealth Member Registration Form (PMRF) - available at any PhilHealth office or downloadable from the PhilHealth website"
+  - "One valid government-issued ID"
+  - "PSA-issued birth certificate (or other proof of identity and birth details as required)"
+requirements_note: "Your PhilHealth Identification Number (PIN) is unique and permanent - if you were ever a member before, do not register again; reuse your existing PIN. Providing a PhilSys (national ID) number on the form is optional. If employed, your employer normally handles your registration and contributions."
+steps:
+  - "Fill out the PhilHealth Member Registration Form (PMRF) with accurate personal details"
+  - "Online: go to the member registration service on the official PhilHealth website, submit the PMRF, and upload clear copies of your valid ID and PSA birth certificate"
+  - "In person: visit the nearest Local Health Insurance Office (LHIO) or PhilHealth Express outlet and submit your PMRF with supporting documents to the officer-in-charge"
+  - "Receive your PhilHealth Identification Number (PIN) and Member Data Record (MDR) - online applicants are notified by email once the registration is processed"
+  - "Pay your premium contributions if you are a self-employed or voluntary (direct) contributor, keeping your receipts; employed members have contributions handled by their employer"
+fee: "No service fee to register. Direct contributors (self-employed/voluntary) pay premium contributions based on the PhilHealth contribution schedule."
+processing_time: "Online registration is typically confirmed within a few working days by email. In-person registration is usually processed on the same visit."
+source_title: "PhilHealth - National Health Insurance Program membership and PhilHealth Member Registration Form (PMRF)"
+source_url: "https://www.philhealth.gov.ph"
+last_verified: 2026-10-23
+review_status: needs_review
+related:
+  - philhealth-enrolment-ofw
+summary_ceb: "Kini nga serbisyo para sa mga Pilipino nga magparehistro dinhi sa nasud isip direct contributor (self-employed, voluntary, o empleyado nga mukuha sa unang PIN). Ubos sa Universal Health Care Law, awtomatiko nang miyembro ang matag Pilipino; kini nga rehistro mohatag kanimo sa imong PhilHealth Identification Number (PIN) ug record. Mahimo online sa opisyal nga PhilHealth website o personal sa usa ka Local Health Insurance Office (LHIO) o PhilHealth Express outlet. Walay service fee sa pagparehistro."
+requirements_ceb:
+  - "Napuno nga PhilHealth Member Registration Form (PMRF) - makuha sa bisan unsang PhilHealth office o ma-download sa PhilHealth website"
+  - "Usa ka valid nga government-issued nga ID"
+  - "PSA nga birth certificate (o lain nga pamatuod sa pagkatawo nga gikinahanglan)"
+requirements_note_ceb: "Ang imong PhilHealth Identification Number (PIN) talagsaon ug permanente - kon miyembro ka na kaniadto, ayaw na pagparehistro pag-usab; gamita ang imong naa nang PIN. Ang paghatag og PhilSys (national ID) nga numero sa form opsyonal ra. Kon empleyado ka, kasagaran ang imong employer na ang maghimo sa imong rehistro ug contributions."
+steps_ceb:
+  - "Pun-a ang PhilHealth Member Registration Form (PMRF) sa tukma nga personal nga detalye"
+  - "Online: adto sa member registration service sa opisyal nga PhilHealth website, isumite ang PMRF, ug i-upload ang klaro nga kopya sa imong valid nga ID ug PSA birth certificate"
+  - "Personal: adto sa pinakaduol nga Local Health Insurance Office (LHIO) o PhilHealth Express outlet ug isumite ang imong PMRF uban ang mga supporting nga dokumento sa officer-in-charge"
+  - "Dawata ang imong PhilHealth Identification Number (PIN) ug Member Data Record (MDR) - ang mga mi-apply online pahibaloon pinaagi sa email kon naproseso na ang rehistro"
+  - "Bayri ang imong premium contributions kon ikaw self-employed o voluntary (direct) nga contributor, ug tipigi ang imong mga resibo; ang mga empleyado, ang ilang employer na ang maghimo sa contributions"
+office_ceb: "PhilHealth. Magparehistro online pinaagi sa member services sa opisyal nga PhilHealth website (https://www.philhealth.gov.ph), o personal sa bisan unsang Local Health Insurance Office (LHIO) o PhilHealth Express outlet."
+fee_ceb: "Walay service fee sa pagparehistro. Ang mga direct contributor (self-employed/voluntary) mobayad og premium contributions base sa PhilHealth contribution schedule."
+processing_time_ceb: "Ang online nga rehistro kasagaran makumpirma sulod sa pipila ka adlaw nga trabaho pinaagi sa email. Ang personal nga rehistro kasagaran maproseso sa samang pagbisita."
