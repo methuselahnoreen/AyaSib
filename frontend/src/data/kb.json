@@ -103,6 +103,52 @@
     "processing_time_ceb": "45 ka minuto sa tanan"
   },
   {
+    "id": "national-id-philsys",
+    "name_en": "National ID (PhilSys / PhilID)",
+    "name_ceb": "",
+    "locality": "National",
+    "who_may_avail": "Filipino citizens and resident aliens",
+    "scope_note": "",
+    "requirements": [
+      "One original, valid supporting document for identity: preferably a PSA-issued birth certificate, or a Philippine passport, driver's license, UMID, or other accepted government-issued ID (see the accepted-documents list on the PhilSys site)",
+      "Yourself, in person, so your biometrics (fingerprints, iris scan, and photo) can be captured at the registration center"
+    ],
+    "requirements_note": "Registration is free. As of 2026 it is walk-in - there is no online pre-registration form to fill out first. Bring the ORIGINAL copy of your supporting document, not a photocopy. A PhilSys number is not required to be part of any other program.",
+    "steps": [
+      "Find a PhilSys Registration Center near you (a PSA office, a participating LGU center, or a participating mall) using the directory at https://philsys.gov.ph",
+      "Go to the center in person and present your original supporting document for identity verification",
+      "Have your biometrics captured on-site: fingerprints, iris scan, and a front-facing photo",
+      "Receive your Transaction Reference Number (TRN) slip - keep it safe, you need it to track your ID and check your ePhilID",
+      "Get your digital National ID: download the eGovPH app (Google Play or Apple App Store), sign in, and view your Digital National ID once your PhilSys record is approved",
+      "Receive your physical PhilID card: the PSA issues it automatically and the Philippine Postal Office (PHLPost) delivers it to your registered address for free - there is no separate application for the card"
+    ],
+    "fee": "Free. There is no charge to register or to receive the PhilID.",
+    "office": "Philippine Statistics Authority (PhilSys). Register in person at any PhilSys Registration Center - a PSA Regional or Provincial Office, a participating city or municipal LGU center, or a participating mall. Find the nearest center through the PhilSys Registration Center directory at https://philsys.gov.ph.",
+    "processing_time": "Biometric capture at the center is usually done in one visit. The Digital National ID can appear in the eGovPH app once your record is approved; the physical card is delivered by PHLPost afterward and timing varies.",
+    "source_title": "Philippine Statistics Authority - Philippine Identification System (PhilSys)",
+    "source_url": "https://philsys.gov.ph",
+    "last_verified": "2026-10-23",
+    "notes": "",
+    "summary_ceb": "Ang National ID (PhilID) mao ang opisyal nga usa ka pamatuod sa pagkatawo nga gihatag sa Philippine Statistics Authority (PSA) ubos sa Philippine Identification System (PhilSys). Libre ang pagpa-rehistro. Sukad 2026, walk-in kini - adto lang sa usa ka PhilSys Registration Center dala ang imong orihinal nga dokumento, kuhaon ang imong biometrics, unya makuha ang imong Digital National ID sa eGovPH app ug ang physical card ipadala sa balay pinaagi sa PHLPost.",
+    "requirements_ceb": [
+      "Usa ka orihinal, valid nga dokumento para sa pagpamatuod sa pagkatawo: mas maayo kon PSA nga birth certificate, o Philippine passport, driver's license, UMID, o uban pang dinawat nga government-issued nga ID (tan-awa ang listahan sa dinawat nga dokumento sa PhilSys website)",
+      "Ikaw mismo, personal, aron makuha ang imong biometrics (fingerprints, iris scan, ug litrato) sa registration center"
+    ],
+    "requirements_note_ceb": "Libre ang pagpa-rehistro. Sukad 2026, walk-in na kini - wala nay online pre-registration form nga pun-on una. Dad-a ang ORIHINAL nga kopya sa imong dokumento, dili photocopy.",
+    "steps_ceb": [
+      "Pangita og PhilSys Registration Center nga duol kanimo (PSA office, partisipanteng LGU center, o partisipanteng mall) gamit ang directory sa https://philsys.gov.ph",
+      "Adto sa center personal ug ipakita ang imong orihinal nga dokumento para sa pag-verify sa pagkatawo",
+      "Ipakuha ang imong biometrics didto: fingerprints, iris scan, ug front-facing nga litrato",
+      "Kuhaa ang imong Transaction Reference Number (TRN) slip - ampingi kini, gikinahanglan aron ma-track ang imong ID ug ma-check ang imong ePhilID",
+      "Kuhaa ang imong digital National ID: i-download ang eGovPH app (Google Play o Apple App Store), mag-sign in, ug tan-awa ang imong Digital National ID kon aprubado na ang imong PhilSys record",
+      "Dawata ang imong physical nga PhilID card: ang PSA mag-isyu niini awtomatiko ug ang Philippine Postal Office (PHLPost) maghatod niini sa imong narehistro nga adres nga libre - walay separado nga aplikasyon para sa card"
+    ],
+    "office_ceb": "Philippine Statistics Authority (PhilSys). Mag-rehistro personal sa bisan unsang PhilSys Registration Center - usa ka PSA Regional o Provincial Office, usa ka partisipanteng city o municipal LGU center, o usa ka partisipanteng mall. Pangitaa ang pinakaduol nga center pinaagi sa PhilSys Registration Center directory sa https://philsys.gov.ph.",
+    "fee_ceb": "Libre. Walay bayad sa pagpa-rehistro o sa pagkuha sa PhilID.",
+    "processing_time_ceb": "Ang pagkuha sa biometrics sa center kasagaran mahuman sa usa ka pagbisita. Ang Digital National ID makita na sa eGovPH app kon aprubado na ang imong record; ang physical card ihatod sa PHLPost human niana ug magkalahi ang gidugayon.",
+    "review_status": "needs_review"
+  },
+  {
     "id": "national-police-clearance",
     "name_en": "National Police Clearance",
     "name_ceb": "",
