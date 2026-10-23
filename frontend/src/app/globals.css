@@ -398,14 +398,16 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
 }
 
 /* "Tulo ra ka lakang" step flow (standalone row) */
-.flow { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+.flow { display: flex; align-items: center; justify-content: space-between; gap: 6px; width: 100%; overflow: hidden; margin-bottom: 6px; }
 .flow-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
 .flow-ring {
   width: 48px; height: 48px; border-radius: 50%; background: var(--sage);
   display: grid; place-items: center; color: var(--forest); flex: none;
 }
 .flow-step span { font-weight: 700; color: var(--deep-green); font-size: 0.82rem; text-align: center; overflow-wrap: anywhere; }
-.flow-arrow { color: var(--gray); flex: none; align-self: center; stroke-width: 1.8; }
+/* Pin the connector chevron small so it can't stretch and push the 3rd step off-screen. */
+.flow-arrow { color: var(--gray); flex: 0 0 auto; width: 16px; height: 16px; align-self: center; }
+.flow-arrow svg, svg.flow-arrow { width: 16px; height: 16px; }
 
 /* Name story / etymology highlight (kept for reuse elsewhere) */
 .name-story {
@@ -597,6 +599,21 @@ main { padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; display: f
   padding: 12px 14px; border-radius: 12px; white-space: pre-wrap;
 }
 .lens-note { margin: 0; color: #f0ecd8; }
+
+/* Line-by-line original + Bisaya pairs in the translation panel. */
+.lens-pairs { list-style: none; margin: 4px 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.lens-pair {
+  background: rgba(255, 253, 240, 0.96); color: var(--charcoal);
+  border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px;
+}
+.lens-pair-orig { font-size: 0.95rem; line-height: 1.35; color: #5b5b4f; }
+.lens-pair-ceb { font-size: 1.1rem; line-height: 1.4; font-weight: 600; color: var(--charcoal); }
+.lens-pair-tag {
+  display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 999px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  background: #e7e4d2; color: #5b5b4f; vertical-align: middle;
+}
+.lens-pair-tag.ceb { background: var(--olive, #4a5d3a); color: #fff; }
 
 .lens-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .lens-actions .btn { flex: 1 1 auto; justify-content: center; display: inline-flex; align-items: center; gap: 8px; }

@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { interpretOcr, MAX_UPLOAD_BYTES, prepareImage, validateImage } from "@/lib/ocr";
 import { OcrCancelled, OcrError, readPhoto, type OcrErrorCode } from "@/lib/ocrClient";
 import { translateText } from "@/lib/client";
-import { linesToText, splitTranslation, toOverlayLines, type OverlayLine } from "@/lib/lensOverlay";
+import { linesToText, pairByMarker, splitTranslation, toOverlayLines, type OverlayLine } from "@/lib/lensOverlay";
 import { recognizeLines } from "@/lib/tesseractClient";
 import { photoText as p } from "@/lib/photoStrings";
 import { Icon } from "@/components/Icon";
@@ -40,6 +40,7 @@ export function PhotoLens() {
   const [view, setView] = useState<View>("overlay");
   const [overlays, setOverlays] = useState<Overlay[]>([]);
   const [panelText, setPanelText] = useState("");
+  const [panelPairs, setPanelPairs] = useState<{ orig: string; ceb: string }[]>([]);
   const [original, setOriginal] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [canRetry, setCanRetry] = useState(false);
@@ -95,8 +96,41 @@ export function PhotoLens() {
     setOriginal(verdict.text);
     setPhase("translating");
     setStatus(p.translating);
+
+    const origLines = verdict.text.split("\n").map((s) => s.trim()).filter(Boolean);
+
+    // Multi-line document: translate in BATCHES of a few lines each, in one call per batch, with
+    // a marker per line so we can split the result back into aligned lines. Batching keeps each
+    // call under the model's output-token cap (long documents were truncating) while staying well
+    // under the 20/min rate limit (a few calls, not one per line). Results stream in per batch.
+    if (origLines.length > 1) {
+      const BATCH = 8;
+      const pairs = origLines.map((orig) => ({ orig, ceb: "" }));
+      setPanelPairs(pairs.map((x) => ({ ...x })));
+      for (let start = 0; start < origLines.length; start += BATCH) {
+        if (signal.aborted) return false;
+        const batch = origLines.slice(start, start + BATCH);
+        // Markers are numbered within the batch (1..n); map them back to absolute indices.
+        const marked = batch.map((line, i) => `#${i + 1}# ${line}`).join("\n");
+        try {
+          const result = await translateText(marked, "en", "ceb");
+          const batchPairs = pairByMarker(batch, result.translation);
+          batchPairs.forEach((bp, i) => {
+            pairs[start + i].ceb = bp.ceb;
+          });
+          setPanelPairs(pairs.map((x) => ({ ...x }))); // new array so React re-renders as batches arrive
+        } catch {
+          // Leave this batch's lines as original-only; keep going with the rest.
+        }
+      }
+      if (signal.aborted) return false;
+      setPanelText(pairs.map((x) => x.ceb).filter(Boolean).join("\n"));
+      return true;
+    }
+
     const result = await translateText(verdict.text, "en", "ceb");
     setPanelText(result.translation);
+    setPanelPairs([]);
     return true;
   }
 
@@ -125,6 +159,7 @@ export function PhotoLens() {
     setCanRetry(false);
     setOverlays([]);
     setPanelText("");
+    setPanelPairs([]);
     setOriginal("");
     setShowOriginal(false);
     setPhase("scanning");
@@ -144,12 +179,12 @@ export function PhotoLens() {
       setView("panel");
       setPhase("result");
 
-      // Overlay as a silent upgrade: try the in-browser box OCR in the background. If it produces
-      // usable positioned lines, offer the overlay view. Any stall/failure is swallowed (timeout
-      // inside recognizeLines guarantees it can't hang), leaving the working panel in place.
-      void overlayPath(image).then((gotOverlay) => {
-        if (!controller.signal.aborted && gotOverlay) setView("overlay");
-      });
+      // Overlay as a silent upgrade: try the in-browser box OCR in the background. When it
+      // produces usable positioned lines, the panel upgrades to line-by-line original+Bisaya
+      // pairs (see the panel render) and the on-image overlay becomes available via the toggle.
+      // We intentionally keep the user on the panel by default: the paired list is the readable,
+      // verifiable view. Any stall/failure is swallowed, leaving the working panel in place.
+      void overlayPath(image);
     } catch (e) {
       if (e instanceof OcrCancelled) {
         setPhase("idle");
@@ -247,6 +282,7 @@ export function PhotoLens() {
     setPreview(null);
     setOverlays([]);
     setPanelText("");
+    setPanelPairs([]);
     setOriginal("");
     setError(null);
     setCanRetry(false);
@@ -302,11 +338,35 @@ export function PhotoLens() {
               </span>
             ))}
 
-          {/* Tier 1: translation panel */}
+          {/* Tier 1: translation panel. When line-aligned data is available, show each original
+              line paired with its Bisaya so the user can see what each translation maps to.
+              Falls back to the single translated block when no per-line data exists. */}
           {phase === "result" && view === "panel" && (
             <div className="lens-overlay" role="region" aria-label={p.resultTitle}>
               <strong>{p.resultTitle}</strong>
-              <p className="lens-translation">{panelText}</p>
+              {panelPairs.length > 0 ? (
+                <>
+                  <p className="lens-note small">{p.pairedHint}</p>
+                  <ul className="lens-pairs">
+                    {panelPairs.map((pair, i) => (
+                      <li className="lens-pair" key={i}>
+                        <span className="lens-pair-orig">
+                          <span className="lens-pair-tag">{p.originalTag}</span>
+                          {pair.orig}
+                        </span>
+                        {pair.ceb && (
+                          <span className="lens-pair-ceb">
+                            <span className="lens-pair-tag ceb">{p.bisayaTag}</span>
+                            {pair.ceb}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="lens-translation">{panelText}</p>
+              )}
               <p className="lens-note small">{p.overlayNote}</p>
             </div>
           )}

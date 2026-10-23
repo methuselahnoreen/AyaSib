@@ -28,6 +28,10 @@ export const photoText = {
   scanning: "Gi-scan ang litrato...",
   translating: "Gihubad sa Bisaya...",
   resultTitle: "Hubad sa Bisaya",
+  // Line-by-line aligned view: tag each original line and its Bisaya translation.
+  originalTag: "Orihinal",
+  bisayaTag: "Bisaya",
+  pairedHint: "Matag linya: orihinal sa taas, Bisaya sa ubos.",
   showOriginal: "Ipakita ang orihinal nga teksto",
   hideOriginal: "Itago ang orihinal",
   again: "Lain nga litrato",
