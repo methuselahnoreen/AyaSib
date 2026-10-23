@@ -41,8 +41,8 @@
   },
   {
     "question": "Kinahanglan nako ug PSA authenticated nga marriage certificate, unsaon?",
-    "expected": "civil-registry-psa-authenticated",
-    "note": "PSA-authenticated certificate request."
+    "expected": "psa-marriage-certificate",
+    "note": "Names 'PSA marriage certificate' - routes to the dedicated PSA marriage service (national), not the Cebu City charter record."
   },
   {
     "question": "Unsaon pag-order ug PSA marriage certificate online sa PSAHelpline?",
@@ -56,8 +56,13 @@
   },
   {
     "question": "Unsaon pagkuha ug PWD ID card?",
-    "expected": "person-with-disability-identification-card-issuance",
-    "note": "PWD identification card issuance (NCDA policy, issued by local social welfare office)."
+    "expected": "pwd-id",
+    "note": "PWD identification card issuance (Unified PWD ID System, issued locally by PDAO/CSWDO)."
+  },
+  {
+    "question": "Unsaon pagkuha ug senior citizen ID?",
+    "expected": "senior-citizen-id-issuance",
+    "note": "Senior Citizen ID via OSCA (NCSC), for Filipinos 60 and older."
   },
   {
     "question": "Unsaon pagkuha ug national police clearance?",
