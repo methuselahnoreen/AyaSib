@@ -299,73 +299,6 @@
     "review_status": "needs_review"
   },
   {
-    "id": "person-with-disability-identification-card-issuance",
-    "name_en": "Person with Disability Identification Card Issuance",
-    "name_ceb": "",
-    "locality": "National",
-    "who_may_avail": "Any bonafide person with permanent disability",
-    "scope_note": "",
-    "requirements": [
-      "Apparent Disability: Certificate of Disability issued by city/municipality health office",
-      "Apparent Disability: Certificate of Disability from Issuing Office of PWD-IDC who assessed the applicant",
-      "Non-apparent Disability: Certificate of disability issued by specialists or appropriate physicians from the City, Municipal/Regional Health Offices or any recognized private medical institutions",
-      "Cancer and rare diseases applicants: Medical Certificate/Certificate of Disability issued by an Oncologist, Surgeon or appropriate Physician",
-      "New applicant: Two '1x1' recent ID pictures with the names, and signatures or thumb marks at the back of the picture",
-      "New applicant: One valid government ID",
-      "Children: School ID, or in the absence of school ID, a photocopy of the Birth Certificate",
-      "Applicant of legal age: One valid government ID, or in the absence of a valid ID, a Barangay Certificate",
-      "Proof of residence: Voters ID, Barangay certificate, or utility bills with exact name and address",
-      "Guardian: Proof of guardianship",
-      "Authorized Representative: Notarized authorization letter",
-      "Renewal: Accomplished PWDID-AF (Renewal box checked)",
-      "Renewal: Expired PWD-IDC",
-      "Lost PWD-IDC: Affidavit of Loss if PWD-IDC is declared lost",
-      "Renewal without expired PWD-IDC: Two '1x1' recent ID pictures with the names, and signatures or thumb marks at the back of the picture"
-    ],
-    "requirements_note": "",
-    "steps": [
-      "Secure and accomplish all the necessary required details in the application form",
-      "Attach the requirements to PWDID-AF",
-      "Submit the complete documents/requirements to City or Municipality Mayor or PDAO",
-      "Receive the PWD-IDC"
-    ],
-    "fee": "Free of charge (initial issuance); minimal fee for replacement in case of loss or damage",
-    "office": "City or Municipal Social Welfare and Development Office or PDAO",
-    "processing_time": "",
-    "source_title": "NCDA Administrative Order No. 001 Series of 2021",
-    "source_url": "https://ncda.gov.ph/",
-    "last_verified": "2026-10-23",
-    "notes": "",
-    "summary_ceb": "Kini nga mando naghatag og mga giya sa pag-isyu sa Person with Disability Identification Card (PWD-IDC). Gidetalye niini ang mga kinahanglanon sa dokumento para sa nagkalain-laing matang sa kakulangan ug ang mga pamaagi sa aplikasyon.",
-    "requirements_ceb": [
-      "Apparent Disability: Certificate of Disability nga gipagawas sa city/municipality health office",
-      "Apparent Disability: Certificate of Disability gikan sa Issuing Office sa PWD-IDC nga nitan-aw sa aplikante",
-      "Non-apparent Disability: Certificate of disability nga gipagawas sa mga specialist o angay nga doktor gikan sa City, Municipal/Regional Health Offices o bisan unsang giila nga pribadong medical institution",
-      "Cancer ug rare diseases nga aplikante: Medical Certificate/Certificate of Disability nga gipagawas sa usa ka Oncologist, Surgeon o angay nga Doktor",
-      "Bag-ong aplikante: Duha ka '1x1' nga bag-ong ID picture nga may pangalan, ug pirma o marka sa tudlo sa luyo sa litrato",
-      "Bag-ong aplikante: Usa ka balidong government ID",
-      "Mga bata: School ID, o kun walay School ID, usa ka photocopy sa Birth Certificate",
-      "Aplikante nga sakto na sa edad: Usa ka balidong government ID, o kun walay balidong ID, usa ka Barangay Certificate",
-      "Proof of residence: Voters ID, Barangay certificate, o utility bills nga may eksaktong pangalan ug address",
-      "Guardian: Proof of guardianship",
-      "Authorized Representative: Notarized authorization letter",
-      "Renewal: Naasikaso nga PWDID-AF (gisulatan ang Renewal box)",
-      "Renewal: Expired nga PWD-IDC",
-      "Nawala nga PWD-IDC: Affidavit of Loss kun ang PWD-IDC gideklarar nga lost",
-      "Renewal nga walay expired PWD-IDC: Duha ka '1x1' nga bag-ong ID picture nga may pangalan, ug pirma o marka sa tudlo sa luyo sa litrato"
-    ],
-    "requirements_note_ceb": "",
-    "steps_ceb": [
-      "Kuhaa ug kumpletoha ang tanang kinahanglanon nga detalye sa application form",
-      "Idugtong ang mga kinahanglanon sa PWDID-AF",
-      "Isumite ang kumpletong dokumento/kinahanglanon sa City o Municipality Mayor o PDAO",
-      "Dawaa ang PWD-IDC"
-    ],
-    "office_ceb": "City o Municipal Social Welfare and Development Office o PDAO",
-    "fee_ceb": "Free of charge (initial issuance); gamay nga fee para sa replacement kun lost o damaged",
-    "processing_time_ceb": ""
-  },
-  {
     "id": "philhealth-enrolment-ofw",
     "name_en": "PhilHealth Membership Registration for OFWs and Filipinos Abroad (Walk-in or E-mail)",
     "name_ceb": "",
@@ -537,7 +470,7 @@
       "Proof of residence in the city or municipality (for example a barangay certificate or a valid ID showing your address)",
       "For a non-apparent disability: a medical certificate or clinical abstract from a licensed physician confirming the disability"
     ],
-    "requirements_note": "A PhilSys (national ID) number is NOT required to register. For an apparent disability (one that can be seen), a medical certificate is no longer required - visual confirmation by the issuing office is enough. The exact supporting documents can vary slightly by LGU, so confirm with your local office.",
+    "requirements_note": "A PhilSys (national ID) number is NOT required to register. For an apparent disability (one that can be seen), a medical certificate is no longer required - visual confirmation by the issuing office is enough. For renewal, bring your expired PWD ID and the accomplished renewal form; if your card was lost, bring an Affidavit of Loss instead. The exact supporting documents can vary slightly by LGU, so confirm with your local office.",
     "steps": [
       "Go to your city or municipal Persons with Disability Affairs Office (PDAO) or Social Welfare and Development Office (CSWDO/MSWDO) and ask for the PWD ID registration form",
       "Fill out the form and attach your two 1x1 photos and proof of residence",
@@ -545,7 +478,7 @@
       "Submit everything to the office for verification and approval",
       "Wait for your Unified PWD ID to be printed and released by the local office; some LGUs release it the same day while others ask you to return on a set date"
     ],
-    "fee": "Free. There is no charge for the PWD ID.",
+    "fee": "Free for initial issuance. A minimal fee may apply to replace a lost or damaged card.",
     "office": "Your city or municipal Persons with Disability Affairs Office (PDAO), or the City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) where you live. Records are centrally managed by the DSWD and NCDA under the Unified PWD ID System (UPWDIS), but the card is produced and released locally.",
     "processing_time": "Varies by local office. Some issue the ID on the same day, while others schedule a release date. Ask your PDAO or social welfare office for their timeline.",
     "source_title": "National Council on Disability Affairs (NCDA) - Unified PWD ID System, Administrative Order No. 001, s. 2026",
@@ -559,7 +492,7 @@
       "Pamatuod nga nagpuyo ka sa maong siyudad o lungsod (pananglitan barangay certificate o valid nga ID nga nagpakita sa imong adres)",
       "Para sa dili-makita (non-apparent) nga kapansanan: medical certificate o clinical abstract gikan sa lisensiyadong doktor nga nagpamatuod sa kapansanan"
     ],
-    "requirements_note_ceb": "DILI kinahanglan ang PhilSys (national ID) nga numero aron maka-register. Para sa makita (apparent) nga kapansanan, dili na kinahanglan ang medical certificate - igo na ang pagtan-aw ug pagkumpirma sa opisina. Ang eksaktong mga dokumento mahimong magkalahi gamay matag LGU, busa pangutana sa imong lokal nga opisina.",
+    "requirements_note_ceb": "DILI kinahanglan ang PhilSys (national ID) nga numero aron maka-register. Para sa makita (apparent) nga kapansanan, dili na kinahanglan ang medical certificate - igo na ang pagtan-aw ug pagkumpirma sa opisina. Para sa renewal, dad-a ang imong expired nga PWD ID ug ang napuno nga renewal form; kon nawala ang imong kard, dad-a hinuon ang Affidavit of Loss. Ang eksaktong mga dokumento mahimong magkalahi gamay matag LGU, busa pangutana sa imong lokal nga opisina.",
     "steps_ceb": [
       "Adto sa imong city o municipal Persons with Disability Affairs Office (PDAO) o Social Welfare and Development Office (CSWDO/MSWDO) ug pangayo sa PWD ID registration form",
       "Pun-a ang form ug ilakip ang imong duha ka 1x1 nga litrato ug ang pamatuod sa imong puy-anan",
@@ -568,7 +501,7 @@
       "Hulata nga ma-print ug mahatag ang imong Unified PWD ID sa lokal nga opisina; ang ubang LGU mohatag niini parehas nga adlaw, ang uban mohangyo nga mobalik ka sa gitakdang petsa"
     ],
     "office_ceb": "Ang imong city o municipal Persons with Disability Affairs Office (PDAO), o ang City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) sa imong puy-anan. Ang mga record sentral nga gidumala sa DSWD ug NCDA ubos sa Unified PWD ID System (UPWDIS), apan ang kard gihimo ug gihatag lokal.",
-    "fee_ceb": "Libre. Walay bayad ang PWD ID.",
+    "fee_ceb": "Libre ang unang pagkuha. Mahimong adunay gamay nga bayad para ilisan ang nawala o nadaot nga kard.",
     "processing_time_ceb": "Magkalahi matag lokal nga opisina. Ang uban mohatag sa ID parehas nga adlaw, ang uban magtakda og petsa sa pagkuha. Pangutana sa imong PDAO o social welfare office bahin sa ilang timeline.",
     "review_status": "needs_review"
   },
